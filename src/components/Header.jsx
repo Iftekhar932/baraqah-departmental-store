@@ -4,7 +4,7 @@ const Header = () => {
   const [navVisibilityMobile, setNavVisibilityMobile] = useState(false);
   return (
     <>
-      <div className="navbar bg-base-100 w-3/4 mb-5 mx-auto border-b-2 font-thin">
+      <div className="navbar bg-base-100  mb-5 mx-auto border-b-2 font-thin">
         <div
           className="dropdown"
           onClick={() => setNavVisibilityMobile(!navVisibilityMobile)}
@@ -42,9 +42,8 @@ const Header = () => {
             </li>
           </ul>
         </div>
-        {/* <a className="btn btn-ghost normal-case text-xl">daisyUI</a> */}
 
-        <div className="hidden w-full  lg:flex justify-between ">
+        <div className="hidden w-3/4 mx-auto  lg:flex justify-between ">
           <ul className="menu menu-horizontal px-1 ">
             <li>
               <a>Feedback</a>
@@ -87,7 +86,7 @@ const Header = () => {
       </div>
 
       {/* 👇👇👇👇👇👇👇👇👇 SECOND HEADER PART  👇👇👇👇👇👇👇👇👇    */}
-      <div className="navbar bg-base-100 w-3/4 mb-5 mx-auto border-b-2 font-thin">
+      <div className="navbar bg-base-100 mb-5 mx-auto border-b-2 font-thin">
         <div className="">
           <div
             className="dropdown"
@@ -129,21 +128,39 @@ const Header = () => {
           {/* <a className="btn btn-ghost normal-case text-xl">daisyUI</a> */}
         </div>
 
-        <div className="hidden w-full  lg:flex justify-between">
-          <ul className="menu menu-horizontal px-1 ">
+        <div className="hidden w-3/4 mx-auto  lg:flex justify-between">
+          <ul className="menu menu-horizontal px-1 w-full justify-end place-items-center">
+            <li>
+              <a className="font-medium text-xl" href="#">
+                {/* //* image not working don't know why */}
+                {/* <img src="./logo.png" height="50px" width="50px" alt="" /> */}
+                <span>
+                  <span className="text-[#17827B]">Ba</span>
+                  raqah
+                </span>
+              </a>
+            </li>
             <li>
               <a>Feedback</a>
             </li>
             <li>
-              <a>Contact Us</a>
+              <select className="bg-[#faf7f5]">
+                <option defaultValue="">Choose location</option>
+                <option>Dhaka</option>
+                <option>Rajshahi</option>
+                <option>Khulna</option>
+              </select>
+            </li>
+            <li>
+              <input
+                type="text"
+                placeholder="Search products that you want                 &#128269;"
+                className="bg-[#f4f4f5] p-2 w-72"
+              />
             </li>
           </ul>
-          <input
-            type="text"
-            placeholder="Search products that you want                 &#128269;"
-            className="bg-[#f4f4f5] p-2 w-1/4"
-          />
-          <ul className="menu menu-horizontal px-1">
+
+          <ul className="menu menu-horizontal px-1 place-self-end	w-full justify-end">
             <li>
               <a>
                 <img
