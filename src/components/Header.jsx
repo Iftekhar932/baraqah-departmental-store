@@ -5,7 +5,7 @@ const Header = () => {
   const [navVisibilityMobile, setNavVisibilityMobile] = useState(false);
   return (
     <>
-      <div className="navbar bg-white  mb-5 mx-auto border-b-[0.5] font-thin">
+      <div className="navbar bg-white  mb-5 mx-auto border-b font-thin">
         <div
           className="dropdown"
           onClick={() => setNavVisibilityMobile(!navVisibilityMobile)}
@@ -86,7 +86,7 @@ const Header = () => {
       </div>
 
       {/* 👇👇👇👇👇👇👇👇👇 SECOND HEADER PART  👇👇👇👇👇👇👇👇👇    */}
-      <div className="navbar bg-white mb-5 mx-auto border-b-2 font-thin">
+      <div className="navbar bg-white mb-5 mx-auto border-b font-thin">
         <div className="">
           <div
             className="dropdown"

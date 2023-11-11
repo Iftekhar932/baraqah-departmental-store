@@ -17,9 +17,8 @@ const Hero = () => {
               <span className="text-[#17827b]">fresh</span> food for you
             </h1>
             <p className="py-6  ">
-              Baraqah is an online store with 100% organic{" "}
-              <span className="text-[#17827B]">Healthy</span> foods and 100%
-              <span className="text-[#17827B] "> Fresh</span> products for you
+              Baraqah is an online store with 100% organic Healthy foods and
+              100% Fresh products for you
             </p>
             <button className="btn btn-primary">Show Now</button>
           </div>
