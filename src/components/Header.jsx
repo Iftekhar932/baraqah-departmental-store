@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import logoImg from "../images/logo.png";
 
 const Header = () => {
   const [navVisibilityMobile, setNavVisibilityMobile] = useState(false);
   return (
     <>
-      <div className="navbar bg-base-100  mb-5 mx-auto border-b-2 font-thin">
+      <div className="navbar bg-white  mb-5 mx-auto border-b-[0.5] font-thin">
         <div
           className="dropdown"
           onClick={() => setNavVisibilityMobile(!navVisibilityMobile)}
@@ -85,7 +86,7 @@ const Header = () => {
       </div>
 
       {/* 👇👇👇👇👇👇👇👇👇 SECOND HEADER PART  👇👇👇👇👇👇👇👇👇    */}
-      <div className="navbar bg-base-100 mb-5 mx-auto border-b-2 font-thin">
+      <div className="navbar bg-white mb-5 mx-auto border-b-2 font-thin">
         <div className="">
           <div
             className="dropdown"
@@ -128,11 +129,9 @@ const Header = () => {
         </div>
 
         <div className="hidden w-3/4 mx-auto  lg:flex justify-between">
-          <ul className="menu menu-horizontal px-1 w-full justify-end place-items-center">
+          <ul className="menu menu-horizontal px-1 w-full justify-end place-items-center gap-4">
             <li>
               <a className="font-medium text-xl" href="#">
-                {/* //* image not working don't know why */}
-                {/* <img src="./logo.png" height="50px" width="50px" alt="" /> */}
                 <span>
                   <span className="text-[#17827B]">Ba</span>
                   raqah
