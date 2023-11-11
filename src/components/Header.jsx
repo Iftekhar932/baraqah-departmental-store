@@ -42,7 +42,6 @@ const Header = () => {
             </li>
           </ul>
         </div>
-
         <div className="hidden w-3/4 mx-auto  lg:flex justify-between ">
           <ul className="menu menu-horizontal px-1 ">
             <li>
@@ -154,8 +153,8 @@ const Header = () => {
             <li>
               <input
                 type="text"
-                placeholder="Search products that you want                 &#128269;"
-                className="bg-[#f4f4f5] p-2 w-72"
+                placeholder="Search products &#128269;"
+                className="bg-[#f4f4f5] p-2 "
               />
             </li>
           </ul>
