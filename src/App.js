@@ -19,10 +19,6 @@ const router = createBrowserRouter([
           console.log(err);
         });
       return response;
-      /* const data = await fetch("http://localhost:3001/getAllProducts");
-      const response = data.json(); */
-
-      // return response;
     },
   },
 ]);
