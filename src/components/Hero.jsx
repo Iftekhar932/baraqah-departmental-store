@@ -3,11 +3,15 @@ import deliveryImg from "../images/delivery.svg";
 
 const Hero = () => {
   return (
-    <div className="bg-white">
+    <div className="">
       <div className="hero ">
-        <div className="hero-content flex-col lg:flex-row-reverse min-h-screen ">
-          <div className="w-2/4">
-            <img src={deliveryImg} alt="delivery guy" />
+        <div className="hero-content flex-col lg:flex-row-reverse min-h-full ">
+          <div className="w-2/4 ">
+            <img
+              src={deliveryImg}
+              alt="delivery guy"
+              className="rounded-full"
+            />
           </div>
 
           <div className="w-2/4">

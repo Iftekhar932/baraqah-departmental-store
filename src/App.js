@@ -8,7 +8,7 @@ import Hero from "./components/Hero";
 import axios from "axios";
 
 const router = createBrowserRouter([
-  { path: "/home", element: <Home /> },
+  { path: "/", element: <Home /> },
   {
     path: "/products",
     element: <Cards />,
@@ -27,8 +27,7 @@ function App() {
   return (
     <RouterProvider router={router}>
       <div className="App">
-        <Header />
-        <Hero />
+        <Home />
       </div>
     </RouterProvider>
   );
