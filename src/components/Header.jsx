@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [navVisibilityMobile, setNavVisibilityMobile] = useState(false);
   return (
     <>
+      {/* //* MOBILE 👇 */}
       <div className="navbar  mb-5 mx-auto border-b-[0.5] font-thin">
         <div
           className="dropdown"
@@ -38,10 +40,11 @@ const Header = () => {
               <a>Contact us</a>
             </li>
             <li>
-              <a>FAQ</a>
+              <Link to="/products">Products</Link>
             </li>
           </ul>
         </div>
+        {/* //* 👇 LARGE SCREEN */}
         <div className="hidden w-3/4 mx-auto  lg:flex justify-between ">
           <ul className="menu menu-horizontal px-1 ">
             <li>
@@ -51,7 +54,7 @@ const Header = () => {
               <a>Contact Us</a>
             </li>
             <li>
-              <a>Faq</a>
+              <Link to="/products">Products</Link>
             </li>
           </ul>
 
@@ -86,6 +89,7 @@ const Header = () => {
 
       {/* 👇👇👇👇👇👇👇👇👇 SECOND HEADER PART  👇👇👇👇👇👇👇👇👇    */}
       <div className="navbar mb-5 mx-auto border-b-2 font-thin">
+        {/* //* MOBILE */}
         <div className="">
           <div
             className="dropdown"
@@ -128,6 +132,7 @@ const Header = () => {
         </div>
 
         <div className="hidden w-3/4 mx-auto  lg:flex justify-between">
+          {/* //*LARGE SCREEN */}
           <ul className="menu menu-horizontal px-1 w-full justify-end place-items-center gap-4">
             <li>
               <a className="font-medium text-xl" href="#">
