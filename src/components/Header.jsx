@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import logoImg from "../images/logo.png";
 
 const Header = () => {
   const [navVisibilityMobile, setNavVisibilityMobile] = useState(false);
   return (
     <>
-      <div className="navbar bg-white  mb-5 mx-auto border-b-[0.5] font-thin">
+      <div className="navbar  mb-5 mx-auto border-b-[0.5] font-thin">
         <div
           className="dropdown"
           onClick={() => setNavVisibilityMobile(!navVisibilityMobile)}
@@ -86,7 +85,7 @@ const Header = () => {
       </div>
 
       {/* 👇👇👇👇👇👇👇👇👇 SECOND HEADER PART  👇👇👇👇👇👇👇👇👇    */}
-      <div className="navbar bg-white mb-5 mx-auto border-b-2 font-thin">
+      <div className="navbar mb-5 mx-auto border-b-2 font-thin">
         <div className="">
           <div
             className="dropdown"
@@ -142,7 +141,7 @@ const Header = () => {
               <a>Feedback</a>
             </li>
             <li>
-              <select className="bg-[#faf7f5]">
+              <select className="">
                 <option defaultValue="">Choose location</option>
                 <option>Dhaka</option>
                 <option>Rajshahi</option>
@@ -153,7 +152,7 @@ const Header = () => {
               <input
                 type="text"
                 placeholder="Search products &#128269;"
-                className="bg-[#f4f4f5] p-2 "
+                className="p-2 "
               />
             </li>
           </ul>

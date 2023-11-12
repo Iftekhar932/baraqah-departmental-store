@@ -5,15 +5,37 @@ import Cards from "./components/Cards";
 import Home from "./components/Home";
 import Hero from "./components/Hero";
 
-const router = createBrowserRouter([{ path: "/home", element: <Home /> }]);
+import axios from "axios";
+
+const router = createBrowserRouter([
+  { path: "/home", element: <Home /> },
+  {
+    path: "/products",
+    element: <Cards />,
+    loader: async () => {
+      const response = await axios
+        .get("http://localhost:3001/getAllProducts")
+        .catch(function (err) {
+          console.log(err);
+        });
+      return response;
+      /* const data = await fetch("http://localhost:3001/getAllProducts");
+      const response = data.json(); */
+
+      // return response;
+    },
+  },
+]);
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      {/* <Cards /> */}
-      <Hero />
-    </div>
+    <RouterProvider router={router}>
+      <div className="App">
+        <Header />
+        <Cards />
+        {/* <Hero /> */}
+      </div>
+    </RouterProvider>
   );
 }
 
