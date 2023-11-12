@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <>
       {/* //* MOBILE 👇 */}
-      <div className="navbar  mb-5 mx-auto border-b-[0.5] font-thin">
+      <div className="navbar  mb-5 mx-auto border-b font-thin">
         <div
           className="dropdown"
           onClick={() => setNavVisibilityMobile(!navVisibilityMobile)}
@@ -48,7 +48,7 @@ const Header = () => {
         <div className="hidden w-3/4 mx-auto  lg:flex justify-between ">
           <ul className="menu menu-horizontal px-1 ">
             <li>
-              <a>Feedback</a>
+              <Link to="/">Home</Link>
             </li>
             <li>
               <a>Contact Us</a>
@@ -86,9 +86,10 @@ const Header = () => {
           </ul>
         </div>
       </div>
+      {/*  ⬆👆☝👆☝⬆👆☝👆☝⬆👆☝👆☝ FIRST HEADER PART  ⬆👆☝👆☝⬆👆☝👆☝⬆👆☝👆☝    */}
 
-      {/* 👇👇👇👇👇👇👇👇👇 SECOND HEADER PART  👇👇👇👇👇👇👇👇👇    */}
-      <div className="navbar mb-5 mx-auto border-b-2 font-thin">
+      {/*  👇👇👇👇👇👇👇👇👇 SECOND HEADER PART  👇👇👇👇👇👇👇👇👇    */}
+      <div className="navbar mb-5 mx-auto border-b font-thin">
         {/* //* MOBILE */}
         <div className="">
           <div
@@ -135,15 +136,15 @@ const Header = () => {
           {/* //*LARGE SCREEN */}
           <ul className="menu menu-horizontal px-1 w-full justify-end place-items-center gap-4">
             <li>
-              <a className="font-medium text-xl" href="#">
+              <Link className="font-medium text-xl" to="/">
                 <span>
                   <span className="text-[#17827B]">Ba</span>
                   raqah
                 </span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a>Feedback</a>
+              <a href="#">Feedback</a>
             </li>
             <li>
               <select className="">
@@ -164,36 +165,36 @@ const Header = () => {
 
           <ul className="menu menu-horizontal px-1 place-self-end	w-full justify-end">
             <li>
-              <a>
+              <a title="Favorites">
                 <img
                   height="20px"
                   width="20px"
                   src="https://i.ibb.co/yyZvx7c/love-svgrepo-com.png"
-                  alt="love-svgrepo-com"
+                  alt="Favorites"
                   border="0"
                 />{" "}
               </a>
             </li>
 
             <li>
-              <a>
+              <a title="Cart">
                 <img
                   height="20px"
                   width="20px"
                   src="https://i.ibb.co/5s9HH42/cart-shopping-svgrepo-com.png"
-                  alt="cart-shopping-svgrepo-com"
+                  alt="cart"
                   border="0"
                 />{" "}
               </a>
             </li>
 
             <li>
-              <a>
+              <a title="Account">
                 <img
                   height="20px"
                   width="20px"
                   src="https://i.ibb.co/GT1KM5g/person-svgrepo-com.png"
-                  alt="person-svgrepo-com"
+                  alt="Account"
                   border="0"
                 />
               </a>

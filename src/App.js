@@ -4,6 +4,7 @@ import axios from "axios";
 import Cards from "./components/Cards";
 import Home from "./components/Home";
 import Header from "./components/Header";
+import Hero from "./components/Hero";
 
 const router = createBrowserRouter([
   {
@@ -29,9 +30,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     <RouterProvider router={router}>
-      <div className="App">
-        <Header />
-      </div>
+      <div className="App"></div>
     </RouterProvider>
   );
 }
