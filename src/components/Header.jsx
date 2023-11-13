@@ -138,7 +138,7 @@ const Header = () => {
             <li>
               <Link className="font-medium text-xl" to="/">
                 <span>
-                  <span className="text-[#17827B]">Ba</span>
+                  <span className="text-green-700">Ba</span>
                   raqah
                 </span>
               </Link>

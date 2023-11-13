@@ -15,10 +15,12 @@ const Hero = () => {
           </div>
 
           <div className="w-2/4">
-            <span className="font-thin">Sales up to 20%</span>
+            <span className="font-semibold text-orange-500">
+              Sales up to 20%
+            </span>
             <h1 className="text-5xl font-bold">
-              <span className="text-[#17827b]">Healthy</span> and{" "}
-              <span className="text-[#17827b]">fresh</span> food for you
+              <span className="text-green-700">Healthy</span> and{" "}
+              <span className="text-green-700">fresh</span> food for you
             </h1>
             <p className="py-6  ">
               Baraqah is an online store with 100% organic Healthy foods and

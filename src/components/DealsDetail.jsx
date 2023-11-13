@@ -4,12 +4,13 @@ const DealsDetail = () => {
   return (
     <div className="mx-auto flex gap-10 justify-center items-center p-12 ">
       <article className="">
-        <h1>
-          Hot 🔥<span className="text-[#17827B]"> Deals</span> For You
+        <h1 className="font-bold text-2xl">
+          Hot 🔥
+          <br /> <span className="text-green-700"> Deals</span> For You
         </h1>
         <span>
           Baraqah is an online store with 100% organic Healthy foods and 100%
-          Fresh products for you
+          Fresh products for you, safe for health and fresh as ever
         </span>
       </article>
       <article className="">
@@ -21,7 +22,7 @@ const DealsDetail = () => {
               width="50px"
             />
             <span>Fresh</span>
-            <span></span>
+            <span>Product is fresher than other stores</span>
           </div>
         </div>
       </article>
@@ -34,7 +35,7 @@ const DealsDetail = () => {
               width="50px"
             />
             <span>Healthy</span>
-            <span></span>
+            <span>The healthiest organic food is safe for health</span>
           </div>
         </div>
       </article>
@@ -48,7 +49,7 @@ const DealsDetail = () => {
             />
 
             <span>Fast</span>
-            <span></span>
+            <span>Enjoy shopping for the fastest delivery ever</span>
           </div>
         </div>
       </article>
