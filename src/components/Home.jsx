@@ -11,7 +11,6 @@ const Home = () => {
       <Header />
       <Hero />
       <DealsDetail />
-      <CategoriesSlide />
       <Outlet />
     </>
   );

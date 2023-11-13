@@ -1,25 +1,21 @@
 import React, { useState } from "react";
+import { useLoaderData } from "react-router-dom";
 
 const CategoriesSlide = () => {
-  const imgs = [
-    "https://i.ibb.co/TT3rxZq/fish-1.png",
-    "https://i.ibb.co/FKpCk7Z/vegetables.png",
-    "https://i.ibb.co/KKPqTF1/milk.png",
-    "https://i.ibb.co/98T7NSM/meat.png",
-    "https://i.ibb.co/y80tfRY/fruits.png",
-    "https://i.ibb.co/4S8LwKt/fish.png",
-    "https://i.ibb.co/nzFTRg7/soda.png",
-    "https://i.ibb.co/KLmWyPP/cake-slice.png",
-    "https://i.ibb.co/h13WKSP/bread.png",
-  ];
+  const loadedData = useLoaderData();
+
+  let imgs = loadedData?.data?.map((imgData) => {
+    return imgData.categoryImg;
+  });
+  imgs = [...new Set(imgs)]; //preventing duplicate elements
+
   const [current, setCurrent] = useState(2);
 
   // makes sure if it is the last item then it doesn't go more that that and goes back to the first item again, e.g: items.length =8, it won't let index become 9
   const nextSlide = () => {
     setCurrent(current === imgs.length - 1 ? 0 : current + 1);
   };
-
-  // makes sure if it is the first item it doesn't go to negative
+  // vice-versa of nextSlide
   const prevSlide = () => {
     setCurrent(current === 0 ? imgs.length - 1 : current - 1);
   };
