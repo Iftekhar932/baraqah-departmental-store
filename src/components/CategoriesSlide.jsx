@@ -21,16 +21,21 @@ const CategoriesSlide = () => {
   };
 
   return (
-    <div>
-      <div className="flex justify-between w-3/4 mx-auto">
+    <div className="my-10">
+      <div className="flex justify-between w-3/4 mx-auto  text-lg">
         <span className="font-bold">Categories</span>
-        <span className="text-green-700 text-lg">View All</span>
+        <span className="text-green-700">View All</span>
       </div>
       <div className="flex items-center justify-center">
         <button onClick={prevSlide} className="btn btn-primary mr-4">
           Prev
         </button>
         <div className="flex space-x-4">
+          {/*
+           imgs[(current - 2 + imgs.length) % imgs.length]
+          in this calculation, if the current element number is 2 which means the third element of the array
+          then the result will be the 
+          */}
           <img
             src={imgs[(current - 2 + imgs.length) % imgs.length]}
             alt=""

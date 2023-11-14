@@ -2,7 +2,7 @@ import React from "react";
 
 const DealsDetail = () => {
   return (
-    <div className="mx-auto p-12 w-3/4 flex gap-10 justify-center items-center">
+    <div className="mx-auto p-12 w-2/4 flex gap-10 justify-center items-center">
       <article className="">
         <h1 className="font-bold text-2xl">
           Hot 🔥

@@ -5,8 +5,8 @@ const Hero = () => {
   return (
     <div className="">
       <div className="hero ">
-        <div className="hero-content flex-col lg:flex-row-reverse min-h-full ">
-          <div className="w-2/4 ">
+        <div className="hero-content flex-col lg:flex-row-reverse min-h-full w-2/4">
+          <div className="w-2/4">
             <img
               src={deliveryImg}
               alt="delivery guy"
