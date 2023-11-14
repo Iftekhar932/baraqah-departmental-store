@@ -1,30 +1,54 @@
 import React from "react";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useLoaderData } from "react-router-dom";
+import "react-multi-carousel/lib/styles.css";
+import Carousel from "react-multi-carousel";
+
+const responsive = {
+  superLargeDesktop: {
+    breakpoint: { max: 4000, min: 3000 },
+    items: 3,
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 3,
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2,
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1,
+  },
+};
 
 const SliderCategory = () => {
   const loadedData = useLoaderData();
   let imgs = loadedData?.data?.map((imgData) => {
     return imgData.categoryImg;
   });
-
+  imgs = [...new Set(imgs)];
   return (
-    <div className="mx-auto">
-      <Carousel
-        showThumbs={false}
-        dynamicHeight={false}
-        infiniteLoop={true}
-        autoPlay={false}
-        className="w-32 mx-auto"
-      >
-        {imgs.map((image, index) => (
-          <div key={index}>
-            <img src={image} alt="" />
-          </div>
-        ))}
-      </Carousel>
-    </div>
+    <Carousel
+      swipeable={true}
+      draggable={false}
+      showDots={true}
+      responsive={responsive}
+      ssr={true} // means to render carousel on server-side.
+      infinite={true}
+      autoPlaySpeed={1000}
+      keyBoardControl={true}
+      containerClass="carousel-container"
+      removeArrowOnDeviceType={["tablet", "mobile"]}
+      itemClass="carousel-item-padding-40-px"
+      className="h-64 w-[500px] mx-auto "
+    >
+      {imgs.map((image, index) => (
+        <div key={index} className="mr-5">
+          <img src={image} alt="" />
+        </div>
+      ))}
+    </Carousel>
   );
 };
 
