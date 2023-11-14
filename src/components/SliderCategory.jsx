@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, Outlet, useLoaderData } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import Carousel from "react-multi-carousel";
 
@@ -54,13 +54,14 @@ const SliderCategory = () => {
           return (
             <div key={index} className="mr-5">
               <Link to={`${img.category}`}>
-                <Link to={`${category[index]}`}>
+                <Link to={`products/${category[index]}`}>
                   <img src={img} alt="" />
                 </Link>
               </Link>
             </div>
           );
         })}
+        <Outlet />
       </Carousel>
     </>
   );

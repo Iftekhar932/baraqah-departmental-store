@@ -3,7 +3,7 @@ import axios from "axios";
 
 import Products from "./components/Products";
 import Home from "./components/Home";
-import CategoriesSlide from "./components/CategoriesSlide";
+// import CategoriesSlide from "./components/CategoriesSlide";
 import SliderCategory from "./components/SliderCategory";
 
 const router = createBrowserRouter([
@@ -11,7 +11,6 @@ const router = createBrowserRouter([
     path: "/",
     element: <Home />,
     children: [
-      // *👇👇👇👇 CHANGE IT MAKE IT PROPER, IT WAS DEMO
       {
         path: "/",
         element: <SliderCategory />,
@@ -23,6 +22,23 @@ const router = createBrowserRouter([
             });
           return response;
         },
+        children: [
+          {
+            path: `/products/:category`,
+            element: <Products />,
+            loader: async (req) => {
+              console.log(req);
+              const response = await axios
+                .get(
+                  `http://localhost:3001/getAllProducts/${req.params.category}`
+                )
+                .catch(function (err) {
+                  console.log(err);
+                });
+              return response;
+            },
+          },
+        ],
       },
       /*   {
         path: "/",
