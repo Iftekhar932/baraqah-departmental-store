@@ -1,5 +1,5 @@
-import React from "react";
-import { useLoaderData } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLoaderData } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import Carousel from "react-multi-carousel";
 
@@ -24,6 +24,17 @@ const responsive = {
 
 const SliderCategory = () => {
   const loadedData = useLoaderData();
+
+  let category = loadedData?.data?.map((image) => {
+    return image.category;
+  });
+  category = [...new Set(category)];
+
+  let imgs = loadedData?.data?.map((image) => {
+    return image.categoryImg;
+  });
+  imgs = [...new Set(imgs)];
+
   return (
     <>
       <Carousel
@@ -36,15 +47,20 @@ const SliderCategory = () => {
         autoPlaySpeed={1000}
         keyBoardControl={true}
         containerClass="carousel-container"
-        removeArrowOnDeviceType={["tablet", "mobile"]}
         itemClass="carousel-item-padding-40-px"
         className="h-64 w-[500px] mx-auto "
       >
-        {loadedData.data.map((info, index) => (
-          <div key={index} className="mr-5">
-            <img src={info.categoryImg} alt="" />
-          </div>
-        ))}
+        {imgs?.map((img, index) => {
+          return (
+            <div key={index} className="mr-5">
+              <Link to={`${img.category}`}>
+                <Link to={`${category[index]}`}>
+                  <img src={img} alt="" />
+                </Link>
+              </Link>
+            </div>
+          );
+        })}
       </Carousel>
     </>
   );
