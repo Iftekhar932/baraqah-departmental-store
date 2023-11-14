@@ -24,31 +24,29 @@ const responsive = {
 
 const SliderCategory = () => {
   const loadedData = useLoaderData();
-  let imgs = loadedData?.data?.map((imgData) => {
-    return imgData.categoryImg;
-  });
-  imgs = [...new Set(imgs)];
   return (
-    <Carousel
-      swipeable={true}
-      draggable={false}
-      showDots={true}
-      responsive={responsive}
-      ssr={true} // means to render carousel on server-side.
-      infinite={true}
-      autoPlaySpeed={1000}
-      keyBoardControl={true}
-      containerClass="carousel-container"
-      removeArrowOnDeviceType={["tablet", "mobile"]}
-      itemClass="carousel-item-padding-40-px"
-      className="h-64 w-[500px] mx-auto "
-    >
-      {imgs.map((image, index) => (
-        <div key={index} className="mr-5">
-          <img src={image} alt="" />
-        </div>
-      ))}
-    </Carousel>
+    <>
+      <Carousel
+        swipeable={true}
+        draggable={false}
+        showDots={true}
+        responsive={responsive}
+        ssr={true} // means to render carousel on server-side.
+        infinite={true}
+        autoPlaySpeed={1000}
+        keyBoardControl={true}
+        containerClass="carousel-container"
+        removeArrowOnDeviceType={["tablet", "mobile"]}
+        itemClass="carousel-item-padding-40-px"
+        className="h-64 w-[500px] mx-auto "
+      >
+        {loadedData.data.map((info, index) => (
+          <div key={index} className="mr-5">
+            <img src={info.categoryImg} alt="" />
+          </div>
+        ))}
+      </Carousel>
+    </>
   );
 };
 

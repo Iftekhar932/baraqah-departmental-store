@@ -1,7 +1,7 @@
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import axios from "axios";
 
-import Cards from "./components/Products";
+import Products from "./components/Products";
 import Home from "./components/Home";
 import CategoriesSlide from "./components/CategoriesSlide";
 import SliderCategory from "./components/SliderCategory";
@@ -41,7 +41,7 @@ const router = createBrowserRouter([
 
   {
     path: "/products",
-    element: <Cards />,
+    element: <Products />,
     loader: async () => {
       const response = await axios
         .get("http://localhost:3001/getAllProducts")
