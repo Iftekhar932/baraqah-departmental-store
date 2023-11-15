@@ -4,7 +4,7 @@ import useFirebase from "../hooks/useFirebase";
 const UserLogin = () => {
   const { signUpWithEmailFunc } = useFirebase();
   return (
-    <div className="hero min-h-screen bg-base-200">
+    <div className="hero min-h-screen w-3/4 bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Login now!</h1>
