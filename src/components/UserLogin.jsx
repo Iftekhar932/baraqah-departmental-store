@@ -1,6 +1,8 @@
 import React from "react";
+import useFirebase from "../hooks/useFirebase";
 
 const UserLogin = () => {
+  const { signUpWithEmailFunc } = useFirebase();
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
