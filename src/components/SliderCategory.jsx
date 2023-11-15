@@ -53,16 +53,20 @@ const SliderCategory = () => {
         {imgs?.map((img, index) => {
           return (
             <div key={index} className="mr-5">
-              <Link to={`${img.category}`}>
-                <Link to={`products/${category[index]}`}>
-                  <img src={img} alt="" />
-                </Link>
+              {/* <Link to={`${img.category}`}> */}
+              <Link
+                to={`products/${category[index]}`}
+                className="tooltip"
+                data-tip={`${category[index]}`}
+              >
+                <img src={img} alt="" />
               </Link>
+              {/* </Link> */}
             </div>
           );
         })}
-        <Outlet />
       </Carousel>
+      <Outlet />
     </>
   );
 };
