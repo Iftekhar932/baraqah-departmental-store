@@ -27,7 +27,6 @@ const router = createBrowserRouter([
             path: `/products/:category`,
             element: <Products />,
             loader: async (req) => {
-              console.log(req);
               const response = await axios
                 .get(
                   `http://localhost:3001/getAllProducts/${req.params.category}`
