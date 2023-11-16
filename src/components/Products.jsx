@@ -6,7 +6,6 @@ import axios from "axios";
 const Cards = () => {
   const [categoryProductData, setCategoryProductData] = useState([]);
   const loadedData = useLoaderData();
-  console.log("🚀 ~ file: Products.jsx:9 ~ Cards ~ loadedData:", loadedData);
   const { category } = useParams();
 
   return (

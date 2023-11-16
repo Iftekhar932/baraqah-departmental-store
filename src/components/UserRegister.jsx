@@ -13,9 +13,12 @@ const UserRegister = () => {
     const password = e.target.form.password.value;
     setUserEmail(email);
     setUserPassword(password);
+    console.log(userEmail, userPassword);
   };
 
-  const submitFunction = () => {
+  const submitFunction = (e) => {
+    e.preventDefault();
+
     return signUpWithEmailFunc(userEmail, userPassword);
   };
 

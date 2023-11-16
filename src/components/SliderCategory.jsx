@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { Link, Outlet, useLoaderData } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import Carousel from "react-multi-carousel";

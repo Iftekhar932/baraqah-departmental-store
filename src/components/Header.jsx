@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import useFirebase from "../hooks/useFirebase";
 
 const Header = () => {
   const [navVisibilityMobile, setNavVisibilityMobile] = useState(false);
+  const { user } = useFirebase();
   return (
     <>
       {/* //* MOBILE 👇 */}
@@ -68,7 +70,7 @@ const Header = () => {
                   alt="telephone-svgrepo-com"
                   border="0"
                 />
-                +880xx123123123
+                {user?.email}
               </a>
             </li>
             <li>

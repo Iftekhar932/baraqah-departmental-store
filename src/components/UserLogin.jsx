@@ -13,7 +13,8 @@ const UserLogin = () => {
     setUserPassword(password);
   };
 
-  const submitFunction = () => {
+  const submitFunction = (e) => {
+    e.preventDefault();
     return signInWithEmailFunc(userEmail, userPassword);
   };
 
@@ -38,6 +39,9 @@ const UserLogin = () => {
                 placeholder="email"
                 className="input input-bordered"
                 name="email"
+                onKeyUp={(e) => {
+                  infoCollection(e);
+                }}
                 required
               />
             </div>
@@ -50,6 +54,9 @@ const UserLogin = () => {
                 placeholder="password"
                 className="input input-bordered"
                 name="password"
+                onKeyUp={(e) => {
+                  infoCollection(e);
+                }}
                 required
               />
               <label className="label">
