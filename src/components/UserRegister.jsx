@@ -4,7 +4,15 @@ import useFirebase from "../hooks/useFirebase";
 
 const UserRegister = () => {
   const { signUpWithEmailFunc } = useFirebase();
-  const infoCollection = (e) => {};
+
+  const infoCollection = (e) => {
+    const email = e.target.form.email.value;
+    const password = e.target.form.password.value;
+
+    if ((email, password)) {
+      return signUpWithEmailFunc(email, password);
+    }
+  };
 
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -26,6 +34,7 @@ const UserRegister = () => {
                 type="email"
                 placeholder="email"
                 className="input input-bordered"
+                name="email"
                 onBlur={(e) => {
                   infoCollection(e);
                 }}
@@ -40,6 +49,7 @@ const UserRegister = () => {
                 type="password"
                 placeholder="password"
                 className="input input-bordered"
+                name="password"
                 onBlur={(e) => {
                   infoCollection(e);
                 }}
