@@ -4,6 +4,10 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  updateProfile,
+  onAuthStateChanged,
 } from "firebase/auth";
 
 import { app } from "../Firebase/firebase.init";
@@ -24,6 +28,7 @@ const useFirebase = () => {
         // The signed-in user info.
         const user = result.user;
         setUser(user);
+        console.log(user);
         // IdP data available using getAdditionalUserInfo(result)
         // ...
       })
@@ -54,8 +59,9 @@ const useFirebase = () => {
   /* 🔽⏬🔽⏬ SIGN OUT WITH EMAIL 🔽⏬🔽⏬ */
   const logOut = () => {
     signOut(auth)
-      .then(() => {
+      .then((d) => {
         // Sign-out successful.
+        console.log(d, "signed Out");
       })
       .catch((error) => {
         // An error happened.
@@ -68,6 +74,7 @@ const useFirebase = () => {
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
+        console.log(user, "emailUp");
         setUser(user);
       })
       .catch((error) => {
@@ -83,6 +90,7 @@ const useFirebase = () => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+        console.log(user, "emailIn");
         setUser(user);
         // ...
       })
@@ -112,7 +120,7 @@ const useFirebase = () => {
       displayName: "Jane Q. User",
     })
       .then((d) => {
-        console.log(data, "profile updated");
+        console.log(d, "profile updated");
       })
       .catch((error) => {
         console.log(
@@ -123,6 +131,8 @@ const useFirebase = () => {
   };
 
   return {
+    user,
+    setUser,
     signUpWithEmailFunc,
     signInWithEmailFunc,
     signInWithGoogle,
