@@ -51,10 +51,10 @@ const Header = () => {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <a>Contact Us</a>
+              <Link to="/products">Products</Link>
             </li>
             <li>
-              <Link to="/products">Products</Link>
+              <Link to="/userLogin">Sign In</Link>
             </li>
           </ul>
 

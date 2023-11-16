@@ -5,6 +5,8 @@ import Products from "./components/Products";
 import Home from "./components/Home";
 // import CategoriesSlide from "./components/CategoriesSlide";
 import SliderCategory from "./components/SliderCategory";
+import UserLogin from "./components/UserLogin";
+import UserRegister from "./components/UserRegister";
 
 const router = createBrowserRouter([
   {
@@ -39,21 +41,8 @@ const router = createBrowserRouter([
           },
         ],
       },
-      /*   {
-        path: "/",
-        element: <CategoriesSlide />,
-        loader: async () => {
-          const response = await axios
-            .get("http://localhost:3001/getAllProducts")
-            .catch(function (err) {
-              console.log(err);
-            });
-          return response;
-        },
-      }, */
     ],
   },
-
   {
     path: "/products",
     element: <Products />,
@@ -65,6 +54,14 @@ const router = createBrowserRouter([
         });
       return response;
     },
+  },
+  {
+    path: "/userLogin",
+    element: <UserLogin />,
+  },
+  {
+    path: "/userRegister",
+    element: <UserRegister />,
   },
 ]);
 
