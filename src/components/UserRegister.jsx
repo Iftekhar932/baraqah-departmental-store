@@ -1,17 +1,22 @@
 import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
 
 const UserRegister = () => {
   const { signUpWithEmailFunc } = useFirebase();
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
 
   const infoCollection = (e) => {
     const email = e.target.form.email.value;
     const password = e.target.form.password.value;
+    setUserEmail(email);
+    setUserPassword(password);
+  };
 
-    if ((email, password)) {
-      return signUpWithEmailFunc(email, password);
-    }
+  const submitFunction = () => {
+    return signUpWithEmailFunc(userEmail, userPassword);
   };
 
   return (
@@ -35,7 +40,7 @@ const UserRegister = () => {
                 placeholder="email"
                 className="input input-bordered"
                 name="email"
-                onBlur={(e) => {
+                onKeyUp={(e) => {
                   infoCollection(e);
                 }}
                 required
@@ -50,7 +55,7 @@ const UserRegister = () => {
                 placeholder="password"
                 className="input input-bordered"
                 name="password"
-                onBlur={(e) => {
+                onKeyUp={(e) => {
                   infoCollection(e);
                 }}
                 required
@@ -68,7 +73,9 @@ const UserRegister = () => {
               </label>
             </div>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Register</button>
+              <button className="btn btn-primary" onClick={submitFunction}>
+                Register
+              </button>
             </div>
           </form>
         </div>

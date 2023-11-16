@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
 
 const UserLogin = () => {
-  const { signUpWithEmailFunc } = useFirebase();
+  const { signInWithEmailFunc } = useFirebase();
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+  const infoCollection = (e) => {
+    const email = e.target.form.email.value;
+    const password = e.target.form.password.value;
+    setUserEmail(email);
+    setUserPassword(password);
+  };
+
+  const submitFunction = () => {
+    return signInWithEmailFunc(userEmail, userPassword);
+  };
+
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="w-3/4 hero-content flex-col lg:flex-row-reverse">
@@ -24,6 +37,7 @@ const UserLogin = () => {
                 type="email"
                 placeholder="email"
                 className="input input-bordered"
+                name="email"
                 required
               />
             </div>
@@ -35,6 +49,7 @@ const UserLogin = () => {
                 type="password"
                 placeholder="password"
                 className="input input-bordered"
+                name="password"
                 required
               />
               <label className="label">
@@ -50,7 +65,9 @@ const UserLogin = () => {
               </label>
             </div>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Login</button>
+              <button className="btn btn-primary" onClick={submitFunction}>
+                Login
+              </button>
             </div>
           </form>
         </div>

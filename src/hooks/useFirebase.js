@@ -36,21 +36,24 @@ const useFirebase = () => {
         // Handle Errors here.
         const errorCode = error.code;
         console.log(
-          "🚀 ~ file: useFirebase.js:32 ~ .then ~ errorCode:",
+          "❌❌❌❌❌ ~ file: useFirebase.js:32 ~ .then ~ errorCode:",
           errorCode
         );
         const errorMessage = error.message;
         console.log(
-          "🚀 ~ file: useFirebase.js:34 ~ .then ~ errorMessage:",
+          "❌❌❌❌❌ ~ file: useFirebase.js:34 ~ .then ~ errorMessage:",
           errorMessage
         );
         // The email of the user's account used.
         const email = error.customData.email;
-        console.log("🚀 ~ file: useFirebase.js:37 ~ .then ~ email:", email);
+        console.log(
+          "❌❌❌❌❌ ~ file: useFirebase.js:37 ~ .then ~ email:",
+          email
+        );
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
         console.log(
-          "🚀 ~ file: useFirebase.js:40 ~ .then ~ credential:",
+          "❌❌❌❌❌ ~ file: useFirebase.js:40 ~ .then ~ credential:",
           credential
         );
       });
@@ -102,7 +105,17 @@ const useFirebase = () => {
   };
 
   /* 🔽⏬🔽⏬ USER STATE OBSERVER 🔽⏬🔽⏬ */
-  onAuthStateChanged(auth, (user) => {
+
+  useEffect(() => {
+    const unlisten = auth.onAuthStateChanged((user) => {
+      user ? setAuthUser(user) : setAuthUser(null);
+    });
+
+    return () => {
+      unlisten();
+    };
+  }, []);
+  /* onAuthStateChanged(auth, (user) => {
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/auth.user
@@ -112,7 +125,7 @@ const useFirebase = () => {
       // User is signed out
       setUser(null);
     }
-  });
+  }); */
 
   /* 🔽⏬🔽⏬ PROFILE UPDATE FUNCTION 🔽⏬🔽⏬ */
   const profileUpdate = () => {
