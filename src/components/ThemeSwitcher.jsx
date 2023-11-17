@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const themeNames = [
   "light",
@@ -33,44 +33,25 @@ const themeNames = [
 ];
 
 const ThemeSwitcher = () => {
+  const [userTheme, setUserTheme] = useState(
+    window.localStorage.getItem("userSelectedTheme")
+  );
+  console.log(
+    "🚀 ~ file: ThemeSwitcher.jsx:37 ~ ThemeSwitcher ~ userTheme:",
+    userTheme
+  );
+  useEffect(() => {
+    document.body.dataset.theme = userTheme;
+  }, [userTheme]);
+
+  const themeValueSetter = (e) => {
+    window.localStorage.setItem("userSelectedTheme", e.target.textContent);
+    setUserTheme(e.target.textContent);
+  };
+
   return (
     <div className="join join-vertical">
-      {/* <input
-        type="radio"
-        name="theme-buttons"
-        className="btn theme-controller join-item"
-        aria-label="Default"
-        value="default"
-      />
-      <input
-        type="radio"
-        name="theme-buttons"
-        className="btn theme-controller join-item"
-        aria-label="Retro"
-        value="retro"
-      />
-      <input
-        type="radio"
-        name="theme-buttons"
-        className="btn theme-controller join-item"
-        aria-label="Cyberpunk"
-        value="cyberpunk"
-      />
-      <input
-        type="radio"
-        name="theme-buttons"
-        className="btn theme-controller join-item"
-        aria-label="Valentine"
-        value="valentine"
-      />
-      <input
-        type="radio"
-        name="theme-buttons"
-        className="btn theme-controller join-item"
-        aria-label="Aqua"
-        value="aqua"
-      /> */}
-      {themeNames.map((themeName) => {
+      {/*  {themeNames.map((themeName) => {
         return (
           <input
             type="radio"
@@ -80,7 +61,28 @@ const ThemeSwitcher = () => {
             value={`${themeName}`}
           />
         );
-      })}
+      })} */}
+      <div className="flex-none z-10">
+        <ul className="menu menu-horizontal px-1">
+          <li>
+            <details>
+              <summary>Parent</summary>
+              <ul className="bg-base-100 overflow-auto max-h-32">
+                {themeNames.map((themeName) => {
+                  return (
+                    <li
+                      className="capitalize"
+                      onClick={(e) => themeValueSetter(e)}
+                    >
+                      {themeName}
+                    </li>
+                  );
+                })}
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 };

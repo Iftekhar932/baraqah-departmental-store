@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 const Header = () => {
   const [navVisibilityMobile, setNavVisibilityMobile] = useState(false);
@@ -60,30 +61,21 @@ const Header = () => {
             </li>
           </ul>
 
-          <ul className="menu menu-horizontal px-1">
+          <ul className="menu menu-horizontal px-1 items-center">
             <li>
               <a>
                 <img
-                  height="20px"
-                  width="20px"
-                  src="https://i.ibb.co/wdC8yq1/telephone-svgrepo-com.png"
-                  alt="telephone-svgrepo-com"
+                  src="https://i.ibb.co/vPhPLjL/email-1-svgrepo-com.png"
+                  alt="email-1-svgrepo-com"
                   border="0"
+                  height="22px"
+                  width="22px"
                 />
                 {user?.email}
               </a>
             </li>
             <li>
-              <a>
-                <img
-                  height="20px"
-                  width="20px"
-                  src="https://i.ibb.co/mHCTrmh/language-svgrepo-com.png"
-                  alt="language-svgrepo-com"
-                  border="0"
-                />
-                ENG
-              </a>
+              <ThemeSwitcher />
             </li>
           </ul>
         </div>
