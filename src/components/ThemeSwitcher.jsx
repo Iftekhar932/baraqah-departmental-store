@@ -36,10 +36,7 @@ const ThemeSwitcher = () => {
   const [userTheme, setUserTheme] = useState(
     window.localStorage.getItem("userSelectedTheme")
   );
-  console.log(
-    "🚀 ~ file: ThemeSwitcher.jsx:37 ~ ThemeSwitcher ~ userTheme:",
-    userTheme
-  );
+  //
   useEffect(() => {
     document.body.dataset.theme = userTheme;
   }, [userTheme]);
@@ -51,17 +48,6 @@ const ThemeSwitcher = () => {
 
   return (
     <div className="join join-vertical">
-      {/*  {themeNames.map((themeName) => {
-        return (
-          <input
-            type="radio"
-            name="theme-buttons"
-            className="btn theme-controller join-item"
-            aria-label={`${themeName}`}
-            value={`${themeName}`}
-          />
-        );
-      })} */}
       <div className="flex-none z-10">
         <ul className="menu menu-horizontal px-1">
           <li>

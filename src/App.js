@@ -7,11 +7,14 @@ import Home from "./components/Home";
 import SliderCategory from "./components/SliderCategory";
 import UserLogin from "./components/UserLogin";
 import UserRegister from "./components/UserRegister";
+import AdminPanel from "./components/AdminPanel";
+import ErrorComponent from "./components/ErrorComponent";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+    errorElement: <ErrorComponent />,
     children: [
       {
         path: "/",
@@ -22,7 +25,7 @@ const router = createBrowserRouter([
             .catch(function (err) {
               console.log(err);
             });
-          return response;
+          return response || null;
         },
         children: [
           {
@@ -36,7 +39,7 @@ const router = createBrowserRouter([
                 .catch(function (err) {
                   console.log(err);
                 });
-              return response;
+              return response || null;
             },
           },
         ],
@@ -63,6 +66,7 @@ const router = createBrowserRouter([
     path: "/userRegister",
     element: <UserRegister />,
   },
+  { path: "/adminOnly", element: <AdminPanel /> },
 ]);
 
 function App() {
