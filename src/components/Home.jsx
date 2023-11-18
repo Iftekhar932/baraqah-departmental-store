@@ -3,9 +3,9 @@ import { Outlet } from "react-router-dom";
 import DealsDetail from "./DealsDetail";
 import Header from "./Header";
 import Hero from "./Hero";
-import CategoriesSlide from "./CategoriesSlide";
 
 const Home = () => {
+  console.log("this is home");
   return (
     <>
       <Header />

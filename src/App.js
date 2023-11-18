@@ -9,6 +9,7 @@ import UserLogin from "./components/UserLogin";
 import UserRegister from "./components/UserRegister";
 import AdminPanel from "./components/AdminPanel";
 import ErrorComponent from "./components/ErrorComponent";
+import Header from "./components/Header";
 
 const router = createBrowserRouter([
   {
@@ -72,7 +73,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     <RouterProvider router={router}>
-      <div className="App"></div>
+      <Header />
     </RouterProvider>
   );
 }

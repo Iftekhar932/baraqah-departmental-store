@@ -5,7 +5,7 @@ import ThemeSwitcher from "./ThemeSwitcher";
 
 const Header = () => {
   const [navVisibilityMobile, setNavVisibilityMobile] = useState(false);
-  const { user } = useFirebase();
+  const { user, logOut } = useFirebase();
   return (
     <>
       {/* //* MOBILE 👇 */}
@@ -57,13 +57,19 @@ const Header = () => {
               <Link to="/products">Products</Link>
             </li>
             <li>
-              <Link to="/userLogin">Sign In</Link>
+              {user?.email ? (
+                <a href="#" onClick={logOut}>
+                  Logout
+                </a>
+              ) : (
+                <Link to="/userLogin">Sign In</Link>
+              )}
             </li>
           </ul>
 
           <ul className="menu menu-horizontal px-1 items-center">
             <li>
-              <a>
+              <a href="#" title="Your Account">
                 <img
                   src="https://i.ibb.co/vPhPLjL/email-1-svgrepo-com.png"
                   alt="email-1-svgrepo-com"

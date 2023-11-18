@@ -39,6 +39,7 @@ const ThemeSwitcher = () => {
   //
   useEffect(() => {
     document.body.dataset.theme = userTheme;
+    setUserTheme(window.localStorage.getItem("userSelectedTheme"));
   }, [userTheme]);
 
   const themeValueSetter = (e) => {
@@ -47,29 +48,31 @@ const ThemeSwitcher = () => {
   };
 
   return (
-    <div className="join join-vertical">
-      <div className="flex-none z-10">
-        <ul className="menu menu-horizontal px-1">
-          <li>
-            <details>
-              <summary>Parent</summary>
-              <ul className="bg-base-100 overflow-auto max-h-32">
-                {themeNames.map((themeName) => {
-                  return (
-                    <li
-                      className="capitalize"
-                      onClick={(e) => themeValueSetter(e)}
-                    >
-                      {themeName}
-                    </li>
-                  );
-                })}
-              </ul>
-            </details>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <>
+      {/* <div className="join join-vertical">
+      <div className="flex-none z-10"> */}
+      <ul className="menu menu-horizontal px-1 ">
+        <li>
+          <details>
+            <summary>Themes</summary>
+            <ul className="bg-base-100 overflow-auto max-h-32 z-10">
+              {themeNames.map((themeName) => {
+                return (
+                  <li
+                    className="capitalize  cursor-pointer hover:bg-zinc-100"
+                    onClick={(e) => themeValueSetter(e)}
+                  >
+                    {themeName}
+                  </li>
+                );
+              })}
+            </ul>
+          </details>
+        </li>
+      </ul>
+      {/* </div>
+    </div> */}
+    </>
   );
 };
 
