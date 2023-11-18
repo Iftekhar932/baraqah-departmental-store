@@ -14,11 +14,11 @@ const UserLogin = () => {
   };
 
   const submitFunction = (e, flag) => {
+    e.preventDefault();
     if (flag == "google") {
       signInWithGoogle();
       return;
     }
-    e.preventDefault();
     return signInWithEmailFunc(userEmail, userPassword);
   };
 
@@ -80,16 +80,21 @@ const UserLogin = () => {
                 Login
               </button>
             </div>
-            <div className="mt-6 form-control"></div>
+            <button
+              className="btn btn-primary"
+              onClick={(e) => submitFunction(e, "google")}
+            >
+              Sign In with google
+            </button>
           </form>
-          <button
+          {/*  <button
             className="btn btn-primary"
             onClick={(e) => {
               submitFunction(e, "google");
             }}
           >
             Sign In with google
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

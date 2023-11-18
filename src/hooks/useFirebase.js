@@ -12,24 +12,27 @@ import {
 
 import { app } from "../Firebase/firebase.init";
 import { useNavigate } from "react-router-dom";
+const auth = getAuth(app);
 
 const googleProvider = new GoogleAuthProvider();
 
 const useFirebase = () => {
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
-  const auth = getAuth(app);
-  const [user, setUser] = useState([]);
-
   /* 🔽⏬🔽⏬ SIGN IN WITH GOOGLE 🔽⏬🔽⏬ */
   const signInWithGoogle = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-        user.role = "user";
-        console.log(user, "GOOGLE");
         setUser(user);
         navigate("/");
+        console.log(user);
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
       })
       .catch((error) => {
         // Handle Errors here.
@@ -43,6 +46,18 @@ const useFirebase = () => {
           "❌❌❌❌❌ ~ file: useFirebase.js:34 ~ .then ~ errorMessage:",
           errorMessage
         );
+        // The email of the user's account used.
+        const email = error.customData.email;
+        console.log(
+          "❌❌❌❌❌ ~ file: useFirebase.js:37 ~ .then ~ email:",
+          email
+        );
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.log(
+          "❌❌❌❌❌ ~ file: useFirebase.js:40 ~ .then ~ credential:",
+          credential
+        );
       });
   };
 
@@ -54,21 +69,18 @@ const useFirebase = () => {
         console.log(d, "signed Out");
       })
       .catch((error) => {
-        console.log("🚀 ~ file: useFirebase.js:54 ~ logOut ~ error:", error);
         // An error happened.
       });
   };
 
   /* 🔽⏬🔽⏬ SIGN UP WITH EMAIL 🔽⏬🔽⏬ */
   const signUpWithEmailFunc = (email, password) => {
-    console.log("EMAIL");
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
-        // console.log(user, "emailUp");
+        console.log(user, "emailUp");
         setUser(user);
-        navigate("/");
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -83,9 +95,9 @@ const useFirebase = () => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        // console.log(user, "emailIn");
+        console.log(user, "emailIn");
         setUser(user);
-        navigate("/");
+        // ...
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -95,28 +107,31 @@ const useFirebase = () => {
   };
 
   /* 🔽⏬🔽⏬ USER STATE OBSERVER 🔽⏬🔽⏬ */
-
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/auth.user
-        setUser(user);
-        console.log(user, auth.currentUser);
-      } else {
-        // User is signed out
-        setUser(null);
-      }
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      user ? setUser(user) : setUser(null);
     });
 
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
-  }, [auth]);
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+  /* onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/auth.user
+      const uid = user.uid;
+      setUser(user);
+    } else {
+      // User is signed out
+      setUser(null);
+    }
+  }); */
 
   /* 🔽⏬🔽⏬ PROFILE UPDATE FUNCTION 🔽⏬🔽⏬ */
   const profileUpdate = () => {
     updateProfile(auth.currentUser, {
-      displayName: "",
+      displayName: "Jane Q. User",
     })
       .then((d) => {
         console.log(d, "profile updated");

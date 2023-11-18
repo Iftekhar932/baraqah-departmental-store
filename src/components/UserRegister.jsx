@@ -19,7 +19,7 @@ const UserRegister = () => {
     e.preventDefault();
     if (flag == "google") {
       signInWithGoogle();
-      return;
+      return; 
     }
 
     return signUpWithEmailFunc(userEmail, userPassword);
@@ -83,15 +83,13 @@ const UserRegister = () => {
                 Register
               </button>
             </div>
-          </form>
-          <div className="card-body">
             <button
               className="btn btn-primary"
               onClick={(e) => submitFunction(e, "google")}
             >
               Sign In with google
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>
