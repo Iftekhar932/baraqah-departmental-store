@@ -5,7 +5,6 @@ import Header from "./Header";
 import Hero from "./Hero";
 
 const Home = () => {
-  console.log("this is home");
   return (
     <>
       <Header />

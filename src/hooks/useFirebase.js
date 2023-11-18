@@ -26,6 +26,7 @@ const useFirebase = () => {
       .then((result) => {
         // The signed-in user info.
         const user = result.user;
+        user.role = "user";
         console.log(user, "GOOGLE");
         setUser(user);
       })
@@ -64,7 +65,8 @@ const useFirebase = () => {
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
-        console.log(user, "emailUp");
+        user.role = "user";
+        // console.log(user, "emailUp");
         setUser(user);
         navigate("/");
       })
@@ -77,12 +79,11 @@ const useFirebase = () => {
 
   /* 🔽⏬🔽⏬ SIGN IN WITH EMAIL 🔽⏬🔽⏬ */
   const signInWithEmailFunc = (email, password) => {
-    console.log(email, password);
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        console.log(user, "emailIn");
+        // console.log(user, "emailIn");
         setUser(user);
         navigate("/");
       })
@@ -115,7 +116,7 @@ const useFirebase = () => {
   /* 🔽⏬🔽⏬ PROFILE UPDATE FUNCTION 🔽⏬🔽⏬ */
   const profileUpdate = () => {
     updateProfile(auth.currentUser, {
-      // displayName: "Jane Q. User",
+      displayName: "",
     })
       .then((d) => {
         console.log(d, "profile updated");

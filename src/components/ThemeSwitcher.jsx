@@ -56,11 +56,12 @@ const ThemeSwitcher = () => {
           <details>
             <summary>Themes</summary>
             <ul className="bg-base-100 overflow-auto max-h-32 z-10">
-              {themeNames.map((themeName) => {
+              {themeNames.map((themeName, index) => {
                 return (
                   <li
                     className="capitalize  cursor-pointer hover:bg-zinc-100"
                     onClick={(e) => themeValueSetter(e)}
+                    key={index}
                   >
                     {themeName}
                   </li>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
 
 const UserLogin = () => {
-  const { signInWithEmailFunc } = useFirebase();
+  const { signInWithEmailFunc, signInWithGoogle } = useFirebase();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const infoCollection = (e) => {
@@ -73,6 +73,11 @@ const UserLogin = () => {
             </div>
             <div className="form-control mt-6">
               <button className="btn btn-primary" onClick={submitFunction}>
+                Login
+              </button>
+            </div>
+            <div className="mt-6 form-control">
+              <button className="btn btn-primary" onClick={signInWithGoogle}>
                 Login
               </button>
             </div>
