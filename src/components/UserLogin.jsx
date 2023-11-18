@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
 
 const UserLogin = () => {
-  const { signInWithGoogle } = useFirebase();
+  const { signInWithGoogle, signInWithEmailFunc } = useFirebase();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 

@@ -15,11 +15,11 @@ const UserRegister = () => {
     setUserPassword(password);
   };
 
-  const submitFunction = (flag) => {
+  const submitFunction = (e, flag) => {
     e.preventDefault();
     if (flag == "google") {
       signInWithGoogle();
-      return; 
+      return;
     }
 
     return signUpWithEmailFunc(userEmail, userPassword);
@@ -85,7 +85,7 @@ const UserRegister = () => {
             </div>
             <button
               className="btn btn-primary"
-              onClick={(e) => submitFunction("google")}
+              onClick={(e) => submitFunction(e, "google")}
             >
               Sign In with google
             </button>
