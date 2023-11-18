@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
 
 const UserLogin = () => {
-  const { signInWithEmailFunc, signInWithGoogle } = useFirebase();
+  const { signInWithGoogle } = useFirebase();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+
   const infoCollection = (e) => {
     const email = e.target.form.email.value;
     const password = e.target.form.password.value;
@@ -13,13 +14,12 @@ const UserLogin = () => {
     setUserPassword(password);
   };
 
-  const submitFunction = (e, flag) => {
+  const submitFunction = (flag) => {
+    e.preventDefault();
     if (flag == "google") {
       signInWithGoogle();
       return;
     }
-    e.preventDefault();
-    return signInWithEmailFunc(userEmail, userPassword);
   };
 
   return (
@@ -84,8 +84,8 @@ const UserLogin = () => {
           </form>
           <button
             className="btn btn-primary"
-            onClick={(e) => {
-              submitFunction(e, "google");
+            onClick={() => {
+              submitFunction("google");
             }}
           >
             Sign In with google
