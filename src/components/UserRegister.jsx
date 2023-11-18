@@ -15,7 +15,7 @@ const UserRegister = () => {
     setUserPassword(password);
   };
 
-  const submitFunction = (e, flag) => {
+  const submitFunction = (flag) => {
     e.preventDefault();
     if (flag == "google") {
       signInWithGoogle();
@@ -85,7 +85,7 @@ const UserRegister = () => {
             </div>
             <button
               className="btn btn-primary"
-              onClick={(e) => submitFunction(e, "google")}
+              onClick={(e) => submitFunction("google")}
             >
               Sign In with google
             </button>
