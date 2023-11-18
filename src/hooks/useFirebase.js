@@ -29,6 +29,7 @@ const useFirebase = () => {
         user.role = "user";
         console.log(user, "GOOGLE");
         setUser(user);
+        navigate("/");
       })
       .catch((error) => {
         // Handle Errors here.
@@ -65,7 +66,6 @@ const useFirebase = () => {
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
-        user.role = "user";
         // console.log(user, "emailUp");
         setUser(user);
         navigate("/");

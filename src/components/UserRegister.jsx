@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
 
 const UserRegister = () => {
-  const { signUpWithEmailFunc } = useFirebase();
+  const { signUpWithEmailFunc, signInWithGoogle } = useFirebase();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
@@ -13,11 +13,14 @@ const UserRegister = () => {
     const password = e.target.form.password.value;
     setUserEmail(email);
     setUserPassword(password);
-    console.log(userEmail, userPassword);
   };
 
-  const submitFunction = (e) => {
+  const submitFunction = (e, flag) => {
     e.preventDefault();
+    if (flag == "google") {
+      signInWithGoogle();
+      return;
+    }
 
     return signUpWithEmailFunc(userEmail, userPassword);
   };
@@ -81,6 +84,14 @@ const UserRegister = () => {
               </button>
             </div>
           </form>
+          <div className="card-body">
+            <button
+              className="btn btn-primary"
+              onClick={(e) => submitFunction(e, "google")}
+            >
+              Sign In with google
+            </button>
+          </div>
         </div>
       </div>
     </div>

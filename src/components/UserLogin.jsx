@@ -78,7 +78,7 @@ const UserLogin = () => {
             </div>
             <div className="mt-6 form-control">
               <button className="btn btn-primary" onClick={signInWithGoogle}>
-                Login
+                Sign In with google
               </button>
             </div>
           </form>
