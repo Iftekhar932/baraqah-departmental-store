@@ -12,11 +12,11 @@ import {
 
 import { app } from "../Firebase/firebase.init";
 import { useNavigate } from "react-router-dom";
-const auth = getAuth(app);
 
 const googleProvider = new GoogleAuthProvider();
 
 const useFirebase = () => {
+  const auth = getAuth(app);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   /* 🔽⏬🔽⏬ SIGN IN WITH GOOGLE 🔽⏬🔽⏬ */
@@ -115,18 +115,7 @@ const useFirebase = () => {
     return () => {
       unsubscribe();
     };
-  }, []);
-  /* onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/auth.user
-      const uid = user.uid;
-      setUser(user);
-    } else {
-      // User is signed out
-      setUser(null);
-    }
-  }); */
+  }, [auth]);
 
   /* 🔽⏬🔽⏬ PROFILE UPDATE FUNCTION 🔽⏬🔽⏬ */
   const profileUpdate = () => {
