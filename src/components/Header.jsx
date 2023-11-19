@@ -91,18 +91,20 @@ const Header = () => {
           </ul>
 
           <ul className="menu menu-horizontal px-1 items-center">
-            <li className="hover:bg-zinc-200">
-              <a href="#" title="Your Account">
-                <img
-                  src="https://i.ibb.co/vPhPLjL/email-1-svgrepo-com.png"
-                  alt="email-1-svgrepo-com"
-                  border="0"
-                  height="22px"
-                  width="22px"
-                />
-                {user?.email}
-              </a>
-            </li>
+            {user?.email && (
+              <li className="hover:bg-zinc-200">
+                <a href="#" title="Your Account">
+                  <img
+                    src="https://i.ibb.co/vPhPLjL/email-1-svgrepo-com.png"
+                    alt="email-1-svgrepo-com"
+                    border="0"
+                    height="22px"
+                    width="22px"
+                  />
+                  {user?.email}
+                </a>
+              </li>
+            )}
             <li>
               <ThemeSwitcher />
             </li>
