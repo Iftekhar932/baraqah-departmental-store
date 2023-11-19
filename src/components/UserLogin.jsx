@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
+import axios from "axios";
 
 const UserLogin = () => {
   const { signInWithGoogle, signInWithEmailFunc } = useFirebase();
@@ -14,13 +15,29 @@ const UserLogin = () => {
     setUserPassword(password);
   };
 
-  const submitFunction = (e, flag) => {
+  const submitFunction = async (e, flag) => {
     e.preventDefault();
     if (flag == "google") {
       signInWithGoogle();
       return;
     }
-    return signInWithEmailFunc(userEmail, userPassword);
+
+    // return signInWithEmailFunc(userEmail, userPassword);
+    // return signUpWithEmailFunc(userEmail, userPassword);
+    try {
+      const response = await axios.post("http://localhost:3001/login", {
+        email: userEmail,
+        password: userPassword,
+      });
+
+      // Handle response
+      response.status === 200
+        ? console.log(response.data, "login Successful")
+        : console.log(response.data, "login failed");
+      return response;
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
   };
 
   return (
@@ -88,14 +105,6 @@ const UserLogin = () => {
               Sign In with google
             </button>
           </form>
-          {/*  <button
-            className="btn btn-primary"
-            onClick={() => {
-              submitFunction("google");
-            }}
-          >
-            Sign In with google
-          </button> */}
         </div>
       </div>
     </div>
