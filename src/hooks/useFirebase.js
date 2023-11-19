@@ -10,6 +10,8 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 
+import axios from "axios";
+
 import { app } from "../Firebase/firebase.init";
 import { useNavigate } from "react-router-dom";
 
@@ -27,11 +29,17 @@ const useFirebase = () => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
-
         // The signed-in user info.
         const user = result.user;
+        const uid = user.uid;
+        console.log("✨ 🌟  .then  uid:", uid);
         user.role = "user";
         setUser(user);
+        axios.post("http://localhost:3001/jsonWebAccessToken", {
+          uid,
+          email: user.email,
+          role: user.role,
+        });
         navigate("/");
       })
       .catch((error) => {
