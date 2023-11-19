@@ -19,6 +19,7 @@ const useFirebase = () => {
   const auth = getAuth(app);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+
   /* 🔽⏬🔽⏬ SIGN IN WITH GOOGLE 🔽⏬🔽⏬ */
   const signInWithGoogle = () => {
     signInWithPopup(auth, googleProvider)
@@ -72,6 +73,7 @@ const useFirebase = () => {
         // An error happened.
       });
   };
+  /* 🔽⏬🔽⏬ SIGN OUT WITH EMAIL 🔽⏬🔽⏬ */
 
   /* 🔽⏬🔽⏬ SIGN UP WITH EMAIL 🔽⏬🔽⏬ */
   const signUpWithEmailFunc = (email, password) => {
@@ -88,6 +90,7 @@ const useFirebase = () => {
         console.log("❌❌❌line19 emailSignup", errorCode, errorMessage);
       });
   };
+  /* 🔽⏬🔽⏬ SIGN UP WITH EMAIL 🔽⏬🔽⏬ */
 
   /* 🔽⏬🔽⏬ SIGN IN WITH EMAIL 🔽⏬🔽⏬ */
   const signInWithEmailFunc = (email, password) => {
@@ -105,6 +108,7 @@ const useFirebase = () => {
         console.log("❌❌❌line33 emailSignIn", errorCode, errorMessage);
       });
   };
+  /* 🔽⏬🔽⏬ SIGN IN WITH EMAIL 🔽⏬🔽⏬ */
 
   /* 🔽⏬🔽⏬ USER STATE OBSERVER 🔽⏬🔽⏬ */
   useEffect(() => {
@@ -116,6 +120,7 @@ const useFirebase = () => {
       unsubscribe();
     };
   }, [auth]);
+  /* 🔽⏬🔽⏬ USER STATE OBSERVER 🔽⏬🔽⏬ */
 
   /* 🔽⏬🔽⏬ PROFILE UPDATE FUNCTION 🔽⏬🔽⏬ */
   const profileUpdate = () => {
@@ -132,6 +137,7 @@ const useFirebase = () => {
         );
       });
   };
+  /* 🔽⏬🔽⏬ PROFILE UPDATE FUNCTION 🔽⏬🔽⏬ */
 
   return {
     user,
