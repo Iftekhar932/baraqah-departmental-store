@@ -5,7 +5,7 @@ import useFirebase from "../hooks/useFirebase";
 import axios from "axios";
 
 const UserRegister = () => {
-  const { signUpWithEmailFunc, signInWithGoogle } = useFirebase();
+  const { signInWithGoogle } = useFirebase();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
@@ -17,15 +17,14 @@ const UserRegister = () => {
   };
 
   const submitFunction = async (e, flag) => {
-    e.preventDefault();
-    if (flag == "google") {
-      signInWithGoogle();
-      return;
-    }
-
-    // return signUpWithEmailFunc(userEmail, userPassword);
     try {
-      const response = await axios.post("http://localhost:3001/login", {
+      e.preventDefault();
+      if (flag == "google") {
+        signInWithGoogle();
+        return;
+      }
+
+      const response = await axios.post("http://localhost:3001/register", {
         email: userEmail,
         password: userPassword,
       });
@@ -34,6 +33,7 @@ const UserRegister = () => {
       response.status === 200
         ? console.log(response.data, "login Successful")
         : console.log(response.data, "login failed");
+
       return response;
     } catch (error) {
       console.error("Error during login:", error);

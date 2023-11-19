@@ -1,5 +1,6 @@
 import React from "react";
 import deliveryImg from "../images/delivery.svg";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -26,7 +27,9 @@ const Hero = () => {
               Baraqah is an online store with 100% organic Healthy foods and
               100% Fresh products for you
             </p>
-            <button className="btn btn-primary">Show Now</button>
+            <Link to="/products">
+              <button className="btn btn-primary">Show Now</button>
+            </Link>
           </div>
         </div>
       </div>

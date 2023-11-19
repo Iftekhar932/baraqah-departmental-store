@@ -4,7 +4,7 @@ import useFirebase from "../hooks/useFirebase";
 import axios from "axios";
 
 const UserLogin = () => {
-  const { signInWithGoogle, signInWithEmailFunc } = useFirebase();
+  const { signInWithGoogle } = useFirebase();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
@@ -16,15 +16,13 @@ const UserLogin = () => {
   };
 
   const submitFunction = async (e, flag) => {
-    e.preventDefault();
-    if (flag == "google") {
-      signInWithGoogle();
-      return;
-    }
-
-    // return signInWithEmailFunc(userEmail, userPassword);
-    // return signUpWithEmailFunc(userEmail, userPassword);
     try {
+      e.preventDefault();
+      if (flag == "google") {
+        signInWithGoogle();
+        return;
+      }
+
       const response = await axios.post("http://localhost:3001/login", {
         email: userEmail,
         password: userPassword,

@@ -40,6 +40,7 @@ const SliderCategory = () => {
         swipeable={true}
         draggable={false}
         showDots={true}
+        infinite={true}
         responsive={responsive}
         ssr={true} // means to render carousel on server-side.
         autoPlaySpeed={1000}
