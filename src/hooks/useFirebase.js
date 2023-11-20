@@ -29,7 +29,6 @@ const useFirebase = () => {
         // The signed-in user info.
         const user = result.user;
         const uid = user.uid;
-        console.log("✨ 🌟  .then  uid:", uid);
         user.role = "user";
         setUser(user);
         axios.post("http://localhost:3001/jsonWebAccessToken", {
@@ -37,7 +36,7 @@ const useFirebase = () => {
           email: user.email,
           role: user.role,
         });
-        navigate("/");
+        // navigate("/");
       })
       .catch((error) => {
         // Handle Errors here.

@@ -25,7 +25,7 @@ const router = createBrowserRouter([
           const response = await axios
             .get("http://localhost:3001/getAllProducts")
             .catch(function (err) {
-              console.log(err);
+              console.log(err, "NO JWT TOKEN");
             });
           return response || null;
         },
