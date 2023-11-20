@@ -37,7 +37,7 @@ const router = createBrowserRouter([
             loader: async (req) => {
               const response = await axios
                 .get(
-                  `http://localhost:3001/getAllProducts/${req.params.category}`
+                  `http://localhost:3001/getAllProductsCategoryWise/${req.params.category}`
                 )
                 .catch(function (err) {
                   console.log(err);
