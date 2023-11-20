@@ -11,10 +11,10 @@ const Header = () => {
       {/* //* MOBILE 👇 */}
       <div className="navbar mb-5 mx-auto border-b font-thin">
         <div
-          className="dropdown"
+          className="dropdown lg:invisible"
           onClick={() => setNavVisibilityMobile(!navVisibilityMobile)}
         >
-          <label tabIndex={0} className="btn btn-ghost lg:hidden">
+          <label tabIndex={0} className="btn btn-ghost">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -48,7 +48,7 @@ const Header = () => {
           </ul>
         </div>
         {/* //* 👇 LARGE SCREEN */}
-        <div className="hidden w-3/4 mx-auto  lg:flex justify-between ">
+        <div className="w-3/4 mx-auto lg:flex justify-between hidden lg:block">
           <ul className="menu menu-horizontal px-1">
             <li>
               <Link className="font-medium text-xl" to="/">
