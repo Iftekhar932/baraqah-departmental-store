@@ -20,6 +20,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <SliderCategory />,
+        errorElement: <ErrorComponent />,
         loader: async () => {
           const response = await axios
             .get("http://localhost:3001/getAllProducts")
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
           {
             path: `/products/:category`,
             element: <Products />,
+            errorElement: <ErrorComponent />,
             loader: async (req) => {
               const response = await axios
                 .get(
@@ -50,6 +52,7 @@ const router = createBrowserRouter([
   {
     path: "/products",
     element: <Products />,
+    errorElement: <ErrorComponent />,
     loader: async () => {
       const response = await axios
         .get("http://localhost:3001/getAllProducts")
