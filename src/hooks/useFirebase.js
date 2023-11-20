@@ -108,6 +108,18 @@ const useFirebase = () => {
   };
   /* 🔽⏬🔽⏬ SIGN IN WITH EMAIL 🔽⏬🔽⏬ */
 
+  const getCookie = () => {
+    const cookieAccessToken = document.cookie
+      .split("; ")
+      .find((cookie) => cookie.startsWith("access_token="));
+    if (cookieAccessToken) {
+      const accessToken = cookieAccessToken.split("=")[1];
+      return accessToken;
+    } else {
+      return null;
+    }
+  };
+
   /* 🔽⏬🔽⏬ USER STATE OBSERVER 🔽⏬🔽⏬ */
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -145,6 +157,7 @@ const useFirebase = () => {
     signInWithGoogle,
     logOut,
     profileUpdate,
+    getCookie,
   };
 };
 
