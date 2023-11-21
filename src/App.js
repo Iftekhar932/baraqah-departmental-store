@@ -1,4 +1,4 @@
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import axios from "axios";
 
 import Products from "./components/Products";
@@ -25,9 +25,9 @@ const router = createBrowserRouter([
           const response = await axios
             .get("http://localhost:3001/getAllProducts", {
               withCredentials: true,
-              headers: {
+              /* headers: {
                 Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-              },
+              }, */
             })
             .catch(function (err) {
               console.log(err, "NO JWT TOKEN");
@@ -45,9 +45,9 @@ const router = createBrowserRouter([
                   `http://localhost:3001/getAllProductsCategoryWise/${req.params.category}`,
                   {
                     withCredentials: true,
-                    headers: {
+                    /* headers: {
                       Authorization: `Bearer ${localStorage.getItem("access")}`,
-                    },
+                    }, */
                   }
                 )
                 .catch(function (err) {
@@ -68,9 +68,9 @@ const router = createBrowserRouter([
       const response = await axios
         .get("http://localhost:3001/getAllProducts", {
           withCredentials: true,
-          headers: {
+          /* headers: {
             Authorization: `Bearer ${localStorage.getItem("access")}`,
-          },
+          }, */
         })
         .catch(function (err) {
           console.log(err);
