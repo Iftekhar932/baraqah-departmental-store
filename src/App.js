@@ -25,6 +25,9 @@ const router = createBrowserRouter([
           const response = await axios
             .get("http://localhost:3001/getAllProducts", {
               withCredentials: true,
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+              },
             })
             .catch(function (err) {
               console.log(err, "NO JWT TOKEN");
@@ -42,6 +45,9 @@ const router = createBrowserRouter([
                   `http://localhost:3001/getAllProductsCategoryWise/${req.params.category}`,
                   {
                     withCredentials: true,
+                    headers: {
+                      Authorization: `Bearer ${localStorage.getItem("access")}`,
+                    },
                   }
                 )
                 .catch(function (err) {
@@ -62,6 +68,9 @@ const router = createBrowserRouter([
       const response = await axios
         .get("http://localhost:3001/getAllProducts", {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access")}`,
+          },
         })
         .catch(function (err) {
           console.log(err);
