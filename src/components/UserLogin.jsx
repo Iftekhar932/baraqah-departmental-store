@@ -28,9 +28,19 @@ const UserLogin = () => {
         password: userPassword,
       });
 
-      // Handle response
-      response.status === 200
+      // handle response for cookie
+      /* response.status === 200
         ? console.log(response.data, "login Successful")
+        : console.log(response.data, "login failed");
+      return response; */
+
+      // for localStorage
+      response.status === 200
+        ? console.log(
+            localStorage.setItem("access_token", response.data),
+            response.data,
+            "login Successful"
+          )
         : console.log(response.data, "login failed");
       return response;
     } catch (error) {
