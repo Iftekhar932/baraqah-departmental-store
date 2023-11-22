@@ -23,10 +23,14 @@ const UserLogin = () => {
         return;
       }
 
-      const response = await axios.post("http://localhost:3001/login", {
-        email: userEmail,
-        password: userPassword,
-      });
+      const response = await axios.post(
+        "http://localhost:3001/login",
+        {
+          email: userEmail,
+          password: userPassword,
+        },
+        { withCredentials: true }
+      );
 
       // handle response for cookie
       /* response.status === 200

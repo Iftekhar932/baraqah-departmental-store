@@ -25,17 +25,39 @@ const useFirebase = () => {
   /* 🔽⏬🔽⏬ SIGN IN WITH GOOGLE 🔽⏬🔽⏬ */
   const signInWithGoogle = () => {
     signInWithPopup(auth, googleProvider)
-      .then((result) => {
+      .then(async (result) => {
         // The signed-in user info.
         const user = result.user;
         const uid = user.uid;
         user.role = "user";
         setUser(user);
-        axios.post("http://localhost:3001/jsonWebAccessToken", {
-          uid,
-          email: user.email,
-          role: user.role,
-        });
+
+        //* jwt
+        const response = await axios.post(
+          "http://localhost:3001/jsonWebAccessToken",
+          {
+            uid,
+            email: user.email,
+            role: user.role,
+          }
+        );
+
+        //* handle response for cookie
+        /* response.status === 200
+        / ? console.log(response.data, "login Successful")
+        : console.log(response.data, "login failed");
+      return response; */
+
+        //* for localStorage
+        response.status === 200
+          ? console.log(
+              localStorage.setItem("access_token", response.data),
+              response.data,
+              "login Successful"
+            )
+          : console.log(response.data, "login failed");
+        console.log(localStorage.getItem(response.data));
+        return response;
         // navigate("/");
       })
       .catch((error) => {

@@ -11,6 +11,11 @@ import AdminPanel from "./components/AdminPanel";
 import ErrorComponent from "./components/ErrorComponent";
 import Header from "./components/Header";
 
+/* 
+todo: how to set cookies?
+todo: why isn't header rendering in other pages?
+*/
+
 const router = createBrowserRouter([
   {
     path: "/",
