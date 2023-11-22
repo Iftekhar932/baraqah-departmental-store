@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+
+// firebase imports
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -9,10 +11,9 @@ import {
   updateProfile,
   onAuthStateChanged,
 } from "firebase/auth";
+import { app } from "../Firebase/firebase.init";
 
 import axios from "axios";
-
-import { app } from "../Firebase/firebase.init";
 import { useNavigate } from "react-router-dom";
 
 const googleProvider = new GoogleAuthProvider();
@@ -32,7 +33,7 @@ const useFirebase = () => {
         user.role = "user";
         setUser(user);
 
-        //* jwt
+        //* jwt for google sign in only
         const response = await axios.post(
           "http://localhost:3001/jsonWebAccessToken",
           {
@@ -42,13 +43,13 @@ const useFirebase = () => {
           }
         );
 
-        //* handle response for cookie
+        //* ▶️👉handle response for cookie
         /* response.status === 200
         / ? console.log(response.data, "login Successful")
         : console.log(response.data, "login failed");
       return response; */
 
-        //* for localStorage
+        //* ▶️👉for localStorage
         response.status === 200
           ? console.log(
               localStorage.setItem("access_token", response.data),
@@ -57,8 +58,8 @@ const useFirebase = () => {
             )
           : console.log(response.data, "login failed");
         console.log(localStorage.getItem(response.data));
+        navigate("/");
         return response;
-        // navigate("/");
       })
       .catch((error) => {
         // Handle Errors here.
@@ -78,11 +79,10 @@ const useFirebase = () => {
           "❌❌❌❌❌ ~ file: useFirebase.js:37 ~ .then ~ email:",
           email
         );
-        // The AuthCredential type that was used.
       });
   };
 
-  /* 🔽⏬🔽⏬ SIGN OUT WITH EMAIL 🔽⏬🔽⏬ */
+  /* 🔽⏬🔽⏬ SIGN OUT  🔽⏬🔽⏬ */
   const logOut = () => {
     signOut(auth)
       .then((d) => {
@@ -93,42 +93,7 @@ const useFirebase = () => {
         // An error happened.
       });
   };
-  /* 🔽⏬🔽⏬ SIGN OUT WITH EMAIL 🔽⏬🔽⏬ */
-
-  /* 🔽⏬🔽⏬ SIGN UP WITH EMAIL 🔽⏬🔽⏬ */
-  const signUpWithEmailFunc = (email, password) => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-        console.log(user, "emailUp");
-        setUser(user);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log("❌❌❌line19 emailSignup", errorCode, errorMessage);
-      });
-  };
-  /* 🔽⏬🔽⏬ SIGN UP WITH EMAIL 🔽⏬🔽⏬ */
-
-  /* 🔽⏬🔽⏬ SIGN IN WITH EMAIL 🔽⏬🔽⏬ */
-  const signInWithEmailFunc = (email, password) => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log(user, "emailIn");
-        setUser(user);
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log("❌❌❌line33 emailSignIn", errorCode, errorMessage);
-      });
-  };
-  /* 🔽⏬🔽⏬ SIGN IN WITH EMAIL 🔽⏬🔽⏬ */
+  /* 🔽⏬🔽⏬ SIGN OUT  🔽⏬🔽⏬ */
 
   const getCookie = () => {
     const cookieAccessToken = document.cookie
@@ -154,28 +119,9 @@ const useFirebase = () => {
   }, [auth]);
   /* 🔽⏬🔽⏬ USER STATE OBSERVER 🔽⏬🔽⏬ */
 
-  /* 🔽⏬🔽⏬ PROFILE UPDATE FUNCTION 🔽⏬🔽⏬ */
-  const profileUpdate = () => {
-    updateProfile(auth.currentUser, {
-      displayName: "Jane Q. User",
-    })
-      .then((d) => {
-        console.log(d, "profile updated");
-      })
-      .catch((error) => {
-        console.log(
-          "🚀 ~ file: useFirebase.js:115 ~ profileUpdate ~ error:",
-          error
-        );
-      });
-  };
-  /* 🔽⏬🔽⏬ PROFILE UPDATE FUNCTION 🔽⏬🔽⏬ */
-
   return {
     user,
     setUser,
-    signUpWithEmailFunc,
-    signInWithEmailFunc,
     signInWithGoogle,
     logOut,
     profileUpdate,
