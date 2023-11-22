@@ -37,10 +37,10 @@ const Header = () => {
             }`}
           >
             <li>
-              <a>Feedback</a>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <a>Contact us</a>
+              <Link to="/products">Products</Link>
             </li>
             <li>
               <Link to="/products">Products</Link>
@@ -48,7 +48,7 @@ const Header = () => {
           </ul>
         </div>
         {/* //* 👇 LARGE SCREEN */}
-        <div className="w-3/4 mx-auto lg:flex justify-between hidden lg:block">
+        <div className="w-3/4 mx-auto lg:flex justify-between hidden">
           <ul className="menu menu-horizontal px-1">
             <li>
               <Link className="font-medium text-xl" to="/">
