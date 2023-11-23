@@ -1,9 +1,7 @@
-import React from "react";
-
 const DealsDetail = () => {
   return (
-    <div className="mx-auto p-12 w-2/4 flex gap-10 justify-center items-center">
-      <article className="">
+    <div className="mx-auto w-full sm:w-2/5 md:w-3/4 p-12 flex flex-col sm:flex-row gap-10 justify-center items-center place-items-center">
+      <article className="w-full block">
         <h1 className="font-bold text-2xl">
           Hot 🔥
           <br /> <span className="text-green-700"> Deals</span> For You
@@ -13,7 +11,7 @@ const DealsDetail = () => {
           Fresh products for you, safe for health and fresh as ever
         </span>
       </article>
-      <article className="">
+      <article className="w-full">
         <div>
           <div className="flex-col">
             <img
@@ -26,7 +24,7 @@ const DealsDetail = () => {
           </div>
         </div>
       </article>
-      <article className="">
+      <article className="w-full">
         <div>
           <div className="flex-col">
             <img
@@ -39,7 +37,7 @@ const DealsDetail = () => {
           </div>
         </div>
       </article>
-      <article className="">
+      <article className="w-full">
         <div>
           <div className="flex-col">
             <img
@@ -47,7 +45,6 @@ const DealsDetail = () => {
               alt=""
               width="50px"
             />
-
             <span>Fast</span>
             <span>Enjoy shopping for the fastest delivery ever</span>
           </div>

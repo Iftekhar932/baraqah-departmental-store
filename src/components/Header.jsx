@@ -9,7 +9,7 @@ const Header = () => {
   return (
     <>
       {/* //* MOBILE 👇 */}
-      <div className="navbar mb-5 mx-auto border-b font-thin">
+      <div className="navbar mb-5 mx-auto border-b-[.1px] font-thin">
         <div
           className="dropdown lg:invisible"
           onClick={() => setNavVisibilityMobile(!navVisibilityMobile)}
@@ -43,12 +43,12 @@ const Header = () => {
               <Link to="/products">Products</Link>
             </li>
             <li>
-              <Link to="/products">Products</Link>
+              <ThemeSwitcher />
             </li>
           </ul>
         </div>
         {/* //* 👇 LARGE SCREEN */}
-        <div className="w-3/4 mx-auto lg:flex justify-between hidden">
+        <div className="w-full mx-auto lg:flex justify-between hidden">
           <ul className="menu menu-horizontal px-1">
             <li>
               <Link className="font-medium text-xl" to="/">

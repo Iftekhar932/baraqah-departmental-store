@@ -5,6 +5,7 @@ import useFirebase from "../hooks/useFirebase";
 
 const Hero = () => {
   const { getCookie } = useFirebase();
+
   useEffect(() => {
     setTimeout(() => {
       const cookieAccessToken = getCookie();

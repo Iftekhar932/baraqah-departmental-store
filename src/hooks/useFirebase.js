@@ -3,13 +3,9 @@ import React, { useEffect, useState } from "react";
 // firebase imports
 import {
   getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
   signOut,
-  updateProfile,
-  onAuthStateChanged,
 } from "firebase/auth";
 import { app } from "../Firebase/firebase.init";
 
@@ -124,7 +120,6 @@ const useFirebase = () => {
     setUser,
     signInWithGoogle,
     logOut,
-    profileUpdate,
     getCookie,
   };
 };
