@@ -30,7 +30,7 @@ const router = createBrowserRouter([
               },
             })
             .catch(function (err) {
-              console.log(err, "NO JWT TOKEN");
+              console.log(err);
             });
           return response || null;
         },
