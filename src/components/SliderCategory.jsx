@@ -23,6 +23,10 @@ const responsive = {
 
 const SliderCategory = () => {
   const loadedData = useLoaderData();
+  // If there's no data, don't render the component
+  if (!loadedData?.data?.length) {
+    return null;
+  }
 
   let category = loadedData?.data?.map((image) => {
     return image.category;
@@ -33,9 +37,9 @@ const SliderCategory = () => {
     return image.categoryImg;
   });
   imgs = [...new Set(imgs)];
-
+  console.log(loadedData?.data?.length);
   return (
-    <>
+    <div className={`${loadedData?.data?.length === 0 ? "hidden" : ""}`}>
       <Carousel
         swipeable={true}
         draggable={false}
@@ -63,7 +67,7 @@ const SliderCategory = () => {
         })}
       </Carousel>
       <Outlet />
-    </>
+    </div>
   );
 };
 

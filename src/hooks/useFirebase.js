@@ -84,6 +84,7 @@ const useFirebase = () => {
       .then((d) => {
         // Sign-out successful.
         console.log(d, "signed Out");
+        localStorage.removeItem("access_token");
       })
       .catch((error) => {
         // An error happened.
