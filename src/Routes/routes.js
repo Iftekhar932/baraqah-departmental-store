@@ -1,5 +1,3 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
 import axios from "axios";
 import Products from "../components/Products";
 import Home from "../components/Home";
@@ -10,6 +8,8 @@ import UserRegister from "../components/UserRegister";
 import AdminPanel from "../components/AdminPanel";
 import ErrorComponent from "../components/ErrorComponent";
 import UserProfile from "../components/UserProfile";
+import Header from "../components/Header";
+import { createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
               },
             })
             .catch(function (err) {
-              console.log(err);
+              console.log("not logged in");
             });
           return response || null;
         },
@@ -62,6 +62,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+
   {
     path: "/products",
     element: <Products />,
