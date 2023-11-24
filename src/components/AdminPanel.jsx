@@ -1,6 +1,11 @@
 import "daisyui/dist/full.css";
+import { useLoaderData } from "react-router-dom";
 
 function AdminPanel() {
+  const loadedData = useLoaderData();
+  const users = loadedData.users;
+  console.log("✨ 🌟  AdminPanel  users:", users);
+  
   return (
     <div className="bg-gray-200 min-h-screen p-12">
       <div className="text-center">

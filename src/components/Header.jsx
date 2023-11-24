@@ -6,14 +6,13 @@ import ThemeSwitcher from "./ThemeSwitcher";
 const Header = () => {
   const [navVisibilityMobile, setNavVisibilityMobile] = useState(false);
   const { user, logOut } = useFirebase();
+  console.log("header");
   return (
     <>
       {/* //* MOBILE 👇 */}
       <div className="navbar mb-5 mx-auto border-b-[.1px] font-thin">
-        <div
-          className="dropdown lg:invisible"
-          onClick={() => setNavVisibilityMobile(!navVisibilityMobile)}
-        >
+        <div className="dropdown">
+          {/* // todo: make it work in responsive mode on click toggle menu */}
           <label tabIndex={0} className="btn btn-ghost">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -32,9 +31,7 @@ const Header = () => {
           </label>
           <ul
             tabIndex={0}
-            className={`menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 ${
-              !navVisibilityMobile && "hidden"
-            }`}
+            className={`menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52`}
           >
             <li>
               <Link to="/">Home</Link>
@@ -42,11 +39,10 @@ const Header = () => {
             <li>
               <Link to="/products">Products</Link>
             </li>
-            <li>
-              <ThemeSwitcher />
-            </li>
+            <ThemeSwitcher />
           </ul>
         </div>
+
         {/* //* 👇 LARGE SCREEN */}
         <div className="w-full mx-auto lg:flex justify-between hidden">
           <ul className="menu menu-horizontal px-1">

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ErrorComponent = () => {
   return (
@@ -8,6 +9,9 @@ const ErrorComponent = () => {
     >
       <p className="font-bold">Error!</p>
       <p>Something went wrong...</p>
+      <Link to="/" className="underline cursor-pointer">
+        Go back.
+      </Link>
     </div>
   );
 };

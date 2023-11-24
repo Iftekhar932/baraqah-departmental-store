@@ -1,5 +1,3 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
 import axios from "axios";
 import Products from "../components/Products";
 import Home from "../components/Home";
@@ -9,7 +7,9 @@ import UserLogin from "../components/UserLogin";
 import UserRegister from "../components/UserRegister";
 import AdminPanel from "../components/AdminPanel";
 import ErrorComponent from "../components/ErrorComponent";
+import UserProfile from "../components/UserProfile";
 import Header from "../components/Header";
+import { createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
               },
             })
             .catch(function (err) {
-              console.log(err, "NO JWT TOKEN");
+              console.log("not logged in");
             });
           return response || null;
         },
@@ -62,6 +62,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+
   {
     path: "/products",
     element: <Products />,
@@ -88,7 +89,30 @@ const router = createBrowserRouter([
     path: "/userRegister",
     element: <UserRegister />,
   },
-  { path: "/adminOnly", element: <AdminPanel /> },
+  {
+    path: "/adminOnly",
+    element: <AdminPanel />,
+    loader: async () => {
+      const response = await axios
+        .get("http://localhost:3001/getAllUsers")
+        .catch(function (err) {
+          console.log(err);
+        });
+      return response;
+    },
+  },
+  {
+    path: "/userProfile",
+    element: <UserProfile />,
+    loader: async () => {
+      const response = await axios
+        .get("http://localhost:3001/getAllUsers")
+        .catch(function (err) {
+          console.log(err);
+        });
+      return response || [];
+    },
+  },
 ]);
 
 export default router;

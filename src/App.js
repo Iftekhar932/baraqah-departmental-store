@@ -1,5 +1,6 @@
 import { RouterProvider } from "react-router-dom";
 import router from "./Routes/routes";
+import Header from "./components/Header";
 
 /* 
 ? how to set cookies? i have but isn't in browser but in postman
@@ -10,7 +11,11 @@ todo: admin can see user accounts list
 */
 
 function App() {
-  return <RouterProvider router={router}></RouterProvider>;
+  return (
+    <RouterProvider router={router}>
+      <Header />
+    </RouterProvider>
+  );
 }
 
 export default App;
