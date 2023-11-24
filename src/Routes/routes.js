@@ -2,14 +2,15 @@ import axios from "axios";
 import Products from "../components/Products";
 import Home from "../components/Home";
 // import CategoriesSlide from "../components/CategoriesSlide";
+// import Header from "../components/Header";
 import SliderCategory from "../components/SliderCategory";
 import UserLogin from "../components/UserLogin";
 import UserRegister from "../components/UserRegister";
 import AdminPanel from "../components/AdminPanel";
 import ErrorComponent from "../components/ErrorComponent";
 import UserProfile from "../components/UserProfile";
-import Header from "../components/Header";
 import { createBrowserRouter } from "react-router-dom";
+import AboutUs from "../components/AboutUs";
 
 const router = createBrowserRouter([
   {
@@ -113,6 +114,7 @@ const router = createBrowserRouter([
       return response || [];
     },
   },
+  { path: "/about", element: <AboutUs /> },
 ]);
 
 export default router;

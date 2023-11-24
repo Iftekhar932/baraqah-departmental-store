@@ -61,6 +61,9 @@ const Header = () => {
               <Link to="/products">Products</Link>
             </li>
             <li>
+              <Link to="/about">About Us</Link>
+            </li>
+            <li>
               {user?.email ? (
                 <a href="#" onClick={logOut}>
                   Logout

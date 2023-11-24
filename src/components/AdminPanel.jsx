@@ -5,14 +5,14 @@ function AdminPanel() {
   const loadedData = useLoaderData();
   const users = loadedData.users;
   console.log("✨ 🌟  AdminPanel  users:", users);
-  
+
   return (
     <div className="bg-gray-200 min-h-screen p-12">
       <div className="text-center">
         <h1 className="text-4xl mb-4">Admin Panel</h1>
       </div>
       <div className="flex justify-center">
-        <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+        <div className="shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
           <div className="mb-4">
             <label
               className="block text-grey-darker text-sm font-bold mb-2"

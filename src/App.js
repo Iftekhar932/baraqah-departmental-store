@@ -5,7 +5,7 @@ import Header from "./components/Header";
 /* 
 ? how to set cookies? i have but isn't in browser but in postman
 ? why isn't header rendering in other pages? 
-
+? cookies working only for mozilla firefox
 todo: set cart feature, 
 todo: admin can see user accounts list
 */
