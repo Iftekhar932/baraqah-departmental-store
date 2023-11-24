@@ -5,13 +5,16 @@ import useFirebase from "../hooks/useFirebase";
 
 const Hero = () => {
   const { getCookie } = useFirebase();
-
+  /* 
   useEffect(() => {
     setTimeout(() => {
       const cookieAccessToken = getCookie();
-      console.log("✨ 🌟  Hero  cookieAccessToken:", cookieAccessToken);
+      console.log(
+        "✨ 🌟  Hero  cookieAccessToken:",
+        cookieAccessToken === localStorage.getItem("access_token")
+      );
     }, 1000);
-  }, []);
+  }, []); */
 
   return (
     <div className="">

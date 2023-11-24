@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
 import axios from "axios";
 
@@ -7,6 +7,8 @@ const UserLogin = () => {
   const { signInWithGoogle } = useFirebase();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+
+  const navigate = useNavigate();
 
   const infoCollection = (e) => {
     const email = e.target.form.email.value;
@@ -32,13 +34,13 @@ const UserLogin = () => {
         { withCredentials: true }
       );
 
-      // handle response for cookie
+      //* handle response for cookies
       /* response.status === 200
         ? console.log(response.data, "login Successful")
         : console.log(response.data, "login failed");
       return response; */
 
-      // for localStorage
+      //* for localStorage
       response.status === 200
         ? console.log(
             localStorage.setItem("access_token", response.data),
@@ -46,6 +48,9 @@ const UserLogin = () => {
             "login Successful"
           )
         : console.log(response.data, "login failed");
+
+      navigate("/");
+
       return response;
     } catch (error) {
       console.error("Error during login:", error);
