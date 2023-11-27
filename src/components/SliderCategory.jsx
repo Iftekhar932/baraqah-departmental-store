@@ -37,7 +37,7 @@ const SliderCategory = () => {
     return image.categoryImg;
   });
   imgs = [...new Set(imgs)];
-  console.log(loadedData?.data?.length);
+
   return (
     <div className={`${loadedData?.data?.length === 0 ? "hidden" : ""}`}>
       <Carousel

@@ -1,9 +1,26 @@
+import axios from "axios";
 import React from "react";
+
 const Product = (props) => {
+  // const [singleProductData,setSingleProductData] = useState()
   const { category, _id, name, unit, img, price } = props.productData;
 
   const numberCheck = (e) => {
     if (e.target.value < 0) return (e.target.value = 0);
+  };
+  const itemSelection = (_id) => {
+    const response = axios
+      .get(`http://localhost:3001/getAllProducts/${_id}`, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      })
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => console.error(err, "line 20 product.js"));
+    return response;
   };
 
   return (
@@ -22,7 +39,10 @@ const Product = (props) => {
           onChange={numberCheck}
         />
         <div className="card-actions justify-end">
-          <button className="btn btn-primary w-full sm:w-auto">
+          <button
+            className="btn btn-primary w-full sm:w-auto"
+            onClick={() => itemSelection(_id)}
+          >
             Add to cart
           </button>
         </div>

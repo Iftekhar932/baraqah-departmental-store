@@ -6,7 +6,6 @@ import ThemeSwitcher from "./ThemeSwitcher";
 const Header = () => {
   const [navVisibilityMobile, setNavVisibilityMobile] = useState(false);
   const { user, logOut } = useFirebase();
-  console.log("header");
   return (
     <>
       {/* //* MOBILE 👇 */}
