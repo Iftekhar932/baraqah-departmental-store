@@ -26,18 +26,23 @@ const useCart = () => {
 
       localStorage.setItem("userProducts", JSON.stringify(products));
       console.log("✨ 🌟  addItem  products:", products);
-    } /* else {
-      const newProduct = products.push({ productId: itemId, qnt: 1 });
-      console.log("✨ 🌟  addItem  newProduct:", newProduct);
-      localStorage.setItem("userProducts", JSON.stringify(newProduct));
-    } */
+    }
   };
 
-  const subItem = () => {
-    let product = localStorage.getItem("userProducts");
-    if (product) {
-      product = JSON.parse(product);
-      product.qnt -= 1;
+  // todo testing needed
+  const subItem = (itemId) => {
+    let products = localStorage.getItem("userProducts");
+
+    // if products array is there then product objects will be added in the array or quantity will be increased
+    if (products) {
+      products = JSON.parse(products);
+
+      const productQntIncrement = products.find((singleProduct) => {
+        if (singleProduct.productId === itemId) return (singleProduct.qnt -= 1);
+      });
+      if (productQntIncrement.length > 0)
+        localStorage.setItem("userProducts", JSON.stringify(products));
+      console.log("✨ 🌟  addItem  products:", products);
     }
   };
 
