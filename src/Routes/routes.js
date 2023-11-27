@@ -11,7 +11,6 @@ import ErrorComponent from "../components/ErrorComponent";
 import UserProfile from "../components/UserProfile";
 import { createBrowserRouter } from "react-router-dom";
 import AboutUs from "../components/AboutUs";
-import Cart from "../components/Cart";
 
 const router = createBrowserRouter([
   {
@@ -116,7 +115,6 @@ const router = createBrowserRouter([
     },
   },
   { path: "/about", element: <AboutUs /> },
-  { path: "/cart", element: <Cart /> },
 ]);
 
 export default router;
