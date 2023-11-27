@@ -1,12 +1,16 @@
+import React, { useState } from "react";
 import axios from "axios";
-import React from "react";
+import useCart from "../hooks/useCart";
 
 const Product = (props) => {
-  // const [singleProductData,setSingleProductData] = useState()
   const { category, _id, name, unit, img, price } = props.productData;
+  const { addItem } = useCart();
+  const [itemQnt, setItemQnt] = useState(0);
 
   const numberCheck = (e) => {
-    if (e.target.value < 0) return (e.target.value = 0);
+    // todo test it if it is ok to use without Number() to make sure it's number input value
+    if (e.target.value < 0) setItemQnt(e.target.value);
+    return (e.target.value = 0);
   };
   const itemSelection = (_id) => {
     const response = axios
@@ -19,8 +23,8 @@ const Product = (props) => {
       .then((response) => {
         return response;
       })
-      .catch((err) => console.error(err, "line 20 product.js"));
-    return response;
+      .catch((err) => console.log(err, "line 21 product.js"));
+    return addItem(response.data[0]._id, itemQnt);
   };
 
   return (

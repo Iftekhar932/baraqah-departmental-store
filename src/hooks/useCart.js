@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 
-const userCart = () => {
+const useCart = () => {
   const [userCart, setUserCart] = useState([]);
 
-  const addItem = () => {
-    let product = localStorage.getItem("userProducts");
+  const addItem = (itemId, itemQnt) => {
+    console.log("🚀 ~ file: useCart.js:WORKING", itemId);
+    let product = localStorage?.getItem("userProducts");
     if (product) {
       product = JSON.parse(product);
+      console.log(product);
       product.qnt += 1;
     } else {
-      product = { product: "eta", qnt: 1 };
+      product = { productId: itemId, qnt: 1 };
+      localStorage.setItem("userProducts", JSON.stringify(product));
     }
-    localStorage.setItem("userProducts", JSON.stringify(product));
   };
 
   const subItem = () => {
@@ -19,13 +21,10 @@ const userCart = () => {
     if (product) {
       product = JSON.parse(product);
       product.qnt -= 1;
-    } else {
-      product = { product: "eta", qnt: 1 };
     }
-    localStorage.setItem("userProducts", JSON.stringify(product));
   };
 
   return { addItem, subItem };
 };
 
-export default userCart;
+export default useCart;
