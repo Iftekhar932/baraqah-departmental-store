@@ -12,6 +12,7 @@ const Product = (props) => {
     if (e.target.value < 0) setItemQnt(e.target.value);
     return (e.target.value = 0);
   };
+
   const itemSelection = (_id) => {
     const response = axios
       .get(`http://localhost:3001/getAllProducts/${_id}`, {
@@ -21,10 +22,9 @@ const Product = (props) => {
         },
       })
       .then((response) => {
-        return response;
+        return addItem(response.data[0]._id);
       })
       .catch((err) => console.log(err, "line 21 product.js"));
-    return addItem(response.data[0]._id, itemQnt);
   };
 
   return (

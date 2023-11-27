@@ -49,13 +49,11 @@ const ThemeSwitcher = () => {
 
   return (
     <>
-      {/* <div className="join join-vertical">
-      <div className="flex-none z-10"> */}
-      <ul className="menu menu-horizontal px-1 ">
+      <ul className="menu menu-horizontal px-1">
         <li>
           <details>
             <summary>Themes</summary>
-            <ul className="bg-base-100 overflow-auto max-h-32 z-10">
+            <ul className="bg-base-100 overflow-auto max-h-36 w-24 z-10">
               {themeNames.map((themeName, index) => {
                 return (
                   <li
@@ -71,8 +69,6 @@ const ThemeSwitcher = () => {
           </details>
         </li>
       </ul>
-      {/* </div>
-    </div> */}
     </>
   );
 };
