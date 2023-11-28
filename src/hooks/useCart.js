@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const useCart = () => {
   const [userCart, setUserCart] = useState([]);
 
-  const addItem = (itemId, itemQnt) => {
+  const addItem = (itemId) => {
     let products = localStorage.getItem("userProducts");
 
     // if products array is not there it'll create one for product list
@@ -36,14 +36,16 @@ const useCart = () => {
     if (products) {
       products = JSON.parse(products);
 
-      const productQntIncrement = products.find((singleProduct) => {
-        if (singleProduct.productId === itemId) return (singleProduct.qnt -= 1);
-      })
-        ? localStorage.setItem("userProducts", JSON.stringify(products))
-        : "";
+      const productQntDecrement = products.find((singleProduct) => {
+        if (singleProduct.productId === itemId) {
+          return (singleProduct.qnt -= 1);
+        }
+      });
+      localStorage.setItem("userProducts", JSON.stringify(products));
     }
   };
-
+  //!remove item
+  //todoremove item
   return { addItem, subItem };
 };
 

@@ -13,7 +13,7 @@ const Product = (props) => {
     return (e.target.value = 0);
   };
 
-  const itemSelection = (_id) => {
+  const itemSelection = (_id, flag) => {
     const response = axios
       .get(`http://localhost:3001/getAllProducts/${_id}`, {
         withCredentials: true,
@@ -22,7 +22,11 @@ const Product = (props) => {
         },
       })
       .then((response) => {
-        return addItem(response.data[0]._id);
+        if (flag == true) {
+          return subItem(response.data[0]._id);
+        } else {
+          return addItem(response.data[0]._id);
+        }
       })
       .catch((err) => console.log(err, "line 21 product.js"));
   };
@@ -48,6 +52,12 @@ const Product = (props) => {
             onClick={() => itemSelection(_id)}
           >
             Add to cart
+          </button>
+          <button
+            className="btn btn-primary w-full sm:w-auto"
+            onClick={() => itemSelection(_id, true)}
+          >
+            Remove
           </button>
         </div>
       </div>
