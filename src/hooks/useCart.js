@@ -14,7 +14,7 @@ const useCart = () => {
       );
     }
 
-    // if products array is there then product objects will be added in the array or quantity will be increased
+    // if products array is there then product objects will be added in the array or quantity will be increased of product
     else if (products) {
       products = JSON.parse(products);
 
@@ -25,11 +25,10 @@ const useCart = () => {
         : products.push({ productId: itemId, qnt: 1 });
 
       localStorage.setItem("userProducts", JSON.stringify(products));
-      console.log("✨ 🌟  addItem  products:", products);
     }
   };
 
-  // todo testing needed
+  //! testing needed
   const subItem = (itemId) => {
     let products = localStorage.getItem("userProducts");
 
@@ -39,10 +38,9 @@ const useCart = () => {
 
       const productQntIncrement = products.find((singleProduct) => {
         if (singleProduct.productId === itemId) return (singleProduct.qnt -= 1);
-      });
-      if (productQntIncrement.length > 0)
-        localStorage.setItem("userProducts", JSON.stringify(products));
-      console.log("✨ 🌟  addItem  products:", products);
+      })
+        ? localStorage.setItem("userProducts", JSON.stringify(products))
+        : "";
     }
   };
 

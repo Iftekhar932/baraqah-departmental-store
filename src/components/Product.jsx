@@ -4,7 +4,7 @@ import useCart from "../hooks/useCart";
 
 const Product = (props) => {
   const { category, _id, name, unit, img, price } = props.productData;
-  const { addItem } = useCart();
+  const { addItem, subItem } = useCart();
   const [itemQnt, setItemQnt] = useState(0);
 
   const numberCheck = (e) => {
