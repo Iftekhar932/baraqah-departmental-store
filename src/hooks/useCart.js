@@ -36,25 +36,21 @@ const useCart = () => {
     if (products) {
       products = JSON.parse(products);
 
-      const productQntDecrement = products.find((singleProduct) => {
-        if (singleProduct.productId === itemId) {
-          return (singleProduct.qnt -= 1);
-        }
-      });
-      console.log(products);
-      /*  const productQntIndex = products.findIndex((singleProduct) => {
-        if (singleProduct.productId === itemId) {
-          return (singleProduct.qnt -= 1);
-        }
+      const productQntDecrement = products.findIndex((singleProduct) => {
+        return singleProduct.productId === itemId;
       });
 
-      const element = products[productQntIndex] */
+      if (productQntDecrement >= 0) products[productQntDecrement].qnt -= 1;
+
+      if (products[productQntDecrement].qnt <= 0) {
+        products.splice(productQntDecrement, 1);
+      }
 
       localStorage.setItem("userProducts", JSON.stringify(products));
     }
   };
   /* 
-    const subItem = (itemId) => {
+  const subItem = (itemId) => {
     let products = localStorage.getItem("userProducts");
 
     // If products array exists, handle product subtraction
@@ -74,14 +70,12 @@ const useCart = () => {
           products.splice(productIndex, 1);
         }
 
-        products[productIndex] = product;
+        // products[productIndex] = product;
         localStorage.setItem("userProducts", JSON.stringify(products));
       }
     }
   };
-  
-  
-  */
+ */
   return { addItem, subItem };
 };
 
