@@ -116,7 +116,7 @@ const router = createBrowserRouter([
     },
   },
   { path: "/about", element: <AboutUs /> },
-  { path: "/viewCart", element: <CartView /> },
+  { path: "/viewCart", element: <CartView /> }, // axios api call in component file
 ]);
 
 export default router;
