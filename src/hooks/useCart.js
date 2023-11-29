@@ -41,11 +41,47 @@ const useCart = () => {
           return (singleProduct.qnt -= 1);
         }
       });
+      console.log(products);
+      /*  const productQntIndex = products.findIndex((singleProduct) => {
+        if (singleProduct.productId === itemId) {
+          return (singleProduct.qnt -= 1);
+        }
+      });
+
+      const element = products[productQntIndex] */
+
       localStorage.setItem("userProducts", JSON.stringify(products));
     }
   };
-  //!remove item
-  //todoremove item
+  /* 
+    const subItem = (itemId) => {
+    let products = localStorage.getItem("userProducts");
+
+    // If products array exists, handle product subtraction
+    if (products) {
+      products = JSON.parse(products);
+
+      const productIndex = products.findIndex(
+        (singleProduct) => singleProduct.productId === itemId
+      );
+
+      if (productIndex !== -1) {
+        const product = products[productIndex];
+        product.qnt -= 1;
+
+        // Remove item if quantity reaches 0 or less
+        if (product.qnt <= 0) {
+          products.splice(productIndex, 1);
+        }
+
+        products[productIndex] = product;
+        localStorage.setItem("userProducts", JSON.stringify(products));
+      }
+    }
+  };
+  
+  
+  */
   return { addItem, subItem };
 };
 
