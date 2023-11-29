@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CartView = () => {
   const [cartProductDisplay, setCartProductDisplay] = useState([]);
   const [cartTotalSum, setCartTotalSum] = useState(0);
+  const navigate = useNavigate();
 
   let fetchCartProducts;
 
@@ -49,7 +51,7 @@ const CartView = () => {
     };
 
     fetchCartProducts();
-  }, []);
+  }, [cartProductDisplay]);
 
   if (!cartProductDisplay) {
     return <div>Loading...</div>;
@@ -99,6 +101,7 @@ const CartView = () => {
           onClick={() => {
             localStorage.clear();
             fetchCartProducts();
+            navigate("/");
           }}
         >
           Clear All
