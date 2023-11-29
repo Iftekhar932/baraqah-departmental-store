@@ -13,8 +13,9 @@ const Product = (props) => {
     return (e.target.value = 0);
   };
 
-  const itemSelection = (_id, flag) => {
-    const response = axios
+  // ! TESTED WITHOUT ASYNC AWAIT, IF ERROR THROWN TRY REMOVING ASYNC AWAIT
+  const itemSelection = async (_id, flag) => {
+    const response = await axios
       .get(`http://localhost:3001/getAllProducts/${_id}`, {
         withCredentials: true,
         headers: {
@@ -29,6 +30,7 @@ const Product = (props) => {
         }
       })
       .catch((err) => console.log(err, "line 21 product.js"));
+    return response;
   };
 
   return (

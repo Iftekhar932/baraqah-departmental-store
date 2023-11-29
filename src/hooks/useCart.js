@@ -49,33 +49,6 @@ const useCart = () => {
       localStorage.setItem("userProducts", JSON.stringify(products));
     }
   };
-  /* 
-  const subItem = (itemId) => {
-    let products = localStorage.getItem("userProducts");
-
-    // If products array exists, handle product subtraction
-    if (products) {
-      products = JSON.parse(products);
-
-      const productIndex = products.findIndex(
-        (singleProduct) => singleProduct.productId === itemId
-      );
-
-      if (productIndex !== -1) {
-        const product = products[productIndex];
-        product.qnt -= 1;
-
-        // Remove item if quantity reaches 0 or less
-        if (product.qnt <= 0) {
-          products.splice(productIndex, 1);
-        }
-
-        // products[productIndex] = product;
-        localStorage.setItem("userProducts", JSON.stringify(products));
-      }
-    }
-  };
- */
   return { addItem, subItem };
 };
 
