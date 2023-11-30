@@ -92,7 +92,7 @@ const router = createBrowserRouter([
     path: "/userRegister",
     element: <UserRegister />,
   },
-  /*  {
+  {
     path: "/adminOnly",
     element: <AdminPanel />,
     loader: async () => {
@@ -103,8 +103,8 @@ const router = createBrowserRouter([
         });
       return response;
     },
-  }, */
-  /*  {
+  },
+  {
     path: "/userProfile",
     element: <UserProfile />,
     loader: async () => {
@@ -115,8 +115,8 @@ const router = createBrowserRouter([
         });
       return response || [];
     },
-  }, */
-  // { path: "/about", element: <AboutUs /> },
+  },
+  { path: "/about", element: <AboutUs /> },
   { path: "/viewCart", element: <CartView /> }, // axios api call in component file
 ]);
 
