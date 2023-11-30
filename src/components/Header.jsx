@@ -119,7 +119,7 @@ const Header = () => {
             </li>
 
             <li className="bg-gradient-to-r from-zinc-100 to-zinc-50 rounded-full">
-              <a title="Cart">
+              <Link to="/viewCart" title="Cart">
                 <img
                   height="20px"
                   width="20px"
@@ -127,7 +127,7 @@ const Header = () => {
                   alt="cart"
                   border="0"
                 />{" "}
-              </a>
+              </Link>
             </li>
 
             <li className="bg-gradient-to-r from-zinc-100 to-zinc-50 rounded-full">
