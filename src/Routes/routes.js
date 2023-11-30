@@ -58,7 +58,6 @@ const router = createBrowserRouter([
                 .catch(function (err) {
                   console.log(err);
                 });
-              console.log(response);
               return response || null;
             },
           },
@@ -82,7 +81,6 @@ const router = createBrowserRouter([
         .catch(function (err) {
           console.log(err);
         });
-      console.log(response.data);
       return response;
     },
   },
