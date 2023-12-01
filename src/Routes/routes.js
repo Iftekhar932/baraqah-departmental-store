@@ -97,7 +97,7 @@ const router = createBrowserRouter([
     element: <AdminPanel />,
     loader: async () => {
       const response = await axios
-        .get("http://localhost:3001/getAllUsers")
+        .get("http://localhost:3001/adminGetUsers")
         .catch(function (err) {
           console.log(err);
         });
