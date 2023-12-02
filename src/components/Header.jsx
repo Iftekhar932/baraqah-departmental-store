@@ -14,7 +14,6 @@ const Header = () => {
       {/* //* MOBILE 👇 */}
       <div className="navbar mb-5 mx-auto border-b-[.1px] font-thin">
         <div className="dropdown">
-          {/* // todo: make it work in responsive mode on click toggle menu */}
           <label tabIndex={0} className="btn btn-ghost">
             <svg
               xmlns="http://www.w3.org/2000/svg"
