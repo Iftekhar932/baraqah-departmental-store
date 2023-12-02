@@ -39,13 +39,7 @@ const useFirebase = () => {
           }
         );
 
-        //* ▶️👉handle response for cookie
-        /* response.status === 200
-        / ? console.log(response.data, "login Successful")
-        : console.log(response.data, "login failed");
-      return response; */
-
-        //* ▶️👉for localStorage
+        // ▶️👉 handling response
         response.status === 200
           ? console.log(
               localStorage.setItem("access_token", response.data),
@@ -53,7 +47,7 @@ const useFirebase = () => {
               "login Successful"
             )
           : console.log(response.data, "login failed");
-        console.log(localStorage.getItem(response.data));
+
         navigate("/");
         return response;
       })
@@ -88,21 +82,10 @@ const useFirebase = () => {
       })
       .catch((error) => {
         // An error happened.
+        console.log("✨ 🌟  logOut  error:", error);
       });
   };
   /* 🔽⏬🔽⏬ SIGN OUT  🔽⏬🔽⏬ */
-
-  const getCookie = () => {
-    const cookieAccessToken = document.cookie
-      .split("; ")
-      .find((cookie) => cookie.startsWith("access_token="));
-    if (cookieAccessToken) {
-      const accessToken = cookieAccessToken.split("=")[1];
-      return accessToken;
-    } else {
-      return null;
-    }
-  };
 
   /* 🔽⏬🔽⏬ USER STATE OBSERVER 🔽⏬🔽⏬ */
   useEffect(() => {
@@ -121,7 +104,6 @@ const useFirebase = () => {
     setUser,
     signInWithGoogle,
     logOut,
-    getCookie,
   };
 };
 

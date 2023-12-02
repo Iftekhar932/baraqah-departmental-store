@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
 import axios from "axios";
 
 const UserLogin = () => {
-  const { signInWithGoogle } = useFirebase();
+  const { signInWithGoogle, setUser, user } = useFirebase();
+
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   const infoCollection = (e) => {
     const email = e.target.form.email.value;
@@ -34,23 +39,21 @@ const UserLogin = () => {
         { withCredentials: true }
       );
 
-      //* handle response for cookies
-      /* response.status === 200
-        ? console.log(response.data, "login Successful")
-        : console.log(response.data, "login failed");
-      return response; */
-
-      //* for localStorage
+      // handle response
       response.status === 200
         ? console.log(
-            localStorage.setItem("access_token", response.data),
+            localStorage.setItem("access_token", response.data.accessToken),
             response.data,
             "login Successful"
           )
         : console.log(response.data, "login failed");
 
-      navigate("/");
+      setUser({ email: response.data.email });
 
+      console.log("✨ 🌟  submitFunction  user:", user);
+      console.log("✨ 🌟  submitFunction  email:", response.data.email);
+
+      navigate("/");
       return response;
     } catch (error) {
       console.error("Error during login:", error);
