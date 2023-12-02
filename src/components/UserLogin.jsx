@@ -11,10 +11,6 @@ const UserLogin = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
   const infoCollection = (e) => {
     const email = e.target.form.email.value;
     const password = e.target.form.password.value;
@@ -48,12 +44,10 @@ const UserLogin = () => {
           )
         : console.log(response.data, "login failed");
 
-      setUser({ email: response.data.email });
-
-      console.log("✨ 🌟  submitFunction  user:", user);
-      console.log("✨ 🌟  submitFunction  email:", response.data.email);
+      localStorage.setItem("userEmail", response.data.email);
 
       navigate("/");
+
       return response;
     } catch (error) {
       console.error("Error during login:", error);

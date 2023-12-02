@@ -7,6 +7,8 @@ const Header = () => {
   const [navVisibilityMobile, setNavVisibilityMobile] = useState(false);
   const { user, logOut } = useFirebase();
 
+  const userEmail = localStorage.getItem("userEmail");
+
   return (
     <>
       {/* //* MOBILE 👇 */}
@@ -90,20 +92,21 @@ const Header = () => {
           </ul>
 
           <ul className="menu menu-horizontal px-1 items-center">
-            {user?.email && (
-              <li className="hover:bg-zinc-200">
-                <Link to="/adminOnly" title="Your Account">
-                  <img
-                    src="https://i.ibb.co/vPhPLjL/email-1-svgrepo-com.png"
-                    alt="email-1-svgrepo-com"
-                    border="0"
-                    height="22px"
-                    width="22px"
-                  />
-                  {user?.email}
-                </Link>
-              </li>
-            )}
+            {user?.email ||
+              (userEmail && (
+                <li className="hover:bg-zinc-200">
+                  <Link to="/adminOnly" title="Your Account">
+                    <img
+                      src="https://i.ibb.co/vPhPLjL/email-1-svgrepo-com.png"
+                      alt="email-1-svgrepo-com"
+                      border="0"
+                      height="22px"
+                      width="22px"
+                    />
+                    {userEmail}
+                  </Link>
+                </li>
+              ))}
             <li>
               <ThemeSwitcher />
             </li>
