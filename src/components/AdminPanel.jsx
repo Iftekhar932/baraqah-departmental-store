@@ -20,7 +20,7 @@ function AdminPanel() {
             key={user?._id || user?.uid}
             className="mx-auto my-2 border rounded grid place-items-center grid-cols-3"
           >
-            <span className="">Email: {user?.email || user?.displayName}</span>
+            <span>Email: {user?.email || user?.displayName}</span>
             <span>
               Role:
               {user?.role ? user?.role : "user"}
