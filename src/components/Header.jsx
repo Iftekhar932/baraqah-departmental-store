@@ -91,7 +91,7 @@ const Header = () => {
           <ul className="menu menu-horizontal px-1 items-center">
             {user?.email && (
               <li className="hover:bg-zinc-200">
-                <a href="#" title="Your Account">
+                <Link to="/adminOnly" title="Your Account">
                   <img
                     src="https://i.ibb.co/vPhPLjL/email-1-svgrepo-com.png"
                     alt="email-1-svgrepo-com"
@@ -100,7 +100,7 @@ const Header = () => {
                     width="22px"
                   />
                   {user?.email}
-                </a>
+                </Link>
               </li>
             )}
             <li>
@@ -131,7 +131,7 @@ const Header = () => {
             </li>
 
             <li className="bg-gradient-to-r from-zinc-100 to-zinc-50 rounded-full">
-              <a title="Account">
+              <Link to="/adminOnly" title="Account">
                 <img
                   height="20px"
                   width="20px"
@@ -139,7 +139,7 @@ const Header = () => {
                   alt="Account"
                   border="0"
                 />
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

@@ -97,7 +97,12 @@ const router = createBrowserRouter([
     element: <AdminPanel />,
     loader: async () => {
       const response = await axios
-        .get("http://localhost:3001/adminGetUsers")
+        .get("http://localhost:3001/adminGetUsers", {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+        })
         .catch(function (err) {
           console.log(err);
         });
