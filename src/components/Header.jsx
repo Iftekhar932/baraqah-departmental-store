@@ -23,7 +23,7 @@ const Header = () => {
     <>
       {/* //* MOBILE 👇 */}
       <div className="navbar mb-5 mx-auto border-b-[.1px] font-thin">
-        <div className="dropdown">
+        <div className="dropdown lg:invisible">
           <label tabIndex={0} className="btn btn-ghost">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +55,7 @@ const Header = () => {
         </div>
 
         {/* //* 👇 LARGE SCREEN */}
-        <div className="w-full mx-auto lg:flex justify-between hidden">
+        <div className="w-full mx-auto hidden lg:flex justify-between">
           <ul className="menu menu-horizontal px-1">
             <li>
               <Link className="font-medium text-xl" to="/">
@@ -83,21 +83,21 @@ const Header = () => {
                 <Link to="/userLogin">Sign In</Link>
               )}
             </li>
-            <li>
+            {/* <li>
               <select className="">
                 <option defaultValue="">Choose location</option>
                 <option>Dhaka</option>
                 <option>Rajshahi</option>
                 <option>Khulna</option>
               </select>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <input
                 type="text"
                 placeholder="Search products &#128269;"
                 className="p-2 "
               />
-            </li>
+            </li> */}
           </ul>
 
           <ul className="menu menu-horizontal px-1 items-center">

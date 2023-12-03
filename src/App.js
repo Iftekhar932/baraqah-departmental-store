@@ -7,8 +7,9 @@ import Header from "./components/Header";
 ? why isn't header rendering in other pages? 
 ? cookies working only for mozilla firefox
 todo: make it work in responsive mode on click toggle menu 
-todo: make user log out and navigate to login when tries to enter protected route
+todo: make user log out when jwt expires
 todo: add refreshToken
+todo: add deletion function for admin 
 */
 
 function App() {

@@ -4,7 +4,7 @@ import useFirebase from "../hooks/useFirebase";
 import axios from "axios";
 
 const UserLogin = () => {
-  const { signInWithGoogle, setUser, user } = useFirebase();
+  const { signInWithGoogle } = useFirebase();
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");

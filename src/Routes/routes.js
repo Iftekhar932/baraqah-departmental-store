@@ -79,7 +79,7 @@ const router = createBrowserRouter([
           },
         })
         .catch(function (err) {
-          console.log(err);
+          console.log(err.response.status);
         });
       return response;
     },
