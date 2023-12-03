@@ -4,13 +4,17 @@ import { Link, useNavigate } from "react-router-dom";
 
 const ErrorComponent = () => {
   const navigate = useNavigate();
+  const [userHere, setUserHere] = useState(false);
 
+  // NOTE: the condition with the state is to make sure if user stays on the error page for 3 seconds will be redirected otherwise won't
   useEffect(() => {
     const timeToNavigate = () => {
-      setTimeout(() => navigate("/userLogin"), 1800);
+      setTimeout(() => setUserHere(() => !userHere), 3000);
     };
     timeToNavigate();
-  }, []);
+
+    if (userHere) return navigate("/userLogin");
+  }, [userHere]);
 
   return (
     <div
