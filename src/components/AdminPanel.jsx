@@ -4,12 +4,32 @@ import { useLoaderData } from "react-router-dom";
 function AdminPanel() {
   const loadedData = useLoaderData();
   const allUsers = loadedData.data.allUsers;
-
+  /* 
   const deletionOfUserByAdmin = (userId) => {
-    const confirmation = window.prompt(
-      "Are you sure you want to delete this user? type 'DELETE' "
-    );
-    if (confirmation === "DELETE".toLocaleLowerCase()) return "ok";
+    console.log("✨ 🌟  deletionOfUserByAdmin  userId:", userId);
+    const id = userId.split(" ")[0];
+    const flag = userId.split(" ")[1];
+    if (flag == "uid") {
+      const confirmation = window.prompt(
+        "Are you sure you want to delete this user? type 'DELETE' "
+      );
+      if (confirmation === "DELETE".toLocaleLowerCase()) return "ok";
+    }
+    if (flag == "_id") {
+      return window.confirm("Are you sure you want to delete this user");
+    }
+  };
+ */
+  const deletionOfUserByAdmin = (user) => {
+    if (user?.uid) {
+      const confirmation = window.prompt(
+        "Are you sure you want to delete this user? type 'DELETE' "
+      );
+      if (confirmation === "DELETE".toLocaleLowerCase()) return "ok";
+    }
+    if (user?._id) {
+      return window.confirm("Are you sure you want to delete this user");
+    }
   };
 
   return (
@@ -21,11 +41,15 @@ function AdminPanel() {
             className="mx-auto my-2 border rounded grid place-items-center grid-cols-3"
           >
             <span>Email: {user?.email || user?.displayName}</span>
-            <span>Role: {user?.role ? user?.role : "user"}</span>
+            {<span>Role: {user?.role ? user?.role : "user"}</span>}
 
             <button
               className="btn btn-danger"
-              onClick={() => deletionOfUserByAdmin(user?._id || user?.uid)}
+              onClick={
+                () => deletionOfUserByAdmin(user)
+                // deletionOfUserByAdmin(`${user?._id} _id` || `${user?.uid} uid`)
+              }
+              disabled={user?.role == "admin"}
             >
               Delete
             </button>
