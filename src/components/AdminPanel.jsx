@@ -24,6 +24,8 @@ function AdminPanel() {
           "http://localhost:3001/adminUserDeletion",
           {
             userIdToDelete: id,
+          },
+          {
             withCredentials: true,
             headers: {
               Authorization: `Bearer ${localStorage.getItem("access_token")}`,
