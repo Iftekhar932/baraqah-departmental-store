@@ -1,6 +1,7 @@
 import { Link, Outlet, useLoaderData } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import Carousel from "react-multi-carousel";
+import useFirebase from "../hooks/useFirebase";
 
 const responsive = {
   superLargeDesktop: {
@@ -22,6 +23,8 @@ const responsive = {
 };
 
 const SliderCategory = () => {
+  const { user } = useFirebase();
+
   const loadedData = useLoaderData();
   // If there's no data, don't render the component
   if (!loadedData?.data?.length) {
@@ -51,7 +54,7 @@ const SliderCategory = () => {
         keyBoardControl={true}
         containerClass="carousel-container"
         itemClass="carousel-item-padding-40-px"
-        className="h-64 w-[500px] mx-auto "
+        className={`h-64 w-[500px] mx-auto ${!user && "hidden"}`} // ! haven't tested after adding this hidden condition
       >
         {imgs?.map((img, index) => {
           return (

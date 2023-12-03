@@ -21,10 +21,7 @@ function AdminPanel() {
             className="mx-auto my-2 border rounded grid place-items-center grid-cols-3"
           >
             <span>Email: {user?.email || user?.displayName}</span>
-            <span>
-              Role:
-              {user?.role ? user?.role : "user"}
-            </span>
+            <span>Role: {user?.role ? user?.role : "user"}</span>
 
             <button
               className="btn btn-danger"

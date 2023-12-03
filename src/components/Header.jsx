@@ -9,6 +9,16 @@ const Header = () => {
 
   const userEmail = localStorage.getItem("userEmail");
 
+  const logOutFunc = () => {
+    if (userEmail) {
+      localStorage.removeItem("userEmail");
+      localStorage.removeItem("access_token");
+      return;
+    } else {
+      return logOut();
+    }
+  };
+
   return (
     <>
       {/* //* MOBILE 👇 */}
@@ -65,8 +75,8 @@ const Header = () => {
               <Link to="/about">About Us</Link>
             </li>
             <li>
-              {user?.email ? (
-                <a href="#" onClick={logOut}>
+              {user?.email || userEmail ? (
+                <a href="#" onClick={logOutFunc}>
                   Logout
                 </a>
               ) : (
@@ -102,7 +112,7 @@ const Header = () => {
                       height="22px"
                       width="22px"
                     />
-                    {userEmail}
+                    {user?.email || userEmail}
                   </Link>
                 </li>
               ))}

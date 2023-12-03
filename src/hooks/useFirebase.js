@@ -41,11 +41,7 @@ const useFirebase = () => {
 
         // ▶️👉 handling response
         response.status === 200
-          ? console.log(
-              localStorage.setItem("access_token", response.data),
-              response.data,
-              "login Successful"
-            )
+          ? localStorage.setItem("access_token", response.data)
           : console.log(response.data, "login failed");
 
         navigate("/");
