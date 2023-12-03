@@ -1,4 +1,5 @@
 import "daisyui/dist/full.css";
+import axios from "axios";
 import { useLoaderData } from "react-router-dom";
 
 function AdminPanel() {
@@ -7,18 +8,32 @@ function AdminPanel() {
 
   async function deleteUser(id, flag) {
     try {
-      if (flag == "uid") {
-        await admin.auth().deleteUser(id);
+      /*   if (flag == "uid") {
+        axios.post("http://localhost:3001/adminUserDeletion", {
+          userIdToDelete: id,
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+        });
         console.log("Successfully deleted user");
       }
-
+ */
       if (flag == "_id") {
-        // console.log(id)
-
-        console.log("Successfully deleted user");
+        const response = await axios.post(
+          "http://localhost:3001/adminUserDeletion",
+          {
+            userIdToDelete: id,
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+            },
+          }
+        );
+        console.log(response.status);
       }
     } catch (error) {
-      console.error("Error deleting user:", error);
+      console.error("Error deleting user:", error.response);
     }
   }
 
