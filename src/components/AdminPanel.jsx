@@ -4,31 +4,44 @@ import { useLoaderData } from "react-router-dom";
 function AdminPanel() {
   const loadedData = useLoaderData();
   const allUsers = loadedData.data.allUsers;
-  /* 
-  const deletionOfUserByAdmin = (userId) => {
-    console.log("✨ 🌟  deletionOfUserByAdmin  userId:", userId);
-    const id = userId.split(" ")[0];
-    const flag = userId.split(" ")[1];
-    if (flag == "uid") {
-      const confirmation = window.prompt(
-        "Are you sure you want to delete this user? type 'DELETE' "
-      );
-      if (confirmation === "DELETE".toLocaleLowerCase()) return "ok";
+
+  async function deleteUser(id, flag) {
+    try {
+      if (flag == "uid") {
+        await admin.auth().deleteUser(id);
+        console.log("Successfully deleted user");
+      }
+
+      if (flag == "_id") {
+        // console.log(id)
+
+        console.log("Successfully deleted user");
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error);
     }
-    if (flag == "_id") {
-      return window.confirm("Are you sure you want to delete this user");
-    }
-  };
- */
+  }
+
   const deletionOfUserByAdmin = (user) => {
-    if (user?.uid) {
-      const confirmation = window.prompt(
-        "Are you sure you want to delete this user? type 'DELETE' "
+    try {
+      if (user?.uid) {
+        const confirmation = window.prompt(
+          "Are you sure you want to delete this user? type 'DELETE' "
+        );
+        if (confirmation === "DELETE".toLocaleLowerCase())
+          return deleteUser(user.uid, "uid");
+      }
+
+      if (user?._id) {
+        if (window.confirm("Are you sure you want to delete this user")) {
+          deleteUser(user._id, "_id");
+        }
+      }
+    } catch (error) {
+      console.log(
+        "🚀 ~ file: AdminPanel.jsx:28 ~ deletionOfUserByAdmin ~ error:",
+        error
       );
-      if (confirmation === "DELETE".toLocaleLowerCase()) return "ok";
-    }
-    if (user?._id) {
-      return window.confirm("Are you sure you want to delete this user");
     }
   };
 
@@ -73,7 +86,6 @@ async function deleteUser(uid) {
 }
 
 // Call the function with the user's UID
-deleteUser('userUid');
 
 
 
