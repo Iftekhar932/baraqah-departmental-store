@@ -1,7 +1,16 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const ErrorComponent = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const timeToNavigate = () => {
+      setTimeout(() => navigate("/userLogin"), 1800);
+    };
+
+    timeToNavigate();
+  }, [navigate]);
   return (
     <div
       className="bg-red-500 text-white font-bold rounded-lg border-l-4 border-red-700 p-4"
