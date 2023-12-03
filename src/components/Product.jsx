@@ -13,7 +13,6 @@ const Product = (props) => {
     return (e.target.value = 0);
   };
 
-  // ! TESTED WITHOUT ASYNC AWAIT, IF ERROR THROWN TRY REMOVING ASYNC AWAIT
   const itemSelection = async (_id, flag) => {
     const response = await axios
       .get(`http://localhost:3001/getAllProducts/${_id}`, {
