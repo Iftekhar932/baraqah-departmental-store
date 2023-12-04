@@ -56,7 +56,10 @@ const router = createBrowserRouter([
                   }
                 )
                 .catch(function (err) {
-                  console.log(err);
+                  console.log(err.response.status);
+                  if (err.response.status == 403)
+                    localStorage.setItem("access_token", null);
+                  localStorage.removeItem("userEmail");
                 });
               return response || null;
             },
@@ -80,6 +83,9 @@ const router = createBrowserRouter([
         })
         .catch(function (err) {
           console.log(err.response.status);
+          if (err.response.status == 403)
+            localStorage.setItem("access_token", null);
+          localStorage.removeItem("userEmail");
         });
       return response;
     },
@@ -104,7 +110,10 @@ const router = createBrowserRouter([
           },
         })
         .catch(function (err) {
-          console.log(err);
+          console.log(err.response.status);
+          if (err.response.status == 403)
+            localStorage.setItem("access_token", null);
+          localStorage.removeItem("userEmail");
         });
       return response;
     },
@@ -117,7 +126,10 @@ const router = createBrowserRouter([
       const response = await axios
         .get("http://localhost:3001/getAllUsers")
         .catch(function (err) {
-          console.log(err);
+          console.log(err.response.status);
+          if (err.response.status == 403)
+            localStorage.setItem("access_token", null);
+          localStorage.removeItem("userEmail");
         });
       return response || [];
     },

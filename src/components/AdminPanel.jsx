@@ -8,17 +8,20 @@ function AdminPanel() {
 
   async function deleteUser(id, flag) {
     try {
-      /*   if (flag == "uid") {
-        axios.post("http://localhost:3001/adminUserDeletion", {
-          userIdToDelete: id,
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-        });
+      if (flag == "uid") {
+        axios.post(
+          "http://localhost:3001/adminUserDeletion",
+          { userIdToDelete: id },
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+            },
+          }
+        );
         console.log("Successfully deleted user");
       }
- */
+
       if (flag == "_id") {
         const response = await axios.post(
           "http://localhost:3001/adminUserDeletion",

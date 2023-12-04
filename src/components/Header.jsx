@@ -11,7 +11,7 @@ const Header = () => {
   const logOutFunc = () => {
     if (userEmail) {
       localStorage.removeItem("userEmail");
-      localStorage.removeItem("access_token");
+      localStorage.setItem("access_token", null);
       return;
     } else {
       return logOut();
