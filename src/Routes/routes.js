@@ -57,6 +57,8 @@ const router = createBrowserRouter([
                 )
                 .catch(function (err) {
                   console.log(err.response.status);
+                  /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
+
                   if (err.response.status == 403)
                     localStorage.setItem("access_token", null);
                   localStorage.removeItem("userEmail");
@@ -83,6 +85,7 @@ const router = createBrowserRouter([
         })
         .catch(function (err) {
           console.log(err.response.status);
+          /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
           if (err.response.status == 403)
             localStorage.setItem("access_token", null);
           localStorage.removeItem("userEmail");
@@ -111,6 +114,7 @@ const router = createBrowserRouter([
         })
         .catch(function (err) {
           console.log(err.response.status);
+          /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
           if (err.response.status == 403)
             localStorage.setItem("access_token", null);
           localStorage.removeItem("userEmail");
@@ -127,6 +131,8 @@ const router = createBrowserRouter([
         .get("http://localhost:3001/getAllUsers")
         .catch(function (err) {
           console.log(err.response.status);
+          /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
+
           if (err.response.status == 403)
             localStorage.setItem("access_token", null);
           localStorage.removeItem("userEmail");
