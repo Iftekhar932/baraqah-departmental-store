@@ -6,9 +6,8 @@ import Header from "./components/Header";
 ? how to set cookies? i have but isn't working in browser but works in postman
 ? why isn't header rendering in other pages? 
 ? cookies working only for mozilla firefox
-todo: make user log out when jwt expires
 todo: add refreshToken
-todo: add deletion function for admin 
+todo: TEST WITH GOOGLE ACCOUNT USERS
 */
 
 function App() {
