@@ -33,7 +33,7 @@ const router = createBrowserRouter([
               },
             })
             .catch(function (err) {
-              console.log("not logged in", err);
+              console.log("not logged in", err?.response?.data);
             });
           return response || null;
         },
@@ -114,6 +114,7 @@ const router = createBrowserRouter([
         })
         .catch(function (err) {
           console.log(err.response.status);
+          window.alert("You are logged out now!");
           /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
           if (err.response.status == 403)
             localStorage.setItem("access_token", null);

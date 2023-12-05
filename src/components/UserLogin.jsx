@@ -8,6 +8,7 @@ const UserLogin = () => {
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const navigate = useNavigate();
 
@@ -19,6 +20,7 @@ const UserLogin = () => {
   };
 
   const submitFunction = async (e, flag) => {
+    setErrorMsg("");
     try {
       e.preventDefault();
       if (flag == "google") {
@@ -41,12 +43,14 @@ const UserLogin = () => {
         : console.log(response.data, "login failed");
 
       localStorage.setItem("userEmail", response.data.email);
+      localStorage.setItem("role", response.data.role);
 
       navigate("/");
 
       return response;
     } catch (error) {
-      console.error("Error during login:", error);
+      console.error("Error during login:", error.response?.data);
+      setErrorMsg(error?.response?.data?.msg);
     }
   };
 
@@ -77,6 +81,7 @@ const UserLogin = () => {
                 required
               />
             </div>
+            {errorMsg && <span className="text-red-500">{errorMsg}</span>}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Password</span>
