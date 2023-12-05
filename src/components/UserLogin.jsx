@@ -37,11 +37,7 @@ const UserLogin = () => {
 
       // handle response
       response.status === 200
-        ? console.log(
-            localStorage.setItem("access_token", response.data.accessToken),
-            response.data,
-            "login Successful"
-          )
+        ? localStorage.setItem("access_token", response.data.accessToken)
         : console.log(response.data, "login failed");
 
       localStorage.setItem("userEmail", response.data.email);

@@ -6,6 +6,7 @@ import Header from "./components/Header";
 ? how to set cookies? i have but isn't setting in browsers except mozilla and also sets in postman
 ? why isn't header rendering in other pages? 
 todo: add deletion function for admin (FINISH THIS ONE FIRST)
+todo: in header adminonly route icon should be visible for admin only
 todo: add refreshToken
 */
 
