@@ -4,10 +4,7 @@ import Header from "./Header";
 import Card from "./Product";
 
 const Cards = () => {
-  const { user } = useFirebase();
   const loadedData = useLoaderData();
-  const navigate = useNavigate();
-  if (!user) return navigate("/userLogin");
 
   return (
     <>

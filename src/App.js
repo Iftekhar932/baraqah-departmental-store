@@ -3,11 +3,10 @@ import router from "./Routes/routes";
 import Header from "./components/Header";
 
 /* 
-? how to set cookies? i have but isn't working in browser but works in postman
+? how to set cookies? i have but isn't setting in browsers except mozilla and also sets in postman
 ? why isn't header rendering in other pages? 
-? cookies working only for mozilla firefox
-todo: add refreshToken
-todo: TEST WITH GOOGLE ACCOUNT USERS
+! add deletion function for admin (TEST WITH GOOGLE ACCOUNTS)
+todo: add refreshToken(on it)
 */
 
 function App() {

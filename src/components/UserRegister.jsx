@@ -8,6 +8,7 @@ const UserRegister = () => {
   const { signInWithGoogle } = useFirebase();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const infoCollection = (e) => {
     const email = e.target.form.email.value;
@@ -17,6 +18,7 @@ const UserRegister = () => {
   };
 
   const submitFunction = async (e, flag) => {
+    setErrorMsg("");
     try {
       e.preventDefault();
       if (flag == "google") {
@@ -30,13 +32,14 @@ const UserRegister = () => {
       });
 
       // Handle response
-      response.status === 200
+      response.status === 201
         ? console.log(response.data, "login Successful")
         : console.log(response.data, "login failed");
 
       return response;
     } catch (error) {
-      console.error("Error during login:", error);
+      console.error("Error during login:", error.response.data);
+      setErrorMsg(error.response.data.msg);
     }
   };
 
@@ -67,6 +70,7 @@ const UserRegister = () => {
                 required
               />
             </div>
+            {errorMsg && <span className="text-red-500">{errorMsg}</span>}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Password</span>

@@ -7,11 +7,12 @@ const Header = () => {
   const { user, logOut } = useFirebase();
 
   const userEmail = localStorage.getItem("userEmail");
+  const role = localStorage.getItem("role");
 
   const logOutFunc = () => {
     if (userEmail) {
       localStorage.removeItem("userEmail");
-      localStorage.removeItem("access_token");
+      localStorage.setItem("access_token", null);
       return;
     } else {
       return logOut();
@@ -82,28 +83,13 @@ const Header = () => {
                 <Link to="/userLogin">Sign In</Link>
               )}
             </li>
-            {/* <li>
-              <select className="">
-                <option defaultValue="">Choose location</option>
-                <option>Dhaka</option>
-                <option>Rajshahi</option>
-                <option>Khulna</option>
-              </select>
-            </li> */}
-            {/* <li>
-              <input
-                type="text"
-                placeholder="Search products &#128269;"
-                className="p-2 "
-              />
-            </li> */}
           </ul>
 
           <ul className="menu menu-horizontal px-1 items-center">
             {user?.email ||
               (userEmail && (
                 <li className="hover:bg-zinc-200">
-                  <Link to="/adminOnly" title="Your Account">
+                  <a href="#">
                     <img
                       src="https://i.ibb.co/vPhPLjL/email-1-svgrepo-com.png"
                       alt="email-1-svgrepo-com"
@@ -112,7 +98,7 @@ const Header = () => {
                       width="22px"
                     />
                     {user?.email || userEmail}
-                  </Link>
+                  </a>
                 </li>
               ))}
             <li>
@@ -142,17 +128,19 @@ const Header = () => {
               </Link>
             </li>
 
-            <li className="bg-gradient-to-r from-zinc-100 to-zinc-50 rounded-full">
-              <Link to="/adminOnly" title="Account">
-                <img
-                  height="20px"
-                  width="20px"
-                  src="https://i.ibb.co/GT1KM5g/person-svgrepo-com.png"
-                  alt="Account"
-                  border="0"
-                />
-              </Link>
-            </li>
+            {role == "admin" && (
+              <li className="bg-gradient-to-r from-zinc-100 to-zinc-50 rounded-full">
+                <Link to="/adminOnly" title="Account">
+                  <img
+                    height="20px"
+                    width="20px"
+                    src="https://i.ibb.co/GT1KM5g/person-svgrepo-com.png"
+                    alt="Account"
+                    border="0"
+                  />
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>

@@ -33,7 +33,7 @@ const router = createBrowserRouter([
               },
             })
             .catch(function (err) {
-              console.log("not logged in", err);
+              console.log("not logged in", err?.response?.data);
             });
           return response || null;
         },
@@ -56,7 +56,12 @@ const router = createBrowserRouter([
                   }
                 )
                 .catch(function (err) {
-                  console.log(err);
+                  console.log(err.response.status);
+                  /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
+
+                  if (err.response.status == 403)
+                    localStorage.setItem("access_token", null);
+                  localStorage.removeItem("userEmail");
                 });
               return response || null;
             },
@@ -80,6 +85,10 @@ const router = createBrowserRouter([
         })
         .catch(function (err) {
           console.log(err.response.status);
+          /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
+          if (err.response.status == 403)
+            localStorage.setItem("access_token", null);
+          localStorage.removeItem("userEmail");
         });
       return response;
     },
@@ -104,10 +113,16 @@ const router = createBrowserRouter([
           },
         })
         .catch(function (err) {
-          console.log(err);
+          console.log(err.response.status);
+          window.alert("You are logged out now!");
+          /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
+          if (err.response.status == 403)
+            localStorage.setItem("access_token", null);
+          localStorage.removeItem("userEmail");
         });
       return response;
     },
+    errorElement: <ErrorComponent />,
   },
   {
     path: "/userProfile",
@@ -116,7 +131,12 @@ const router = createBrowserRouter([
       const response = await axios
         .get("http://localhost:3001/getAllUsers")
         .catch(function (err) {
-          console.log(err);
+          console.log(err.response.status);
+          /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
+
+          if (err.response.status == 403)
+            localStorage.setItem("access_token", null);
+          localStorage.removeItem("userEmail");
         });
       return response || [];
     },
