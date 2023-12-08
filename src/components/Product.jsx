@@ -8,7 +8,6 @@ const Product = (props) => {
   const [itemQnt, setItemQnt] = useState(0);
 
   const numberCheck = (e) => {
-    // todo test it if it is ok to use without Number() to make sure it's number input value
     if (e.target.value < 0) setItemQnt(e.target.value);
     return (e.target.value = 0);
   };
@@ -42,23 +41,18 @@ const Product = (props) => {
         <p>Category:{category}</p>
         <span>Price: ${price}</span>
         <span>Unit: {unit}</span>
-        <input
-          type="number"
-          placeholder={`Type Quantity measured by ${unit}`}
-          onChange={numberCheck}
-        />
         <div className="card-actions justify-end">
           <button
             className="btn btn-primary w-full sm:w-auto"
             onClick={() => itemSelection(_id)}
           >
-            Add to cart
+            +{" "}
           </button>
           <button
             className="btn btn-primary w-full sm:w-auto"
             onClick={() => itemSelection(_id, true)}
           >
-            Remove
+            -{" "}
           </button>
         </div>
       </div>

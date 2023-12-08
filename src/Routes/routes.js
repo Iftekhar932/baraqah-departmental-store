@@ -32,8 +32,28 @@ const router = createBrowserRouter([
                 Authorization: `Bearer ${localStorage.getItem("access_token")}`,
               },
             })
-            .catch(function (err) {
-              console.log("not logged in", err?.response?.data);
+            .catch(async function (err) {
+              // !ATTENTION , i was removing email from localStorage, many other features are dependent on that,now i have to find out if i can first send the email to server then remove the email from localStorage during logout or jwt expiry
+              // !ATTENTION , i was removing email from localStorage, many other features are dependent on that,now i have to find out if i can first send the email to server then remove the email from localStorage during logout or jwt expiry
+              // !ATTENTION , i was removing email from localStorage, many other features are dependent on that,now i have to find out if i can first send the email to server then remove the email from localStorage during logout or jwt expiry
+              // !ATTENTION , i was removing email from localStorage, many other features are dependent on that,now i have to find out if i can first send the email to server then remove the email from localStorage during logout or jwt expiry
+              console.log(localStorage.getItem("userEmail"));
+              console.log("not logged in", err?.response);
+              if (err?.response?.status === 403) {
+                await axios.post(
+                  "http://localhost:3001/refresh",
+                  {
+                    email: localStorage.getItem("userEmail"),
+                  },
+                  {
+                    headers: {
+                      Authorization: `Bearer ${localStorage.getItem(
+                        "access_token"
+                      )}`,
+                    },
+                  }
+                );
+              }
             });
           return response || null;
         },
@@ -61,7 +81,7 @@ const router = createBrowserRouter([
 
                   if (err.response.status == 403)
                     localStorage.setItem("access_token", null);
-                  localStorage.removeItem("userEmail");
+                  // localStorage.removeItem("userEmail");
                 });
               return response || null;
             },
@@ -88,7 +108,7 @@ const router = createBrowserRouter([
           /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
           if (err.response.status == 403)
             localStorage.setItem("access_token", null);
-          localStorage.removeItem("userEmail");
+          // localStorage.removeItem("userEmail");
         });
       return response;
     },
@@ -115,10 +135,10 @@ const router = createBrowserRouter([
         .catch(function (err) {
           console.log(err.response.status);
           window.alert("You are logged out now!");
-          /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
+          /* LOGGING USER OUT, EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
           if (err.response.status == 403)
             localStorage.setItem("access_token", null);
-          localStorage.removeItem("userEmail");
+          // localStorage.removeItem("userEmail");
         });
       return response;
     },
@@ -136,7 +156,7 @@ const router = createBrowserRouter([
 
           if (err.response.status == 403)
             localStorage.setItem("access_token", null);
-          localStorage.removeItem("userEmail");
+          // localStorage.removeItem("userEmail");
         });
       return response || [];
     },
