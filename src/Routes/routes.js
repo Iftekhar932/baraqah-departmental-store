@@ -54,6 +54,7 @@ const router = createBrowserRouter([
                   }
                 );
               }
+              localStorage.setItem("userEmail", null);
             });
           return response || null;
         },
@@ -94,6 +95,7 @@ const router = createBrowserRouter([
                       }
                     );
                   }
+                  localStorage.setItem("userEmail", null);
                 });
               return response || null;
             },
@@ -133,6 +135,7 @@ const router = createBrowserRouter([
               }
             );
           }
+          localStorage.setItem("userEmail", null);
         });
       return response;
     },
@@ -175,6 +178,7 @@ const router = createBrowserRouter([
               }
             );
           }
+          localStorage.setItem("userEmail", null);
         });
       return response;
     },
