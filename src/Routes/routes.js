@@ -75,13 +75,25 @@ const router = createBrowserRouter([
                     },
                   }
                 )
-                .catch(function (err) {
+                .catch(async function (err) {
                   console.log(err.response.status);
                   /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
 
-                  if (err.response.status == 403)
-                    localStorage.setItem("access_token", null);
-                  // localStorage.removeItem("userEmail");
+                  if (err?.response?.status === 403) {
+                    await axios.post(
+                      "http://localhost:3001/refresh",
+                      {
+                        email: localStorage.getItem("userEmail"),
+                      },
+                      {
+                        headers: {
+                          Authorization: `Bearer ${localStorage.getItem(
+                            "access_token"
+                          )}`,
+                        },
+                      }
+                    );
+                  }
                 });
               return response || null;
             },
@@ -103,12 +115,24 @@ const router = createBrowserRouter([
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
         })
-        .catch(function (err) {
+        .catch(async function (err) {
           console.log(err.response.status);
           /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
-          if (err.response.status == 403)
-            localStorage.setItem("access_token", null);
-          // localStorage.removeItem("userEmail");
+          if (err?.response?.status === 403) {
+            await axios.post(
+              "http://localhost:3001/refresh",
+              {
+                email: localStorage.getItem("userEmail"),
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem(
+                    "access_token"
+                  )}`,
+                },
+              }
+            );
+          }
         });
       return response;
     },
@@ -132,34 +156,29 @@ const router = createBrowserRouter([
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
         })
-        .catch(function (err) {
+        .catch(async function (err) {
           console.log(err.response.status);
           window.alert("You are logged out now!");
           /* LOGGING USER OUT, EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
-          if (err.response.status == 403)
-            localStorage.setItem("access_token", null);
-          // localStorage.removeItem("userEmail");
+          if (err?.response?.status === 403) {
+            await axios.post(
+              "http://localhost:3001/refresh",
+              {
+                email: localStorage.getItem("userEmail"),
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem(
+                    "access_token"
+                  )}`,
+                },
+              }
+            );
+          }
         });
       return response;
     },
     errorElement: <ErrorComponent />,
-  },
-  {
-    path: "/userProfile",
-    element: <UserProfile />,
-    loader: async () => {
-      const response = await axios
-        .get("http://localhost:3001/getAllUsers")
-        .catch(function (err) {
-          console.log(err.response.status);
-          /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
-
-          if (err.response.status == 403)
-            localStorage.setItem("access_token", null);
-          // localStorage.removeItem("userEmail");
-        });
-      return response || [];
-    },
   },
   { path: "/about", element: <AboutUs /> },
   { path: "/viewCart", element: <CartView /> }, // axios api call in component file
