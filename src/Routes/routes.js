@@ -14,6 +14,28 @@ import UserProfile from "../components/UserProfile";
 import AboutUs from "../components/AboutUs";
 import CartView from "../components/CartView";
 
+
+// ! SEARCH THIS ERROR
+/* connection error: Error: querySrv ETIMEOUT _mongodb._tcp.cluster0.hgty8ov.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:240:17) {
+  errno: undefined,
+  code: 'ETIMEOUT',
+  syscall: 'querySrv',
+  hostname: '_mongodb._tcp.cluster0.hgty8ov.mongodb.net'
+}
+node:internal/process/promises:279
+            triggerUncaughtException(err, true /* fromPromise */);
+            ^
+
+Error: querySrv ETIMEOUT _mongodb._tcp.cluster0.hgty8ov.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:240:17) {   
+  errno: undefined,
+  code: 'ETIMEOUT',
+  syscall: 'querySrv',
+  hostname: '_mongodb._tcp.cluster0.hgty8ov.mongodb.net'
+}
+ */
+
 // solve http method
 const refreshHandlingFunction = async () => {
   const response = await axios.post(
@@ -27,7 +49,8 @@ const refreshHandlingFunction = async () => {
       },
     }
   );
-  console.log(response.data.accessToken, "HELLO");
+  console.log(response?.data?.accessToken);
+  localStorage.setItem("access_token", response?.data?.accessToken);
 };
 
 const router = createBrowserRouter([
@@ -48,15 +71,11 @@ const router = createBrowserRouter([
                 Authorization: `Bearer ${localStorage.getItem("access_token")}`,
               },
             })
-            .then((response) => {
-              return response;
-            })
             .catch(async function (err) {
               console.log("not logged in", err?.response);
               if (err?.response?.status === 403) {
                 refreshHandlingFunction();
               }
-              localStorage.removeItem("userEmail");
             });
           return response || [];
         },
@@ -78,9 +97,6 @@ const router = createBrowserRouter([
                     },
                   }
                 )
-                .then((response) => {
-                  return response;
-                })
                 .catch(async function (err) {
                   console.log(err.response.status);
                   /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
@@ -88,7 +104,6 @@ const router = createBrowserRouter([
                   if (err?.response?.status === 403) {
                     refreshHandlingFunction();
                   }
-                  localStorage.removeItem("userEmail");
                 });
               return response || null;
             },
@@ -110,18 +125,13 @@ const router = createBrowserRouter([
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
         })
-        .then((response) => {
-          return response;
-        })
         .catch(async function (err) {
           console.log(err.response.status);
           /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
           if (err?.response?.status === 403) {
             refreshHandlingFunction();
-            localStorage.removeItem("userEmail");
           }
         });
-      return response;
     },
   },
   {
@@ -148,10 +158,9 @@ const router = createBrowserRouter([
           window.alert("You are logged out now!");
           /* LOGGING USER OUT, EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
           if (err?.response?.status === 403) {
+            refreshHandlingFunction();
           }
-          localStorage.removeItem("userEmail");
         });
-      return response;
     },
     errorElement: <ErrorComponent />,
   },
