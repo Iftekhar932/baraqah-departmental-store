@@ -3,9 +3,9 @@ import router from "./Routes/routes";
 import Header from "./components/Header";
 
 /* 
-? how to set cookies? i have but isn't setting in browsers except mozilla and also sets in postman
 ! why isn't header rendering in other pages? 
 ! add deletion function for admin (TEST WITH GOOGLE ACCOUNTS)
+! slider not responsive in mobile
 */
 
 function App() {

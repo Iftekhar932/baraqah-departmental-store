@@ -14,6 +14,22 @@ import UserProfile from "../components/UserProfile";
 import AboutUs from "../components/AboutUs";
 import CartView from "../components/CartView";
 
+// solve http method
+const refreshHandlingFunction = async () => {
+  const response = await axios.post(
+    "http://localhost:3001/refresh",
+    {
+      email: localStorage.getItem("userEmail"),
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    }
+  );
+  console.log(response.data.accessToken, "HELLO");
+};
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -33,38 +49,12 @@ const router = createBrowserRouter([
               },
             })
             .then((response) => {
-              console.log("krei bai");
-              console.log(
-                "🚀 ~ file: routes.js:36 ~ .then ~ response:",
-                response
-              );
-              // Check if the response contains a new accessToken in the headers
-              const newAccessToken = response.headers["new-access-token"];
-
-              if (newAccessToken) {
-                // Update localStorage with the new accessToken
-                localStorage.setItem("access_token", newAccessToken);
-              }
-
-              // Continue processing the response or return it
               return response;
             })
             .catch(async function (err) {
               console.log("not logged in", err?.response);
               if (err?.response?.status === 403) {
-                await axios.post(
-                  "http://localhost:3001/refresh",
-                  {
-                    email: localStorage.getItem("userEmail"),
-                  },
-                  {
-                    headers: {
-                      Authorization: `Bearer ${localStorage.getItem(
-                        "access_token"
-                      )}`,
-                    },
-                  }
-                );
+                refreshHandlingFunction();
               }
               localStorage.removeItem("userEmail");
             });
@@ -88,24 +78,15 @@ const router = createBrowserRouter([
                     },
                   }
                 )
+                .then((response) => {
+                  return response;
+                })
                 .catch(async function (err) {
                   console.log(err.response.status);
                   /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
 
                   if (err?.response?.status === 403) {
-                    await axios.post(
-                      "http://localhost:3001/refresh",
-                      {
-                        email: localStorage.getItem("userEmail"),
-                      },
-                      {
-                        headers: {
-                          Authorization: `Bearer ${localStorage.getItem(
-                            "access_token"
-                          )}`,
-                        },
-                      }
-                    );
+                    refreshHandlingFunction();
                   }
                   localStorage.removeItem("userEmail");
                 });
@@ -129,23 +110,14 @@ const router = createBrowserRouter([
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
         })
+        .then((response) => {
+          return response;
+        })
         .catch(async function (err) {
           console.log(err.response.status);
           /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
           if (err?.response?.status === 403) {
-            await axios.post(
-              "http://localhost:3001/refresh",
-              {
-                email: localStorage.getItem("userEmail"),
-              },
-              {
-                headers: {
-                  Authorization: `Bearer ${localStorage.getItem(
-                    "access_token"
-                  )}`,
-                },
-              }
-            );
+            refreshHandlingFunction();
             localStorage.removeItem("userEmail");
           }
         });
@@ -176,19 +148,6 @@ const router = createBrowserRouter([
           window.alert("You are logged out now!");
           /* LOGGING USER OUT, EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
           if (err?.response?.status === 403) {
-            await axios.post(
-              "http://localhost:3001/refresh",
-              {
-                email: localStorage.getItem("userEmail"),
-              },
-              {
-                headers: {
-                  Authorization: `Bearer ${localStorage.getItem(
-                    "access_token"
-                  )}`,
-                },
-              }
-            );
           }
           localStorage.removeItem("userEmail");
         });
