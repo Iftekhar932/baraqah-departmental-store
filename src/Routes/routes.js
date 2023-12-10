@@ -17,6 +17,24 @@ import CartView from "../components/CartView";
 const router = createBrowserRouter([
   {
     path: "/",
+    /*   .then((response) => {
+              console.log(
+                "🚀 ~ file: routes.js:35 ~ loader: ~ response:",
+                response
+              );
+              // console.log(response.headers.authorization, "line32");
+              // Check if the response contains a new accessToken in the headers
+              const newAccessToken =
+                response.headers.authorization.split(" ")[1];
+
+              if (newAccessToken) {
+                // Update localStorage with the new accessToken
+                localStorage.setItem("access_token", newAccessToken);
+              }
+
+              // Continue processing the response or return it
+              return response;
+            }) */
     element: <Home />,
     errorElement: <ErrorComponent />,
     children: [
@@ -32,12 +50,8 @@ const router = createBrowserRouter([
                 Authorization: `Bearer ${localStorage.getItem("access_token")}`,
               },
             })
+
             .catch(async function (err) {
-              // !ATTENTION , i was removing email from localStorage, many other features are dependent on that,now i have to find out if i can first send the email to server then remove the email from localStorage during logout or jwt expiry
-              // !ATTENTION , i was removing email from localStorage, many other features are dependent on that,now i have to find out if i can first send the email to server then remove the email from localStorage during logout or jwt expiry
-              // !ATTENTION , i was removing email from localStorage, many other features are dependent on that,now i have to find out if i can first send the email to server then remove the email from localStorage during logout or jwt expiry
-              // !ATTENTION , i was removing email from localStorage, many other features are dependent on that,now i have to find out if i can first send the email to server then remove the email from localStorage during logout or jwt expiry
-              console.log(localStorage.getItem("userEmail"));
               console.log("not logged in", err?.response);
               if (err?.response?.status === 403) {
                 await axios.post(
@@ -54,7 +68,7 @@ const router = createBrowserRouter([
                   }
                 );
               }
-              localStorage.setItem("userEmail", null);
+              localStorage.removeItem("userEmail");
             });
           return response || null;
         },
@@ -95,7 +109,7 @@ const router = createBrowserRouter([
                       }
                     );
                   }
-                  localStorage.setItem("userEmail", null);
+                  localStorage.removeItem("userEmail");
                 });
               return response || null;
             },
@@ -134,8 +148,8 @@ const router = createBrowserRouter([
                 },
               }
             );
+            localStorage.removeItem("userEmail");
           }
-          localStorage.setItem("userEmail", null);
         });
       return response;
     },
@@ -178,7 +192,7 @@ const router = createBrowserRouter([
               }
             );
           }
-          localStorage.setItem("userEmail", null);
+          localStorage.removeItem("userEmail");
         });
       return response;
     },

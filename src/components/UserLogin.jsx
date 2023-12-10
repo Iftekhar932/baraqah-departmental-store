@@ -60,8 +60,9 @@ const UserLogin = () => {
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Login now!</h1>
           <p className="py-6">
-            Ours is one of the best online grocery shops around the city with
-            fresh, healthy, pure products along with fast delivery
+            {/*      Ours is one of the best online grocery shops around the city with
+            fresh, healthy, pure products along with fast delivery */}
+            admin@gmail.com
           </p>
         </div>
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
