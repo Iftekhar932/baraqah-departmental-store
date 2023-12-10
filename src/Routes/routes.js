@@ -17,24 +17,6 @@ import CartView from "../components/CartView";
 const router = createBrowserRouter([
   {
     path: "/",
-    /*   .then((response) => {
-              console.log(
-                "🚀 ~ file: routes.js:35 ~ loader: ~ response:",
-                response
-              );
-              // console.log(response.headers.authorization, "line32");
-              // Check if the response contains a new accessToken in the headers
-              const newAccessToken =
-                response.headers.authorization.split(" ")[1];
-
-              if (newAccessToken) {
-                // Update localStorage with the new accessToken
-                localStorage.setItem("access_token", newAccessToken);
-              }
-
-              // Continue processing the response or return it
-              return response;
-            }) */
     element: <Home />,
     errorElement: <ErrorComponent />,
     children: [
@@ -50,7 +32,23 @@ const router = createBrowserRouter([
                 Authorization: `Bearer ${localStorage.getItem("access_token")}`,
               },
             })
+            .then((response) => {
+              console.log("krei bai");
+              console.log(
+                "🚀 ~ file: routes.js:36 ~ .then ~ response:",
+                response
+              );
+              // Check if the response contains a new accessToken in the headers
+              const newAccessToken = response.headers["new-access-token"];
 
+              if (newAccessToken) {
+                // Update localStorage with the new accessToken
+                localStorage.setItem("access_token", newAccessToken);
+              }
+
+              // Continue processing the response or return it
+              return response;
+            })
             .catch(async function (err) {
               console.log("not logged in", err?.response);
               if (err?.response?.status === 403) {
@@ -70,7 +68,7 @@ const router = createBrowserRouter([
               }
               localStorage.removeItem("userEmail");
             });
-          return response || null;
+          return response || [];
         },
         children: [
           {
