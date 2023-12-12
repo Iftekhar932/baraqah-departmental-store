@@ -20,11 +20,11 @@ const userEmailAccount = localStorage?.getItem("userEmail"); // users whose acco
 const userRole = localStorage?.getItem("userEmail"); // users whose accounts created with email sign up
 
 // remove every stored info of user if token or email is missing
-if (accessToken || userEmailAccount == false) {
+/* if (Boolean(accessToken) || Boolean(userEmailAccount) == false) {
   localStorage?.removeItem("access_token");
   localStorage?.removeItem("userEmail");
   localStorage?.removeItem("role");
-}
+} */
 
 // catch block function for axios
 const refreshHandlingFunction = async () => {
@@ -45,6 +45,26 @@ const refreshHandlingFunction = async () => {
   }
 };
 
+const JWTExpiryHandlerFunction = async (url) => {
+  if (Boolean(userEmailAccount) || Boolean(accessToken)) {
+    const response = await axios
+      .get(url, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .catch(function (err) {
+        console.log("🚀 ~ file: routes.js:57 ~ getRequestHandler ~ err:", err);
+        if (err?.response?.status === 403) {
+          return refreshHandlingFunction();
+        }
+      });
+    console.log("line63", response);
+    return response || [];
+  }
+};
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -56,22 +76,9 @@ const router = createBrowserRouter([
         element: <SliderCategory />,
         errorElement: <ErrorComponent />,
         loader: async () => {
-          if (Boolean(userEmailAccount)) {
-            const response = await axios
-              .get("http://localhost:3001/getAllProducts", {
-                withCredentials: true,
-                headers: {
-                  Authorization: `Bearer ${accessToken}`,
-                },
-              })
-              .catch(async function (err) {
-                console.log("🚀 ~ file: routes.js:54 ~ loader: ~ err:", err);
-                if (err?.response?.status === 403) {
-                  return refreshHandlingFunction();
-                }
-              });
-            return response || [];
-          }
+          return JWTExpiryHandlerFunction(
+            "http://localhost:3001/getAllProducts"
+          );
         },
         children: [
           {
@@ -79,30 +86,9 @@ const router = createBrowserRouter([
             element: <Products />,
             errorElement: <ErrorComponent />,
             loader: async (req) => {
-              if (Boolean(userEmailAccount)) {
-                const response = await axios
-                  .get(
-                    `http://localhost:3001/getAllProductsCategoryWise/${req.params.category}`,
-                    {
-                      withCredentials: true,
-                      headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                      },
-                    }
-                  )
-                  .catch(async function (err) {
-                    console.log(
-                      "🚀 ~ file: routes.js:80 ~ loader: ~ err:",
-                      err
-                    );
-                    /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
-
-                    if (err?.response?.status === 403) {
-                      refreshHandlingFunction();
-                    }
-                  });
-                return response || null;
-              }
+              return JWTExpiryHandlerFunction(
+                `http://localhost:3001/getAllProductsCategoryWise/${req.params.category}`
+              );
             },
           },
         ],
@@ -115,23 +101,7 @@ const router = createBrowserRouter([
     element: <Products />,
     errorElement: <ErrorComponent />,
     loader: async () => {
-      if (Boolean(userEmailAccount)) {
-        const response = await axios
-          .get("http://localhost:3001/getAllProducts", {
-            withCredentials: true,
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          })
-          .catch(async function (err) {
-            console.log("🚀 ~ file: routes.js:108 ~ loader: ~ err:", err);
-            /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
-            if (err?.response?.status === 403) {
-              refreshHandlingFunction();
-            }
-          });
-        return response || [];
-      }
+      return JWTExpiryHandlerFunction("http://localhost:3001/getAllProducts");
     },
   },
   {
@@ -146,23 +116,7 @@ const router = createBrowserRouter([
     path: "/adminOnly",
     element: <AdminPanel />,
     loader: async () => {
-      if (Boolean(userEmailAccount)) {
-        const response = await axios
-          .get("http://localhost:3001/adminGetUsers", {
-            withCredentials: true,
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          })
-          .catch(async function (err) {
-            console.log("🚀 ~ file: routes.js:139 ~ loader: ~ err:", err);
-            /* LOGGING USER OUT, EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
-            if (err?.response?.status === 403) {
-              refreshHandlingFunction();
-            }
-          });
-        return response;
-      }
+      return JWTExpiryHandlerFunction("http://localhost:3001/adminGetUsers");
     },
     errorElement: <ErrorComponent />,
   },
