@@ -14,30 +14,9 @@ import UserProfile from "../components/UserProfile";
 import AboutUs from "../components/AboutUs";
 import CartView from "../components/CartView";
 
-
-// ! SEARCH THIS ERROR
-/* connection error: Error: querySrv ETIMEOUT _mongodb._tcp.cluster0.hgty8ov.mongodb.net
-    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:240:17) {
-  errno: undefined,
-  code: 'ETIMEOUT',
-  syscall: 'querySrv',
-  hostname: '_mongodb._tcp.cluster0.hgty8ov.mongodb.net'
-}
-node:internal/process/promises:279
-            triggerUncaughtException(err, true /* fromPromise */);
-            ^
-
-Error: querySrv ETIMEOUT _mongodb._tcp.cluster0.hgty8ov.mongodb.net
-    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:240:17) {   
-  errno: undefined,
-  code: 'ETIMEOUT',
-  syscall: 'querySrv',
-  hostname: '_mongodb._tcp.cluster0.hgty8ov.mongodb.net'
-}
- */
-
-// solve http method
+// catch block function for axios
 const refreshHandlingFunction = async () => {
+  console.log("refreshing");
   const response = await axios.post(
     "http://localhost:3001/refresh",
     {
@@ -49,7 +28,7 @@ const refreshHandlingFunction = async () => {
       },
     }
   );
-  console.log(response?.data?.accessToken);
+  console.log(response?.data);
   localStorage.setItem("access_token", response?.data?.accessToken);
 };
 
@@ -72,9 +51,9 @@ const router = createBrowserRouter([
               },
             })
             .catch(async function (err) {
-              console.log("not logged in", err?.response);
+              console.log("🚀 ~ file: routes.js:54 ~ loader: ~ err:", err);
               if (err?.response?.status === 403) {
-                refreshHandlingFunction();
+                return refreshHandlingFunction();
               }
             });
           return response || [];
@@ -98,7 +77,7 @@ const router = createBrowserRouter([
                   }
                 )
                 .catch(async function (err) {
-                  console.log(err.response.status);
+                  console.log("🚀 ~ file: routes.js:80 ~ loader: ~ err:", err);
                   /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
 
                   if (err?.response?.status === 403) {
@@ -126,12 +105,13 @@ const router = createBrowserRouter([
           },
         })
         .catch(async function (err) {
-          console.log(err.response.status);
+          console.log("🚀 ~ file: routes.js:108 ~ loader: ~ err:", err);
           /* LOGGING USER OUT EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
           if (err?.response?.status === 403) {
             refreshHandlingFunction();
           }
         });
+      return response || [];
     },
   },
   {
@@ -154,8 +134,7 @@ const router = createBrowserRouter([
           },
         })
         .catch(async function (err) {
-          console.log(err.response.status);
-          window.alert("You are logged out now!");
+          console.log("🚀 ~ file: routes.js:139 ~ loader: ~ err:", err);
           /* LOGGING USER OUT, EMAIL ACCOUNT USERS ONLY, NOT GOOGLE SIGN-IN */
           if (err?.response?.status === 403) {
             refreshHandlingFunction();
@@ -165,7 +144,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorComponent />,
   },
   { path: "/about", element: <AboutUs /> },
-  { path: "/viewCart", element: <CartView /> }, // axios api call in component file
+  { path: "/viewCart", element: <CartView /> }, // axios api called in component file
 ]);
 
 export default router;
