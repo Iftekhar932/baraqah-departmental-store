@@ -20,11 +20,12 @@ const userEmailAccount = localStorage?.getItem("userEmail"); // users whose acco
 const userRole = localStorage?.getItem("userEmail"); // users whose accounts created with email sign up
 
 // remove every stored info of user if token or email is missing
-/* if (Boolean(accessToken) || Boolean(userEmailAccount) == false) {
-  localStorage?.removeItem("access_token");
-  localStorage?.removeItem("userEmail");
-  localStorage?.removeItem("role");
-} */
+// !NEEDS TESTING
+if (Boolean(accessToken) || Boolean(userEmailAccount) == false) {
+  localStorage?.setItem("access_token", null);
+  localStorage?.setItem("userEmail", null);
+  localStorage?.setItem("role", null);
+}
 
 // catch block function for axios
 const refreshHandlingFunction = async () => {
