@@ -3,14 +3,12 @@ import axios from "axios";
 
 import Products from "../components/Products";
 import Home from "../components/Home";
-// import CategoriesSlide from "../components/CategoriesSlide";
 // import Header from "../components/Header";
 import SliderCategory from "../components/SliderCategory";
 import UserLogin from "../components/UserLogin";
 import UserRegister from "../components/UserRegister";
 import AdminPanel from "../components/AdminPanel";
 import ErrorComponent from "../components/ErrorComponent";
-import UserProfile from "../components/UserProfile";
 import AboutUs from "../components/AboutUs";
 import CartView from "../components/CartView";
 
@@ -21,13 +19,13 @@ const userRole = localStorage?.getItem("userEmail"); // users whose accounts cre
 
 // remove every stored info of user if token or email is missing
 // !NEEDS TESTING
-if (Boolean(accessToken) || Boolean(userEmailAccount) == false) {
+/* if (Boolean(accessToken) || Boolean(userEmailAccount) == false) {
   localStorage?.setItem("access_token", null);
   localStorage?.setItem("userEmail", null);
   localStorage?.setItem("role", null);
-}
+} */
 
-// catch block function for axios
+// function to call api of refreshToken
 const refreshHandlingFunction = async () => {
   if (Boolean(userEmailAccount)) {
     const response = await axios.post(
@@ -46,6 +44,7 @@ const refreshHandlingFunction = async () => {
   }
 };
 
+// when jwt expires it'll invoke "refreshTokenHandlingFunction" above
 const JWTExpiryHandlerFunction = async (url) => {
   if (Boolean(userEmailAccount) || Boolean(accessToken)) {
     const response = await axios
@@ -61,7 +60,7 @@ const JWTExpiryHandlerFunction = async (url) => {
           return refreshHandlingFunction();
         }
       });
-    console.log("line63", response);
+    console.log("line 65", response);
     return response || [];
   }
 };
@@ -122,7 +121,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorComponent />,
   },
   { path: "/about", element: <AboutUs /> },
-  { path: "/viewCart", element: <CartView /> }, // axios api called in component file
+  { path: "/viewCart", element: <CartView /> }, // axios api called in component file "axios.get()" that uses productsID to get a single product
 ]);
 
 export default router;

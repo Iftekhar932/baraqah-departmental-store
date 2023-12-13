@@ -37,10 +37,10 @@ const CartView = () => {
               qnt: product.qnt,
             };
           })
-          .catch((err) => console.log(err, "line 35 product.js"));
+          .catch((err) => console.log(err, "line 40 product.js"));
       });
 
-      const cartProducts = await Promise.all(productRequests);
+      const cartProducts = await Promise.all(productRequests); // it calls the api for every product, so it makes sure after all promises are resolved it'll be set in "cartTotalSum" state, otherwise it won't set every item on cart that is fetched
       let totalSum = 0;
       for (const product of cartProducts) {
         totalSum += product.price * product.qnt;

@@ -1,6 +1,4 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
-import useFirebase from "../hooks/useFirebase";
-import Header from "./Header";
 import Card from "./Product";
 
 const Cards = () => {

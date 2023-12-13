@@ -13,6 +13,8 @@ const Header = () => {
     if (userEmail) {
       localStorage.setItem("userEmail", null);
       localStorage.setItem("access_token", null);
+      localStorage.setItem("userProducts", []);
+      localStorage.setItem("role", null);
       return;
     } else {
       return logOut();
@@ -75,6 +77,7 @@ const Header = () => {
               <Link to="/about">About Us</Link>
             </li>
             <li>
+              {/* "user?.email" is for google account sign in (firebase) || "userEmail" is manually email account signed in */}
               {user?.email || userEmail ? (
                 <a href="#" onClick={logOutFunc}>
                   Logout
@@ -86,6 +89,7 @@ const Header = () => {
           </ul>
 
           <ul className="menu menu-horizontal px-1 items-center">
+            {/* "user?.email" is for google account sign in (firebase) || "userEmail" is manually email account signed in */}
             {user?.email ||
               (userEmail && (
                 <li className="hover:bg-zinc-200">

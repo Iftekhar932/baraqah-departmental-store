@@ -21,9 +21,10 @@ function AdminPanel() {
           },
         }
       );
-      const indexOfDeletedUser = allUsers.filter(
+      /* const restOfTheUsers = allUsers.filter(
         (user) => user._id || user.uid != id
-      );
+      ); */
+      return response;
     } catch (error) {
       console.error("Error deleting user:", error.response);
     }
@@ -65,10 +66,7 @@ function AdminPanel() {
 
             <button
               className="btn btn-danger"
-              onClick={
-                () => deletionOfUserByAdmin(user)
-                // deletionOfUserByAdmin(`${user?._id} _id` || `${user?.uid} uid`)
-              }
+              onClick={() => deletionOfUserByAdmin(user)}
               disabled={user?.role == "admin"}
             >
               Delete

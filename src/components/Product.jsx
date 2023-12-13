@@ -7,11 +7,6 @@ const Product = (props) => {
   const { addItem, subItem } = useCart();
   const [itemQnt, setItemQnt] = useState(0);
 
-  const numberCheck = (e) => {
-    if (e.target.value < 0) setItemQnt(e.target.value);
-    return (e.target.value = 0);
-  };
-
   const itemSelection = async (_id, flag) => {
     const response = await axios
       .get(`http://localhost:3001/getAllProducts/${_id}`, {
