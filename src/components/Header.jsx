@@ -10,11 +10,10 @@ const Header = () => {
 
   const logOutFunc = () => {
     if (userEmail) {
-      localStorage.setItem("userEmail", null);
-      localStorage.setItem("access_token", null);
-      localStorage.setItem("userProducts", []);
-      localStorage.setItem("role", null);
-      return;
+      localStorage.removeItem("userEmail", null);
+      localStorage.removeItem("access_token", null);
+      localStorage.removeItem("userProducts", []);
+      localStorage.removeItem("role", null);
     } else {
       return logOut();
     }
@@ -76,8 +75,7 @@ const Header = () => {
               <Link to="/about">About Us</Link>
             </li>
             <li>
-              {/* "user?.email" is for google account sign in (firebase) || "userEmail" is manually email account signed in */}
-              {userEmail == null ? (
+              {Boolean(userEmail) ? (
                 <a href="#" onClick={logOutFunc}>
                   Logout
                 </a>
@@ -88,7 +86,7 @@ const Header = () => {
           </ul>
           <ul className="menu menu-horizontal px-1 items-center">
             {/* "user?.email" is for google account sign in (firebase) || "userEmail" is manually email account signed in */}
-            <li className={`hover:bg-zinc-200 ${!userEmail ? "hidden" : ""}`}>
+            <li className={`hover:bg-zinc-200 ${userEmail ? "" : "hidden"}`}>
               <a href="#">
                 <img
                   src="https://i.ibb.co/vPhPLjL/email-1-svgrepo-com.png"

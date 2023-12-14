@@ -16,7 +16,7 @@ import Main from "../components/Main";
 
 // items from localStorage
 const accessToken = localStorage?.getItem("access_token");
-const userEmailAccount = localStorage?.getItem("userEmail"); // users whose accounts created with email sign up
+const userEmailAccount = localStorage.getItem("userEmail"); // users whose accounts created with email sign up
 const userRole = localStorage?.getItem("userEmail"); // users whose accounts created with email sign up
 
 // remove every stored info of user if token or email is missing
@@ -48,6 +48,11 @@ const refreshHandlingFunction = async () => {
 
 // when jwt expires it'll invoke "refreshTokenHandlingFunction" above
 const JWTExpiryHandlerFunction = async (url) => {
+  // ! jwt not working on first login, needs refresh fix that
+  if (Boolean(userEmailAccount) == false) {
+    return;
+  }
+  console.log("ashse");
   const response = await axios
     .get(url, {
       withCredentials: true,
