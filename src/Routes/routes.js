@@ -48,23 +48,21 @@ const refreshHandlingFunction = async () => {
 
 // when jwt expires it'll invoke "refreshTokenHandlingFunction" above
 const JWTExpiryHandlerFunction = async (url) => {
-  if (Boolean(userEmailAccount) || Boolean(accessToken)) {
-    const response = await axios
-      .get(url, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .catch(function (err) {
-        console.log("🚀 ~ file: routes.js:57 ~ getRequestHandler ~ err:", err);
-        if (err?.response?.status === 403) {
-          return refreshHandlingFunction();
-        }
-      });
-    console.log("line 65", response);
-    return response || [];
-  }
+  const response = await axios
+    .get(url, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .catch(function (err) {
+      console.log("🚀 ~ file: routes.js:60 ~ getRequestHandler ~ err:", err);
+      if (err?.response?.status === 403) {
+        return refreshHandlingFunction();
+      }
+    });
+  console.log("line 65", response);
+  return response || [];
 };
 
 const router = createBrowserRouter([

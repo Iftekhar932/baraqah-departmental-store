@@ -4,8 +4,7 @@ import useFirebase from "../hooks/useFirebase";
 import ThemeSwitcher from "./ThemeSwitcher";
 
 const Header = () => {
-  const { user, logOut } = useFirebase();
-
+  const { setUser, user, logOut } = useFirebase();
   const userEmail = localStorage.getItem("userEmail");
   const role = localStorage.getItem("role");
 
@@ -23,8 +22,8 @@ const Header = () => {
 
   return (
     <>
-      {/* //* MOBILE 👇 */}
       <div className="navbar mb-5 mx-auto border-b-[.1px] font-thin">
+        {/* //* MOBILE 👇 */}
         <div className="dropdown md:invisible">
           <label tabIndex={0} className="btn btn-ghost">
             <svg
@@ -78,7 +77,7 @@ const Header = () => {
             </li>
             <li>
               {/* "user?.email" is for google account sign in (firebase) || "userEmail" is manually email account signed in */}
-              {user?.email || userEmail ? (
+              {userEmail == null ? (
                 <a href="#" onClick={logOutFunc}>
                   Logout
                 </a>
@@ -87,24 +86,20 @@ const Header = () => {
               )}
             </li>
           </ul>
-
           <ul className="menu menu-horizontal px-1 items-center">
             {/* "user?.email" is for google account sign in (firebase) || "userEmail" is manually email account signed in */}
-            {user?.email ||
-              (userEmail && (
-                <li className="hover:bg-zinc-200">
-                  <a href="#">
-                    <img
-                      src="https://i.ibb.co/vPhPLjL/email-1-svgrepo-com.png"
-                      alt="email-1-svgrepo-com"
-                      border="0"
-                      height="22px"
-                      width="22px"
-                    />
-                    {user?.email || userEmail}
-                  </a>
-                </li>
-              ))}
+            <li className={`hover:bg-zinc-200 ${!userEmail ? "hidden" : ""}`}>
+              <a href="#">
+                <img
+                  src="https://i.ibb.co/vPhPLjL/email-1-svgrepo-com.png"
+                  alt="email-1-svgrepo-com"
+                  border="0"
+                  height="22px"
+                  width="22px"
+                />
+                {user?.email || userEmail}
+              </a>
+            </li>
             <li>
               <ThemeSwitcher />
             </li>
