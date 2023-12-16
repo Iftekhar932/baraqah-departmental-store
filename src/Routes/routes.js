@@ -27,29 +27,28 @@ const userRole = localStorage?.getItem("userEmail"); // users whose accounts cre
 
 // function to call api of refreshToken
 const refreshHandlingFunction = async () => {
-  console.log(Boolean(userEmailAccount));
-  if (Boolean(userEmailAccount)) {
-    const response = await axios.post(
-      "http://localhost:3001/refresh",
-      {
-        email: userEmailAccount,
+  const response = await axios.post(
+    "http://localhost:3001/refresh",
+    {
+      email: userEmailAccount,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    console.log(response?.data);
-    localStorage.setItem("access_token", response?.data?.accessToken);
-  }
+    }
+  );
+  console.log(response?.data);
+  localStorage.setItem("access_token", response?.data?.accessToken);
 };
 
-// when jwt expires it'll invoke "refreshTokenHandlingFunction" above
+// when jwt expires it'll invoke "refreshTokenHandlingFunction" above or it'll handle response
 const JWTExpiryHandlerFunction = async (url) => {
-  // ! jwt not working on first login, needs refresh fix that
+  // ! needs refresh to render data..fix that
   if (!userEmailAccount) {
-    return <h1>Not logged in</h1>;
+    // You may want to handle this case differently, e.g., redirect to login
+    console.log("User not logged in");
+    return null;
   }
   const response = await axios
     .get(url, {
@@ -58,10 +57,10 @@ const JWTExpiryHandlerFunction = async (url) => {
         Authorization: `Bearer ${accessToken}`,
       },
     })
-    .catch(function (err) {
+    .catch(async function (err) {
       console.log("🚀 ~ file: routes.js:60 ~ getRequestHandler ~ err:", err);
       if (err?.response?.status === 403) {
-        return refreshHandlingFunction();
+        return await refreshHandlingFunction();
       }
     });
   console.log("line 65", response);
@@ -84,7 +83,7 @@ const router = createBrowserRouter([
             element: <SliderCategory />,
             errorElement: <ErrorComponent />,
             loader: async () => {
-              return JWTExpiryHandlerFunction(
+              return await JWTExpiryHandlerFunction(
                 "http://localhost:3001/getAllProducts"
               );
             },
@@ -94,7 +93,7 @@ const router = createBrowserRouter([
                 element: <Products />,
                 errorElement: <ErrorComponent />,
                 loader: async (req) => {
-                  return JWTExpiryHandlerFunction(
+                  return await JWTExpiryHandlerFunction(
                     `http://localhost:3001/getAllProductsCategoryWise/${req.params.category}`
                   );
                 },
@@ -109,7 +108,7 @@ const router = createBrowserRouter([
         element: <Products />,
         errorElement: <ErrorComponent />,
         loader: async () => {
-          return JWTExpiryHandlerFunction(
+          return await JWTExpiryHandlerFunction(
             "http://localhost:3001/getAllProducts"
           );
         },
@@ -126,7 +125,7 @@ const router = createBrowserRouter([
         path: "/adminOnly",
         element: <AdminPanel />,
         loader: async () => {
-          return JWTExpiryHandlerFunction(
+          return await JWTExpiryHandlerFunction(
             "http://localhost:3001/adminGetUsers"
           );
         },

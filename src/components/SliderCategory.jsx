@@ -2,6 +2,7 @@ import { Link, Outlet, useLoaderData } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import Carousel from "react-multi-carousel";
 import useFirebase from "../hooks/useFirebase";
+import { useEffect, useState } from "react";
 
 const responsive = {
   superLargeDesktop: {
@@ -25,12 +26,29 @@ const responsive = {
 const SliderCategory = () => {
   const { user } = useFirebase();
   const loadedData = useLoaderData();
+  console.log("✨ 🌟  SliderCategory  loadedData:", loadedData);
 
+  // Use state to track whether the data is loaded
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
+  useEffect(() => {
+    // Check if data is available and set the loaded state
+    if (loadedData?.data?.length > 0) {
+      setIsDataLoaded(true);
+    }
+  }, [loadedData]);
+
+  // If data is not loaded, return null (component won't render)
+  if (!isDataLoaded) {
+    return null;
+  }
+
+  /* 
   // If there's no data, don't render the component
   if (!loadedData?.data?.length) {
     return null;
   }
-
+ */
   let category = loadedData?.data?.map((image) => {
     return image.category;
   });
@@ -54,7 +72,7 @@ const SliderCategory = () => {
         keyBoardControl={true}
         containerClass="carousel-container"
         itemClass="carousel-item-padding-40-px"
-        className={`h-64 w-[500px] mx-auto ${!user && "hidden"}`} // ! haven't tested after adding this hidden condition
+        className={`h-64 w-[500px] mx-auto `}
       >
         {imgs?.map((img, index) => {
           return (

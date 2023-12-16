@@ -46,7 +46,6 @@ const UserLogin = () => {
       localStorage.setItem("role", response.data.role);
 
       navigate("/");
-
       return response;
     } catch (error) {
       console.error("Error during login:", error.response?.data);
