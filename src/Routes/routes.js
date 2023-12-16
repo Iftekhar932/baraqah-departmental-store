@@ -44,12 +44,12 @@ const refreshHandlingFunction = async () => {
 
 // when jwt expires it'll invoke "refreshTokenHandlingFunction" above or it'll handle response
 const JWTExpiryHandlerFunction = async (url) => {
-  // ! needs refresh to render data..fix that
-  if (!userEmailAccount) {
+  // ! removing this line would solve the problem of rendering, but it'll throw error when user is not logged in, which means user can't stay at the home page without logging in
+  /*  if (!userEmailAccount) {
     // You may want to handle this case differently, e.g., redirect to login
     console.log("User not logged in");
     return null;
-  }
+  } */
   const response = await axios
     .get(url, {
       withCredentials: true,
@@ -64,7 +64,7 @@ const JWTExpiryHandlerFunction = async (url) => {
       }
     });
   console.log("line 65", response);
-  return response || [];
+  return response;
 };
 
 const router = createBrowserRouter([

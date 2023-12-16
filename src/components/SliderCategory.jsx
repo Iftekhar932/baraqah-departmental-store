@@ -29,6 +29,7 @@ const SliderCategory = () => {
   console.log("✨ 🌟  SliderCategory  loadedData:", loadedData);
 
   // If there's no data, don't render the component
+  // ? removing this condition won't solve...
   if (!loadedData?.data?.length) {
     return null;
   }
@@ -44,7 +45,7 @@ const SliderCategory = () => {
   imgs = [...new Set(imgs)];
 
   return (
-    <div className={`${loadedData?.data?.length === 0 ? "hidden" : ""}`}>
+    <div>
       <Carousel
         swipeable={true}
         draggable={false}
@@ -56,7 +57,7 @@ const SliderCategory = () => {
         keyBoardControl={true}
         containerClass="carousel-container"
         itemClass="carousel-item-padding-40-px"
-        className={`h-64 w-[500px] mx-auto `}
+        className="h-64 w-[500px] mx-auto"
       >
         {imgs?.map((img, index) => {
           return (

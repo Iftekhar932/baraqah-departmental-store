@@ -24,7 +24,7 @@ const ErrorComponent = () => {
       <p className="font-bold">Error!</p>
       <p>Something went wrong...</p>
       <Link to="/" className="underline cursor-pointer">
-        Go back.
+        Go to home page.
       </Link>
     </div>
   );

@@ -36,16 +36,19 @@ const UserLogin = () => {
         },
         { withCredentials: true }
       );
+      console.log("✨ 🌟  submitFunction  response:", response);
+
+      const responseHandleFunc = () => {
+        localStorage.setItem("access_token", response.data.accessToken);
+        localStorage.setItem("userEmail", response.data.email);
+        localStorage.setItem("role", response.data.role);
+        navigate("/");
+      };
 
       // handle response
       response.status === 200
-        ? localStorage.setItem("access_token", response.data.accessToken)
+        ? responseHandleFunc()
         : console.log(response.data, "login failed");
-
-      localStorage.setItem("userEmail", response.data.email);
-      localStorage.setItem("role", response.data.role);
-
-      navigate("/");
       return response;
     } catch (error) {
       console.error("Error during login:", error.response?.data);
