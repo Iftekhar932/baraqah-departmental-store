@@ -3,7 +3,6 @@ import axios from "axios";
 
 import Products from "../components/Products";
 import Home from "../components/Home";
-// import Header from "../components/Header";
 import SliderCategory from "../components/SliderCategory";
 import UserLogin from "../components/UserLogin";
 import UserRegister from "../components/UserRegister";
@@ -11,7 +10,6 @@ import AdminPanel from "../components/AdminPanel";
 import ErrorComponent from "../components/ErrorComponent";
 import AboutUs from "../components/AboutUs";
 import CartView from "../components/CartView";
-import Header from "../components/Header";
 import Main from "../components/Main";
 
 // items from localStorage
@@ -29,6 +27,7 @@ const userRole = localStorage?.getItem("userEmail"); // users whose accounts cre
 
 // function to call api of refreshToken
 const refreshHandlingFunction = async () => {
+  console.log(Boolean(userEmailAccount));
   if (Boolean(userEmailAccount)) {
     const response = await axios.post(
       "http://localhost:3001/refresh",
@@ -49,10 +48,9 @@ const refreshHandlingFunction = async () => {
 // when jwt expires it'll invoke "refreshTokenHandlingFunction" above
 const JWTExpiryHandlerFunction = async (url) => {
   // ! jwt not working on first login, needs refresh fix that
-  if (Boolean(userEmailAccount) == false) {
-    return;
+  if (!userEmailAccount) {
+    return <h1>Not logged in</h1>;
   }
-  console.log("ashse");
   const response = await axios
     .get(url, {
       withCredentials: true,
