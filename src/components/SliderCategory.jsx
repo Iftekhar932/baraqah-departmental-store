@@ -28,27 +28,11 @@ const SliderCategory = () => {
   const loadedData = useLoaderData();
   console.log("✨ 🌟  SliderCategory  loadedData:", loadedData);
 
-  // Use state to track whether the data is loaded
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
-
-  useEffect(() => {
-    // Check if data is available and set the loaded state
-    if (loadedData?.data?.length > 0) {
-      setIsDataLoaded(true);
-    }
-  }, [loadedData]);
-
-  // If data is not loaded, return null (component won't render)
-  if (!isDataLoaded) {
-    return null;
-  }
-
-  /* 
   // If there's no data, don't render the component
   if (!loadedData?.data?.length) {
     return null;
   }
- */
+
   let category = loadedData?.data?.map((image) => {
     return image.category;
   });
