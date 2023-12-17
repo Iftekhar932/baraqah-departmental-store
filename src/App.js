@@ -12,7 +12,7 @@ import AboutUs from "./components/AboutUs";
 /* 
 ! add deletion function for admin (TEST WITH GOOGLE ACCOUNTS)
 ! slider not responsive in mobile (RECHECK IT I SOLVED IT THOUGH)
-! need to add forgot password feature for firebase and express authentication
+! need to add forgot password feature for express authentication
 ! add refreshToken feature for google
 */
 
