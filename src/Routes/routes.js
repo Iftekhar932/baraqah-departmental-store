@@ -38,9 +38,9 @@ const refreshHandlingFunction = async () => {
 
 // when jwt expires it'll invoke "refreshTokenHandlingFunction" above or it'll handle response
 const JWTExpiryHandlerFunction = async (url) => {
-  if (userEmailAccount) {
+  /* if (userEmailAccount) {
     return;
-  }
+  } */
   const response = await axios
     .get(url, {
       withCredentials: true,

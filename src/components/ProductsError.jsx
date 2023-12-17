@@ -23,7 +23,7 @@ const ProductsError = () => {
     >
       <p className="font-bold">Not logged in!</p>
       <p>Login to see products...</p>
-      <Link to="/" className="underline cursor-pointer">
+      <Link to="/userLogin" className="underline cursor-pointer">
         Login here
       </Link>
     </div>

@@ -54,11 +54,11 @@ const SliderCategory = () => {
         keyBoardControl={true}
         containerClass="carousel-container"
         itemClass="carousel-item-padding-40-px"
-        className={`h-64 w-[500px] mx-auto `}
+        className="h-64 mx-auto md:w-[500px]"
       >
         {imgs?.map((img, index) => {
           return (
-            <div key={index} className="mr-5">
+            <div key={index} className="m-10 md:mr-5 lg:mr-0">
               <Link
                 to={`products/${category[index]}`}
                 title={`${category[index]}`}
