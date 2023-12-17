@@ -2,7 +2,6 @@ import { Link, Outlet, useLoaderData } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import Carousel from "react-multi-carousel";
 import useFirebase from "../hooks/useFirebase";
-import { useEffect, useState } from "react";
 
 const responsive = {
   superLargeDesktop: {
@@ -26,10 +25,8 @@ const responsive = {
 const SliderCategory = () => {
   const { user } = useFirebase();
   const loadedData = useLoaderData();
-  console.log("✨ 🌟  SliderCategory  loadedData:", loadedData);
 
   // If there's no data, don't render the component
-  // ? removing this condition won't solve...
   if (!loadedData?.data?.length) {
     return null;
   }
@@ -45,7 +42,7 @@ const SliderCategory = () => {
   imgs = [...new Set(imgs)];
 
   return (
-    <div>
+    <div className={`${loadedData?.data?.length === 0 ? "hidden" : ""}`}>
       <Carousel
         swipeable={true}
         draggable={false}
@@ -57,7 +54,7 @@ const SliderCategory = () => {
         keyBoardControl={true}
         containerClass="carousel-container"
         itemClass="carousel-item-padding-40-px"
-        className="h-64 w-[500px] mx-auto"
+        className={`h-64 w-[500px] mx-auto `}
       >
         {imgs?.map((img, index) => {
           return (

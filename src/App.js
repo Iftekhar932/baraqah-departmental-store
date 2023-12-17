@@ -10,11 +10,11 @@ import Main from "./components/Main";
 import AboutUs from "./components/AboutUs";
 
 /* 
-! why isn't header rendering in other pages? 
 ! add deletion function for admin (TEST WITH GOOGLE ACCOUNTS)
 ! slider not responsive in mobile
-! need to add forgot password feature
-! add refreshtoken feature for goolgle
+! need to add forgot password feature for firebase and express authentication
+! add refreshToken feature for google
+! 
 */
 
 function App() {
