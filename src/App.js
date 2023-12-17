@@ -21,15 +21,4 @@ function App() {
   return <RouterProvider router={router}></RouterProvider>;
 }
 
-/* function App() {
-  return (
-    <Router>
-      <Header />
-      <Routes>
-        <Route path="/about" element={<AboutUs />} />
-      </Routes>
-    </Router>
-  );
-} */
-
 export default App;

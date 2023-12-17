@@ -7,23 +7,17 @@ import SliderCategory from "../components/SliderCategory";
 import UserLogin from "../components/UserLogin";
 import UserRegister from "../components/UserRegister";
 import AdminPanel from "../components/AdminPanel";
-import ErrorComponent from "../components/ErrorComponent";
 import AboutUs from "../components/AboutUs";
 import CartView from "../components/CartView";
 import Main from "../components/Main";
+
+import ProductsError from "../components/ProductsError";
+import ErrorComponent from "../components/ErrorComponent";
 
 // items from localStorage
 const accessToken = localStorage?.getItem("access_token");
 const userEmailAccount = localStorage.getItem("userEmail"); // users whose accounts created with email sign up
 const userRole = localStorage?.getItem("userEmail"); // users whose accounts created with email sign up
-
-// remove every stored info of user if token or email is missing
-// !NEEDS TESTING
-/* if (Boolean(accessToken) || Boolean(userEmailAccount) == false) {
-  localStorage?.setItem("access_token", null);
-  localStorage?.setItem("userEmail", null);
-  localStorage?.setItem("role", null);
-} */
 
 // function to call api of refreshToken
 const refreshHandlingFunction = async () => {
@@ -44,12 +38,9 @@ const refreshHandlingFunction = async () => {
 
 // when jwt expires it'll invoke "refreshTokenHandlingFunction" above or it'll handle response
 const JWTExpiryHandlerFunction = async (url) => {
-  // ! removing this line would solve the problem of rendering, but it'll throw error when user is not logged in, which means user can't stay at the home page without logging in
-  /*  if (!userEmailAccount) {
-    // You may want to handle this case differently, e.g., redirect to login
-    console.log("User not logged in");
-    return null;
-  } */
+  if (userEmailAccount) {
+    return;
+  }
   const response = await axios
     .get(url, {
       withCredentials: true,
@@ -81,7 +72,7 @@ const router = createBrowserRouter([
           {
             path: "/",
             element: <SliderCategory />,
-            errorElement: <ErrorComponent />,
+            errorElement: <ProductsError />,
             loader: async () => {
               return await JWTExpiryHandlerFunction(
                 "http://localhost:3001/getAllProducts"

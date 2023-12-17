@@ -13,7 +13,6 @@ const ProductsError = () => {
         setTimeout(() => setUserHere(() => !userHere), 3000);
     };
     timeToNavigate();
-
     if (userHere) return navigate("/userLogin");
   }, [userHere]);
 
@@ -31,4 +30,4 @@ const ProductsError = () => {
   );
 };
 
-export default ErrorComponent;
+export default ProductsError;
