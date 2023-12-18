@@ -6,12 +6,14 @@ const ProductsError = () => {
   const navigate = useNavigate();
   const [userHere, setUserHere] = useState(false);
 
-  // NOTE: the condition with the state is to make sure if user stays on the error page for 3 seconds will be redirected otherwise won't
+  /*  NOTE: the condition with the state is to make sure if user stays on
+   the error page for 3 seconds will be redirected unless it is this route - '/' */
   useEffect(() => {
     const timeToNavigate = () => {
       if (window.location.pathname != "/")
         setTimeout(() => setUserHere(() => !userHere), 3000);
     };
+
     timeToNavigate();
     if (userHere) return navigate("/userLogin");
   }, [userHere]);

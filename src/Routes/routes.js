@@ -18,7 +18,6 @@ import ErrorComponent from "../components/ErrorComponent";
 // items from localStorage
 const accessToken = localStorage?.getItem("access_token");
 const userEmailAccount = localStorage.getItem("userEmail"); // users whose accounts created with email sign up
-const userRole = localStorage?.getItem("userEmail"); // users whose accounts created with email sign up
 
 // function to call api of refreshToken
 const refreshHandlingFunction = async () => {

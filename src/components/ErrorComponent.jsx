@@ -4,9 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 
 const ErrorComponent = () => {
   const navigate = useNavigate();
-  const [userHere, setUserHere] = useState(false);
+  const [userHere, setUserHere] = useState(false); // indicates whether in user's device this component is rendered or not
 
-  // NOTE: the condition with the state is to make sure if user stays on the error page for 3 seconds will be redirected otherwise won't
+  // NOTE: the condition with the state is to make sure if user stays in this page error page for 3 seconds, will be redirected. Otherwise won't
   useEffect(() => {
     const timeToNavigate = () => {
       setTimeout(() => setUserHere(() => !userHere), 3000);
@@ -24,7 +24,17 @@ const ErrorComponent = () => {
       <p className="font-bold">Error!</p>
       <p>Something went wrong...</p>
       <Link to="/" className="underline cursor-pointer">
-        Go to home page.
+        Go to home page. redirecting to login page in{" "}
+        {/* this function below needs testing */}
+        {/* this function below needs testing */}
+        {/* this function below needs testing */}
+        {/* this function below needs testing */}
+        {/* this function below needs testing */}
+        {() => {
+          let i = 3;
+          setTimeout(i - 1, 1000);
+          return i;
+        }}
       </Link>
     </div>
   );

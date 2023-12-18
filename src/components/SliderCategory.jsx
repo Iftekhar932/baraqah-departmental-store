@@ -56,6 +56,11 @@ const SliderCategory = () => {
         itemClass="carousel-item-padding-40-px"
         className="h-64 mx-auto md:w-[500px]"
       >
+        {/* while I'm looping over "imgs" I'm getting the 
+        elements of "category" array with "map()'s index, e.g map(element,index)"  
+        index is increasing by 1 with every element,
+         so I'm basically putting it like this "category[index]", I get all the elements of "category" array at the same time in this way
+        */}
         {imgs?.map((img, index) => {
           return (
             <div key={index} className="m-10 md:mr-5 lg:mr-0">

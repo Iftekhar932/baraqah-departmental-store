@@ -12,6 +12,7 @@ const UserLogin = () => {
 
   const navigate = useNavigate();
 
+  // info collection of user
   const infoCollection = (e) => {
     const email = e.target.form.email.value;
     const password = e.target.form.password.value;
@@ -19,6 +20,7 @@ const UserLogin = () => {
     setUserPassword(password);
   };
 
+  // info submit to server
   const submitFunction = async (e, flag) => {
     setErrorMsg("");
     try {
@@ -36,7 +38,6 @@ const UserLogin = () => {
         },
         { withCredentials: true }
       );
-      console.log("✨ 🌟  submitFunction  response:", response);
 
       const responseHandleFunc = () => {
         localStorage.setItem("access_token", response.data.accessToken);
@@ -62,9 +63,8 @@ const UserLogin = () => {
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Login now!</h1>
           <p className="py-6">
-            {/*      Ours is one of the best online grocery shops around the city with
-            fresh, healthy, pure products along with fast delivery */}
-            admin@gmail.com
+            Ours is one of the best online grocery shops around the city with
+            fresh, healthy, pure products along with fast delivery
           </p>
         </div>
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">

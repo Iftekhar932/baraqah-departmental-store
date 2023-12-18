@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-//! basic logic is done needs testing and have to see what to do after password is reset
 const ForgotPasswordForm = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
@@ -10,6 +9,7 @@ const ForgotPasswordForm = () => {
 
   const navigate = useNavigate();
 
+  // email & password collection
   const infoCollection = (e) => {
     const email = e.target.form.email.value;
     const password = e.target.form.password.value;
@@ -30,16 +30,9 @@ const ForgotPasswordForm = () => {
         { withCredentials: true }
       );
 
-      /* const responseHandleFunc = () => {   
-        localStorage.setItem("access_token", response.data.accessToken);
-        localStorage.setItem("userEmail", response.data.email);
-        localStorage.setItem("role", response.data.role);
-        navigate("/");
-      }; */
-
       // handle response
       response.status === 200
-        ? console.log(response.data, "password changed")
+        ? navigate("/")
         : console.log(response.data, "change failed");
       return response;
     } catch (error) {

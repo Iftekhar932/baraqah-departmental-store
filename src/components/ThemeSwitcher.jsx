@@ -35,13 +35,15 @@ const themeNames = [
 const ThemeSwitcher = () => {
   const [userTheme, setUserTheme] = useState(
     window.localStorage.getItem("userSelectedTheme")
-  );
-  //
+  ); // initial value is set in the useEffect
+
+  // "theme" attribute is set while this component is rendered
   useEffect(() => {
     document.body.dataset.theme = userTheme;
-    setUserTheme(window.localStorage.getItem("userSelectedTheme"));
+    setUserTheme(window.localStorage.getItem("userSelectedTheme")); // setting initialValue on state above
   }, [userTheme]);
 
+  // change theme
   const themeValueSetter = (e) => {
     window.localStorage.setItem("userSelectedTheme", e.target.textContent);
     setUserTheme(e.target.textContent);

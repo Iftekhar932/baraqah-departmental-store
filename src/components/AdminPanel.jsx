@@ -6,6 +6,7 @@ function AdminPanel() {
   const loadedData = useLoaderData();
   const allUsers = loadedData.data.allUsers;
 
+  // account deletion by id or uid(firebase)
   async function deleteUser(id, flag) {
     try {
       const response = await axios.post(
@@ -21,9 +22,6 @@ function AdminPanel() {
           },
         }
       );
-      /* const restOfTheUsers = allUsers.filter(
-        (user) => user._id || user.uid != id
-      ); */
       return response;
     } catch (error) {
       console.error("Error deleting user:", error.response);
@@ -33,15 +31,12 @@ function AdminPanel() {
   const deletionOfUserByAdmin = (user) => {
     try {
       if (user?.uid) {
-        const confirmation = window.prompt(
-          "Are you sure you want to delete this user? type 'DELETE' "
-        );
-        if (confirmation === "DELETE".toLocaleLowerCase())
+        if (window.confirm("Are you sure you want to delete this user?"))
           return deleteUser(user.uid, "uid");
       }
 
       if (user?._id) {
-        if (window.confirm("Are you sure you want to delete this user")) {
+        if (window.confirm("Are you sure you want to delete this user?")) {
           deleteUser(user._id, "_id");
         }
       }

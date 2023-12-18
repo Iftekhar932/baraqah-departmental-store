@@ -4,7 +4,8 @@ import useFirebase from "../hooks/useFirebase";
 import ThemeSwitcher from "./ThemeSwitcher";
 
 const Header = () => {
-  const { setUser, user, logOut } = useFirebase();
+  const { user, logOut } = useFirebase();
+
   const userEmail = localStorage.getItem("userEmail");
   const role = localStorage.getItem("role");
 
@@ -14,7 +15,7 @@ const Header = () => {
       localStorage.removeItem("access_token", null);
       localStorage.removeItem("userProducts", []);
       localStorage.removeItem("role", null);
-    } else {
+    } else if (user) {
       return logOut();
     }
   };

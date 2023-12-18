@@ -3,7 +3,6 @@ import Header from "./Header";
 import { Outlet } from "react-router-dom";
 
 const Main = () => {
-  /* BARAQAH */
   return (
     <div>
       <Header />

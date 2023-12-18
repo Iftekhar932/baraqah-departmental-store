@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios";
 import useCart from "../hooks/useCart";
 
 const Product = (props) => {
   const { category, _id, name, unit, img, price } = props.productData;
   const { addItem, subItem } = useCart();
-  const [itemQnt, setItemQnt] = useState(0);
 
+  // get product id and add it to localStorage cart with "addItem/subitem" function
   const itemSelection = async (_id, flag) => {
     const response = await axios
       .get(`http://localhost:3001/getAllProducts/${_id}`, {

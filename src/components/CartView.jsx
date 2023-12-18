@@ -3,16 +3,18 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const CartView = () => {
-  const [cartProductDisplay, setCartProductDisplay] = useState([]);
-  const [cartTotalSum, setCartTotalSum] = useState(0);
   const navigate = useNavigate();
+  const [cartProductDisplay, setCartProductDisplay] = useState([]); // selected products data to display on table
+  const [cartTotalSum, setCartTotalSum] = useState(0); // total due payment of products purchased by user
 
+  // need lexical scope to access everywhere so it's defined outside of useEffect's curly braces
   let fetchCartProducts;
 
   useEffect(() => {
     if (!localStorage.getItem("userProducts")) return;
     const products = JSON.parse(localStorage.getItem("userProducts"));
 
+    // getting every product by id that is stored in localStorage cart by user
     fetchCartProducts = async () => {
       const productRequests = products.map((product) => {
         return axios
@@ -37,13 +39,17 @@ const CartView = () => {
               qnt: product.qnt,
             };
           })
-          .catch((err) => console.log(err, "line 40 product.js"));
+          .catch((err) => console.log(err, "line 40 cartView.js"));
       });
 
-      const cartProducts = await Promise.all(productRequests); // it calls the api for every product, so it makes sure after all promises are resolved it'll be set in "cartTotalSum" state, otherwise it won't set every item on cart that is fetched
+      /* it calls the api for every product asynchronously, so it makes sure after all promises are resolved it'll be set in 
+      "cartTotalSum" state. */
+      const cartProducts = await Promise.all(productRequests);
+
+      // adding up all selected products price and setting it to state
       let totalSum = 0;
       for (const product of cartProducts) {
-        totalSum += product.price * product.qnt;
+        totalSum += product.price * product.qnt; // e.g: 5x12=60, product price multiplied by quantity
       }
 
       setCartProductDisplay(cartProducts);
@@ -82,6 +88,7 @@ const CartView = () => {
                 <td className="border">{product.unit}</td>
                 <td className="border">{product.qnt}</td>
                 <td className="border">
+                  {/* individual product's total price "toFixed(2)" makes sure e.g: "16.123" will be "16.12"*/}
                   {(product.qnt * product.price).toFixed(2)}
                 </td>
               </tr>
@@ -99,6 +106,7 @@ const CartView = () => {
         <button
           className="btn btn-primary mx-auto self-center"
           onClick={() => {
+            // clearing and updating the table
             localStorage.clear();
             fetchCartProducts();
             navigate("/");

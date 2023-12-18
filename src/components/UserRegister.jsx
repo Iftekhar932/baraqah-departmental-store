@@ -10,6 +10,7 @@ const UserRegister = () => {
   const [userPassword, setUserPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
+  // info collection of user
   const infoCollection = (e) => {
     const email = e.target.form.email.value;
     const password = e.target.form.password.value;
@@ -17,6 +18,7 @@ const UserRegister = () => {
     setUserPassword(password);
   };
 
+  // info submit to server
   const submitFunction = async (e, flag) => {
     setErrorMsg("");
     try {
