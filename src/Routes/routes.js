@@ -33,13 +33,10 @@ const refreshHandlingFunction = async () => {
       },
     }
   );
-  console.log(response?.data);
-  localStorage.setItem("access_token", response?.data?.accessToken);
+  return response;
 };
-// ! needs modification to shorten code(DO IT WHEN YOU'RE FREE)
-// ! needs modification to shorten code(DO IT WHEN YOU'RE FREE)
-// ! needs modification to shorten code(DO IT WHEN YOU'RE FREE)
-// ! needs modification to shorten code(DO IT WHEN YOU'RE FREE)
+
+// promise to use localStorage in asynchronous way(used in "JWTExpiryHandlerFunction")
 function getItemAsync(key) {
   return new Promise((resolve) => {
     const value = localStorage.getItem(key);
@@ -49,14 +46,8 @@ function getItemAsync(key) {
 
 // when jwt expires it'll invoke "refreshTokenHandlingFunction" above or it'll handle response
 const JWTExpiryHandlerFunction = async (url) => {
-  /* if (userEmailAccount) {
-    return;
-  } */
   const token = await getItemAsync("access_token");
-  console.log(
-    "🚀 ~ file: routes.js:53 ~ JWTExpiryHandlerFunction ~ token:",
-    token
-  );
+
   const response = await axios
     .get(url, {
       withCredentials: true,
