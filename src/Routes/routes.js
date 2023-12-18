@@ -10,6 +10,7 @@ import AdminPanel from "../components/AdminPanel";
 import AboutUs from "../components/AboutUs";
 import CartView from "../components/CartView";
 import Main from "../components/Main";
+import ForgotPasswordForm from "../components/ForgotPasswordForm";
 
 import ProductsError from "../components/ProductsError";
 import ErrorComponent from "../components/ErrorComponent";
@@ -35,26 +36,44 @@ const refreshHandlingFunction = async () => {
   console.log(response?.data);
   localStorage.setItem("access_token", response?.data?.accessToken);
 };
+// ! needs modification to shorten code(DO IT WHEN YOU'RE FREE)
+// ! needs modification to shorten code(DO IT WHEN YOU'RE FREE)
+// ! needs modification to shorten code(DO IT WHEN YOU'RE FREE)
+// ! needs modification to shorten code(DO IT WHEN YOU'RE FREE)
+function getItemAsync(key) {
+  return new Promise((resolve) => {
+    const value = localStorage.getItem(key);
+    resolve(value);
+  });
+}
 
 // when jwt expires it'll invoke "refreshTokenHandlingFunction" above or it'll handle response
 const JWTExpiryHandlerFunction = async (url) => {
   /* if (userEmailAccount) {
     return;
   } */
+  const token = await getItemAsync("access_token");
+  console.log(
+    "🚀 ~ file: routes.js:53 ~ JWTExpiryHandlerFunction ~ token:",
+    token
+  );
   const response = await axios
     .get(url, {
       withCredentials: true,
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${token}`,
       },
     })
     .catch(async function (err) {
-      console.log("🚀 ~ file: routes.js:60 ~ getRequestHandler ~ err:", err);
+      console.log(
+        "🚀 ~ file: routes.js:65 ~ JWTExpiryHandlerFunction ~ err:",
+        err
+      );
       if (err?.response?.status === 403) {
         return await refreshHandlingFunction();
       }
     });
-  console.log("line 65", response);
+  console.log("line 73", response);
   return response;
 };
 
@@ -122,6 +141,8 @@ const router = createBrowserRouter([
         },
         errorElement: <ErrorComponent />,
       },
+
+      { path: "/forgotPassword", element: <ForgotPasswordForm /> },
       { path: "/about", element: <AboutUs /> },
       { path: "/viewCart", element: <CartView /> }, // axios api called in component file "axios.get()" that uses productsID to get a single product
     ],

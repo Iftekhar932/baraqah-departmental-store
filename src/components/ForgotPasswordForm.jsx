@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+
 //! basic logic is done needs testing and have to see what to do after password is reset
 const ForgotPasswordForm = () => {
   const [userEmail, setUserEmail] = useState("");
@@ -27,9 +29,8 @@ const ForgotPasswordForm = () => {
         },
         { withCredentials: true }
       );
-      console.log("✨ 🌟  submitFunction  response:", response);
 
-      /* const responseHandleFunc = () => {
+      /* const responseHandleFunc = () => {   
         localStorage.setItem("access_token", response.data.accessToken);
         localStorage.setItem("userEmail", response.data.email);
         localStorage.setItem("role", response.data.role);
@@ -38,8 +39,8 @@ const ForgotPasswordForm = () => {
 
       // handle response
       response.status === 200
-        ? responseHandleFunc()
-        : console.log(response.data, "login failed");
+        ? console.log(response.data, "password changed")
+        : console.log(response.data, "change failed");
       return response;
     } catch (error) {
       console.error("Error during login line 45:", error.response?.data);
@@ -90,9 +91,12 @@ const ForgotPasswordForm = () => {
                 }}
               />
               <label className="label">
-                <a href="#" className="label-text-alt link link-hover">
-                  Forgot password?
-                </a>
+                <Link
+                  to="/userLogin"
+                  className="label-text-alt link link-hover"
+                >
+                  Login here
+                </Link>
                 <Link
                   to="/userRegister"
                   className="label-text-alt link link-hover"

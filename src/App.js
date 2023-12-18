@@ -14,6 +14,7 @@ import AboutUs from "./components/AboutUs";
 ! slider not responsive in mobile (RECHECK IT I SOLVED IT THOUGH)
 ! need to add forgot password feature for express authentication
 ! add refreshToken feature for google
+! without refresh sliderCategory component won't load products, without refresh(access token is not sent to server either)
 */
 
 function App() {

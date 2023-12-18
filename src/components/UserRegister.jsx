@@ -86,9 +86,12 @@ const UserRegister = () => {
                 required
               />
               <label className="label">
-                <a href="#" className="label-text-alt link link-hover">
+                <Link
+                  to="/forgotPassword"
+                  className="label-text-alt link link-hover"
+                >
                   Forgot password?
-                </a>
+                </Link>
                 <Link
                   to="/userLogin"
                   className="label-text-alt link link-hover"
