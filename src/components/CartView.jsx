@@ -13,10 +13,13 @@ const CartView = () => {
   useEffect(() => {
     if (!localStorage.getItem("userProducts")) return;
     const products = JSON.parse(localStorage.getItem("userProducts"));
-
     // getting every product by id that is stored in localStorage cart by user
     fetchCartProducts = async () => {
-      const productRequests = products?.map((product) => {
+      const productRequests = products?.map(async (product) => {
+        console.log(
+          "🚀 ~ file: CartView.jsx:19 ~ productRequests ~ product:",
+          product
+        );
         return axios
           .get(`http://localhost:3001/getAllProducts/${product?.productId}`, {
             withCredentials: true,
@@ -57,7 +60,7 @@ const CartView = () => {
     };
 
     fetchCartProducts();
-  }, [cartProductDisplay]);
+  }, []);
 
   if (!cartProductDisplay) {
     return <div>Loading...</div>;
