@@ -114,7 +114,7 @@ const CartView = () => {
               <td className="px-2 py-1 border-b text-right table-cell">
                 Total
               </td>
-              <td className="px-2 py-1 border-b text-right table-cell">
+              <td className="px-2 py-1 border-b  table-cell">
                 {cartTotalSum.toFixed(2)}
               </td>
             </tr>
