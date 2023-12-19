@@ -1,7 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
+// daisyUI component
 import ThemeSwitcher from "./ThemeSwitcher";
+
+// !change ui conditional rendering, NEEDS TESTING
+// !change ui conditional rendering, NEEDS TESTING
+// !change ui conditional rendering, NEEDS TESTING
+// !change ui conditional rendering, NEEDS TESTING
+// !change ui conditional rendering, NEEDS TESTING
+// !change ui conditional rendering, NEEDS TESTING
 
 const Header = () => {
   const { user, logOut } = useFirebase();
@@ -11,18 +19,22 @@ const Header = () => {
 
   const logOutFunc = () => {
     if (userEmail) {
-      localStorage.removeItem("userEmail", null);
-      localStorage.removeItem("access_token", null);
-      localStorage.removeItem("userProducts", []);
-      localStorage.removeItem("role", null);
+      localStorage.removeItem("userEmail");
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("userProducts");
+      localStorage.removeItem("role");
     } else if (user) {
+      localStorage.removeItem("userEmail");
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("userProducts");
+      localStorage.removeItem("role");
       return logOut();
     }
   };
 
   return (
     <>
-      <div className="navbar mb-5 mx-auto border-b-[.1px] font-thin">
+      <div className="navbar justify-between mb-5 mx-auto border-b-[.1px] font-thin">
         {/* //* MOBILE 👇 */}
         <div className="dropdown md:invisible">
           <label tabIndex={0} className="btn btn-ghost">
@@ -43,7 +55,7 @@ const Header = () => {
           </label>
           <ul
             tabIndex={0}
-            className={`menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52`}
+            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
               <Link to="/">Home</Link>
@@ -51,9 +63,56 @@ const Header = () => {
             <li>
               <Link to="/products">Products</Link>
             </li>
+            <li>
+              <Link to="/about">About us</Link>
+            </li>
+            <li className={` ${userEmail || user?.email ? "" : "hidden"}`}>
+              <a href="#">Logged in: {user?.email || userEmail}</a>
+            </li>
+
+            {role == "admin" && (
+              <li className="rounded-full">
+                <Link to="/adminOnly" title="Account">
+                  <img
+                    height="20px"
+                    width="20px"
+                    src="https://i.ibb.co/GT1KM5g/person-svgrepo-com.png"
+                    alt="Account"
+                    border="0"
+                  />
+                  Admin Panel
+                </Link>
+              </li>
+            )}
+            <li className="rounded-full">
+              <Link to="/viewCart" title="Cart">
+                <img
+                  height="20px"
+                  width="20px"
+                  src="https://i.ibb.co/5s9HH42/cart-shopping-svgrepo-com.png"
+                  alt="cart"
+                  border="0"
+                />{" "}
+                Cart
+              </Link>
+            </li>
             <ThemeSwitcher />
+
+            {Boolean(userEmail) || user?.email ? (
+              <li className="bg-red-700">
+                <a href="#" onClick={logOutFunc}>
+                  Logout
+                </a>
+              </li>
+            ) : (
+              <li>
+                <Link to="/userLogin">Sign In</Link>
+              </li>
+            )}
           </ul>
         </div>
+        <span className="font-bold ">Baraqah</span>
+        {/* //* MOBILE 👆 */}
 
         {/* //* 👇 LARGE SCREEN */}
         <div className="w-full mx-auto hidden md:flex justify-between">
@@ -75,8 +134,9 @@ const Header = () => {
             <li>
               <Link to="/about">About Us</Link>
             </li>
+
             <li>
-              {Boolean(userEmail) ? (
+              {Boolean(userEmail) || user?.email ? (
                 <a href="#" onClick={logOutFunc}>
                   Logout
                 </a>
@@ -87,7 +147,7 @@ const Header = () => {
           </ul>
           <ul className="menu menu-horizontal px-1 items-center">
             {/* "user?.email" is for google account sign in (firebase) || "userEmail" is manually email account signed in */}
-            <li className={`hover:bg-zinc-200 ${userEmail ? "" : "hidden"}`}>
+            <li className={` ${userEmail || user?.email ? "" : "hidden"}`}>
               <a href="#">
                 <img
                   src="https://i.ibb.co/vPhPLjL/email-1-svgrepo-com.png"

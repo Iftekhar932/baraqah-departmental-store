@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import axios from "axios";
 
+// components
 import Products from "../components/Products";
 import Home from "../components/Home";
 import SliderCategory from "../components/SliderCategory";
@@ -12,6 +13,7 @@ import CartView from "../components/CartView";
 import Main from "../components/Main";
 import ForgotPasswordForm from "../components/ForgotPasswordForm";
 
+// error components
 import ProductsError from "../components/ProductsError";
 import ErrorComponent from "../components/ErrorComponent";
 
@@ -19,14 +21,19 @@ import ErrorComponent from "../components/ErrorComponent";
 /* const accessToken = localStorage?.getItem("access_token");
 const userEmailAccount = localStorage.getItem("userEmail"); // users whose accounts created with email sign up */
 
+// used "Promise" to use localStorage in asynchronous way(used in "JWTExpiryHandlerFunction")
+function getItemAsync(key) {
+  return new Promise((resolve) => {
+    const value = localStorage.getItem(key);
+    resolve(value);
+  });
+}
+
 // function to call api of refreshToken
 const refreshHandlingFunction = async () => {
   const accessToken = await getItemAsync("access_token");
   const userEmailAccount = await getItemAsync("userEmail");
 
-  if (!accessToken) {
-    return;
-  }
   const response = await axios.post(
     "http://localhost:3001/refresh",
     {
@@ -38,24 +45,10 @@ const refreshHandlingFunction = async () => {
       },
     }
   );
+  // replacing the old token with the new one in localStorage
+  localStorage.setItem("access_token", response?.data?.accessToken);
   return response;
 };
-
-// promise to use localStorage in asynchronous way(used in "JWTExpiryHandlerFunction")
-function getItemAsync(key) {
-  return new Promise((resolve) => {
-    const value = localStorage.getItem(key);
-    resolve(value);
-  });
-}
-
-/* 
-🟨🟨🟨🟨🟨
-! to prevent unnecessary api call i put if statement in the function below 
-! NEEDS TESTING 
-?pushed to github if errors found remove if statement  And change the "accessToken" back to "token" in below function
-🟨🟨🟨🟨🟨
-*/
 
 // when jwt expires it'll invoke "refreshTokenHandlingFunction" above or it'll handle response
 const JWTExpiryHandlerFunction = async (url) => {
@@ -72,14 +65,14 @@ const JWTExpiryHandlerFunction = async (url) => {
     })
     .catch(async function (err) {
       console.log(
-        "🚀 ~ file: routes.js:65 ~ JWTExpiryHandlerFunction ~ err:",
+        "🚀 ~ file: routes.js:77 ~ JWTExpiryHandlerFunction ~ err:",
         err
       );
       if (err?.response?.status === 403) {
         return await refreshHandlingFunction();
       }
     });
-  console.log("line 73", response);
+  // console.log("line 84", response);
   return response;
 };
 

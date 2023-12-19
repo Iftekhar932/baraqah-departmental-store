@@ -29,7 +29,7 @@ const useFirebase = () => {
         user.role = "user";
         setUser(user);
 
-        //* jwt for google sign in only
+        //* This JWT api is for google sign in only
         const response = await axios.post(
           "http://localhost:3001/jsonWebAccessToken",
           {

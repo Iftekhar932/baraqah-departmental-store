@@ -16,9 +16,9 @@ const CartView = () => {
 
     // getting every product by id that is stored in localStorage cart by user
     fetchCartProducts = async () => {
-      const productRequests = products.map((product) => {
+      const productRequests = products?.map((product) => {
         return axios
-          .get(`http://localhost:3001/getAllProducts/${product.productId}`, {
+          .get(`http://localhost:3001/getAllProducts/${product?.productId}`, {
             withCredentials: true,
             headers: {
               Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -26,7 +26,7 @@ const CartView = () => {
           })
           .then((response) => {
             const { _id, category, categoryImg, id, img, name, price, unit } =
-              response.data[0];
+              response?.data[0];
 
             return {
               id,
@@ -36,10 +36,10 @@ const CartView = () => {
               category,
               categoryImg,
               img,
-              qnt: product.qnt,
+              qnt: product?.qnt,
             };
           })
-          .catch((err) => console.log(err, "line 40 cartView.js"));
+          .catch((err) => console.log(err, "line 42 cartView.js"));
       });
 
       /* This whole function calls the api for every product asynchronously, so it makes sure after all promises are resolved it'll be set in 
@@ -62,42 +62,61 @@ const CartView = () => {
   if (!cartProductDisplay) {
     return <div>Loading...</div>;
   }
-
   return (
     <>
-      <div className="overflow-x-auto mx-auto mt-4 w-4/5 p-4 border">
-        <table className="table table-xs">
+      <div className="sm:w-full overflow-x-auto mx-auto mt-4 md:w-4/5 md:p-4 border rounded-md shadow-md">
+        <table className="table table-xs w-full text-left">
           <thead>
             <tr>
-              <th>Index</th>
-              <th>Category</th>
-              <th>Product Name</th>
-              <th>Price</th>
-              <th>Unit</th>
-              <th>Quantity</th>
-              <th>Total</th>
+              <th className="px-2 py-1 border-b border-r table-cell">Index</th>
+              <th className="px-2 py-1 border-b border-r table-cell">
+                Category
+              </th>
+              <th className="px-2 py-1 border-b border-r table-cell">
+                Product Name
+              </th>
+              <th className="px-2 py-1 border-b border-r table-cell">Price</th>
+              <th className="px-2 py-1 border-b border-r table-cell">Unit</th>
+              <th className="px-2 py-1 border-b border-r table-cell">
+                Quantity
+              </th>
+              <th className="px-2 py-1 border-b table-cell">Total</th>
             </tr>
           </thead>
           <tbody>
             {cartProductDisplay.map((product, index) => (
               <tr key={product.id}>
-                <td className="border">{index + 1}</td>
-                <td className="border">{product.category}</td>
-                <td className="border">{product.name}</td>
-                <td className="border">{product.price}</td>
-                <td className="border">{product.unit}</td>
-                <td className="border">{product.qnt}</td>
-                <td className="border">
-                  {/* individual product's total price "toFixed(2)" makes sure e.g: "16.123" will be "16.12"*/}
+                <td className="px-2 py-1 border-b border-r table-cell">
+                  {index + 1}
+                </td>
+                <td className="px-2 py-1 border-b border-r table-cell">
+                  {product.category}
+                </td>
+                <td className="px-2 py-1 border-b border-r table-cell">
+                  {product.name}
+                </td>
+                <td className="px-2 py-1 border-b border-r table-cell">
+                  {product.price}
+                </td>
+                <td className="px-2 py-1 border-b border-r table-cell">
+                  {product.unit}
+                </td>
+                <td className="px-2 py-1 border-b border-r table-cell">
+                  {product.qnt}
+                </td>
+                <td className="px-2 py-1 border-b table-cell">
                   {(product.qnt * product.price).toFixed(2)}
                 </td>
               </tr>
             ))}
-
             <tr>
-              <td colSpan="5"></td>
-              <td className="border">Total</td>
-              <td className="border">{cartTotalSum.toFixed(2)}</td>
+              <td colSpan="5" className="text-center py-1 border-b"></td>
+              <td className="px-2 py-1 border-b text-right table-cell">
+                Total
+              </td>
+              <td className="px-2 py-1 border-b text-right table-cell">
+                {cartTotalSum.toFixed(2)}
+              </td>
             </tr>
           </tbody>
         </table>
@@ -107,8 +126,7 @@ const CartView = () => {
           className="btn btn-primary mx-auto self-center"
           onClick={() => {
             // clearing and updating the table
-            localStorage.clear();
-            fetchCartProducts();
+            localStorage.removeItem("userProducts");
             navigate("/");
           }}
         >

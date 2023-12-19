@@ -47,28 +47,28 @@ function AdminPanel() {
       );
     }
   };
-
   return (
-    <div className="p-4">
-      {allUsers.map((user) => {
-        return (
-          <p
-            key={user?._id || user?.uid}
-            className="mx-auto my-2 border rounded grid place-items-center grid-cols-3"
+    <div className="p-4 flex flex-wrap">
+      {allUsers.map((user) => (
+        <div
+          key={user?._id || user?.uid}
+          className="w-full md:w-1/2 lg:w-1/3 p-2 border rounded flex flex-col justify-center items-center"
+        >
+          <span className="mb-2 text-center">
+            {user?.email || user?.displayName}
+          </span>
+          <span className="text-center mb-2">
+            Role: {user?.role ? user?.role : "user"}
+          </span>
+          <button
+            className="btn btn-danger self-end"
+            onClick={() => deletionOfUserByAdmin(user)}
+            disabled={user?.role === "admin"}
           >
-            <span>Email: {user?.email || user?.displayName}</span>
-            {<span>Role: {user?.role ? user?.role : "user"}</span>}
-
-            <button
-              className="btn btn-danger"
-              onClick={() => deletionOfUserByAdmin(user)}
-              disabled={user?.role == "admin"}
-            >
-              Delete
-            </button>
-          </p>
-        );
-      })}
+            Delete
+          </button>
+        </div>
+      ))}
     </div>
   );
 }
