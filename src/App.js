@@ -4,6 +4,7 @@ import router from "./Routes/routes";
 /* 
 ! add deletion function for admin (TEST WITH GOOGLE ACCOUNTS)
 ! add refreshToken feature for google
+! add footer
 */
 
 function App() {

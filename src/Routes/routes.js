@@ -16,11 +16,17 @@ import ProductsError from "../components/ProductsError";
 import ErrorComponent from "../components/ErrorComponent";
 
 // items from localStorage
-const accessToken = localStorage?.getItem("access_token");
-const userEmailAccount = localStorage.getItem("userEmail"); // users whose accounts created with email sign up
+/* const accessToken = localStorage?.getItem("access_token");
+const userEmailAccount = localStorage.getItem("userEmail"); // users whose accounts created with email sign up */
 
 // function to call api of refreshToken
 const refreshHandlingFunction = async () => {
+  const accessToken = await getItemAsync("access_token");
+  const userEmailAccount = await getItemAsync("userEmail");
+
+  if (!accessToken) {
+    return;
+  }
   const response = await axios.post(
     "http://localhost:3001/refresh",
     {
@@ -43,15 +49,25 @@ function getItemAsync(key) {
   });
 }
 
+/* 
+🟨🟨🟨🟨🟨
+! to prevent unnecessary api call i put if statement in the function below 
+! NEEDS TESTING 
+?pushed to github if errors found remove if statement  And change the "accessToken" back to "token" in below function
+🟨🟨🟨🟨🟨
+*/
+
 // when jwt expires it'll invoke "refreshTokenHandlingFunction" above or it'll handle response
 const JWTExpiryHandlerFunction = async (url) => {
-  const token = await getItemAsync("access_token");
-
+  const accessToken = await getItemAsync("access_token");
+  if (!accessToken) {
+    return;
+  }
   const response = await axios
     .get(url, {
       withCredentials: true,
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     })
     .catch(async function (err) {

@@ -42,7 +42,7 @@ const CartView = () => {
           .catch((err) => console.log(err, "line 40 cartView.js"));
       });
 
-      /* it calls the api for every product asynchronously, so it makes sure after all promises are resolved it'll be set in 
+      /* This whole function calls the api for every product asynchronously, so it makes sure after all promises are resolved it'll be set in 
       "cartTotalSum" state. */
       const cartProducts = await Promise.all(productRequests);
 
