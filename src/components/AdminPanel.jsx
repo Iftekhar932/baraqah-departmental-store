@@ -1,10 +1,19 @@
 import "daisyui/dist/full.css";
 import axios from "axios";
 import { useLoaderData } from "react-router-dom";
+import React from "react";
 
 function AdminPanel() {
   const loadedData = useLoaderData();
-  const allUsers = loadedData.data.allUsers;
+  const allUsers = loadedData?.data?.allUsers;
+  console.log(
+    "🚀 ~ file: AdminPanel.jsx:9 ~ AdminPanel ~ allUsers:",
+    loadedData
+  );
+
+  const [usersToLoad, setUsersToLoad] = React.useState([]);
+
+  React.useEffect(() => setUsersToLoad(allUsers), []);
 
   // account deletion by id or uid(firebase)
   async function deleteUser(id, flag) {
@@ -50,7 +59,7 @@ function AdminPanel() {
   return (
     <div className="h-screen">
       <div className="gap-2 flex flex-wrap justify-center">
-        {allUsers?.map((user) => (
+        {usersToLoad?.map((user) => (
           <div
             key={user?._id || user?.uid}
             className="md:w-1/2 lg:w-1/3 p-2 border rounded flex flex-col justify-center items-center"

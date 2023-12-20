@@ -31,7 +31,7 @@ function getItemAsync(key) {
 
 async function refreshAsync(key) {}
 
-// function to call api of refreshToken
+// * function to call api of refreshToken
 const refreshHandlingFunction = async (url) => {
   const accessToken = await getItemAsync("access_token");
   const userEmailAccount = await getItemAsync("userEmail");
@@ -50,14 +50,13 @@ const refreshHandlingFunction = async (url) => {
     // replacing the old token with the new one in localStorage
     localStorage.setItem("access_token", response?.data?.accessToken);
     await JWTExpiryHandlerFunction(url);
-    window.location.reload(); //! remove if this doesn't work against the blank page issue of adminPanel component
-    return response;
+    // return response; // ! see if it causes any problems
   } catch (err) {
     console.log(err);
   }
 };
 
-// when jwt expires it'll invoke "refreshTokenHandlingFunction" above or it'll handle response
+//* when jwt expires it'll invoke "refreshTokenHandlingFunction" above or it'll handle response
 async function JWTExpiryHandlerFunction(url) {
   const accessToken = await getItemAsync("access_token");
   if (!accessToken) {
@@ -83,6 +82,7 @@ async function JWTExpiryHandlerFunction(url) {
     });
 
   // console.log("line 84", response);
+  console.log("line 84");
   return response;
 }
 
@@ -110,7 +110,7 @@ const router = createBrowserRouter([
               {
                 path: "/products/:category",
                 element: <Products />,
-                errorElement: <ErrorComponent />,
+                errorElement: <ProductsError />,
                 loader: async (req) => {
                   return await JWTExpiryHandlerFunction(
                     `http://localhost:3001/getAllProductsCategoryWise/${req.params.category}`
