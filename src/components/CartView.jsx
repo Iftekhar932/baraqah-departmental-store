@@ -52,7 +52,7 @@ const CartView = () => {
       // adding up all selected products price and setting it to state
       let totalSum = 0;
       for (const product of cartProducts) {
-        totalSum += product.price * product.qnt; // e.g: 5x12=60, product price multiplied by quantity
+        totalSum += product?.price * product?.qnt; // e.g: 5x12=60, product price multiplied by quantity
       }
 
       setCartProductDisplay(cartProducts);
@@ -67,8 +67,8 @@ const CartView = () => {
   }
   return (
     <>
-      <div className="sm:w-full overflow-x-auto mx-auto mt-4 md:w-4/5 md:p-4 border rounded-md shadow-md">
-        <table className="table table-xs w-full text-left">
+      <div className="sm:w-full overflow-x-auto mx-auto mt-4 md:w-4/5 md:p-4 md:h-screen border rounded-md shadow-md">
+        <table className="table table-xs w-full h-max text-left">
           <thead>
             <tr>
               <th className="px-2 py-1 border-b border-r table-cell">Index</th>

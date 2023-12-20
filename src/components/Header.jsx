@@ -162,7 +162,7 @@ const Header = () => {
             <li>
               <ThemeSwitcher />
             </li>
-            <li className="bg-gradient-to-r from-zinc-100 to-zinc-50 rounded-full">
+            <li className="border border-purple-700 rounded-full">
               <a title="Favorites">
                 <img
                   height="20px"
@@ -174,7 +174,7 @@ const Header = () => {
               </a>
             </li>
 
-            <li className="bg-gradient-to-r from-zinc-100 to-zinc-50 rounded-full">
+            <li className="border border-purple-700 rounded-full">
               <Link to="/viewCart" title="Cart">
                 <img
                   height="20px"
@@ -187,7 +187,7 @@ const Header = () => {
             </li>
 
             {role == "admin" && (
-              <li className="bg-gradient-to-r from-zinc-100 to-zinc-50 rounded-full">
+              <li className="border border-purple-700 rounded-full">
                 <Link to="/adminOnly" title="Account">
                   <img
                     height="20px"
@@ -202,7 +202,7 @@ const Header = () => {
           </ul>
         </div>
       </div>
-      {/*  ⬆👆☝👆☝⬆👆☝👆☝⬆👆☝👆☝ FIRST HEADER PART  ⬆👆☝👆☝⬆👆☝👆☝⬆👆☝👆☝    */}
+      {/*  ⬆👆☝👆☝⬆👆☝👆☝⬆👆☝👆☝  //* LARGE SCREEN *\\  ⬆👆☝👆☝⬆👆☝👆☝⬆👆☝👆☝    */}
     </>
   );
 };
