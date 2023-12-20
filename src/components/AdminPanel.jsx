@@ -48,27 +48,29 @@ function AdminPanel() {
     }
   };
   return (
-    <div className="p-4 flex flex-wrap">
-      {allUsers.map((user) => (
-        <div
-          key={user?._id || user?.uid}
-          className="w-full md:w-1/2 lg:w-1/3 p-2 border rounded flex flex-col justify-center items-center"
-        >
-          <span className="mb-2 text-center">
-            {user?.email || user?.displayName}
-          </span>
-          <span className="text-center mb-2">
-            Role: {user?.role ? user?.role : "user"}
-          </span>
-          <button
-            className="btn btn-danger self-end"
-            onClick={() => deletionOfUserByAdmin(user)}
-            disabled={user?.role === "admin"}
+    <div className="h-screen">
+      <div className="gap-2 flex flex-wrap justify-center">
+        {allUsers.map((user) => (
+          <div
+            key={user?._id || user?.uid}
+            className="md:w-1/2 lg:w-1/3 p-2 border rounded flex flex-col justify-center items-center"
           >
-            Delete
-          </button>
-        </div>
-      ))}
+            <span className="mb-2 text-center">
+              {user?.email || user?.displayName}
+            </span>
+            <span className="text-center mb-2">
+              Role: {user?.role ? user?.role : "user"}
+            </span>
+            <button
+              className="btn btn-error "
+              onClick={() => deletionOfUserByAdmin(user)}
+              disabled={user?.role === "admin"}
+            >
+              Delete
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

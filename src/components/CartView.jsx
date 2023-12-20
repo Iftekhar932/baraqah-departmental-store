@@ -67,74 +67,80 @@ const CartView = () => {
   }
   return (
     <>
-      <div className="sm:w-full overflow-x-auto mx-auto mt-4 md:w-4/5 md:p-4 md:h-screen border rounded-md shadow-md">
-        <table className="table table-xs w-full h-max text-left">
-          <thead>
-            <tr>
-              <th className="px-2 py-1 border-b border-r table-cell">Index</th>
-              <th className="px-2 py-1 border-b border-r table-cell">
-                Category
-              </th>
-              <th className="px-2 py-1 border-b border-r table-cell">
-                Product Name
-              </th>
-              <th className="px-2 py-1 border-b border-r table-cell">Price</th>
-              <th className="px-2 py-1 border-b border-r table-cell">Unit</th>
-              <th className="px-2 py-1 border-b border-r table-cell">
-                Quantity
-              </th>
-              <th className="px-2 py-1 border-b table-cell">Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {cartProductDisplay.map((product, index) => (
-              <tr key={product.id}>
-                <td className="px-2 py-1 border-b border-r table-cell">
-                  {index + 1}
+      <div className="min-h-screen">
+        <div className="sm:w-full overflow-x-auto mx-auto mt-4 md:w-4/5 md:p-4 border rounded-md shadow-md">
+          <table className="table table-xs w-full h-max text-left">
+            <thead>
+              <tr>
+                <th className="px-2 py-1 border-b border-r table-cell">
+                  Index
+                </th>
+                <th className="px-2 py-1 border-b border-r table-cell">
+                  Category
+                </th>
+                <th className="px-2 py-1 border-b border-r table-cell">
+                  Product Name
+                </th>
+                <th className="px-2 py-1 border-b border-r table-cell">
+                  Price
+                </th>
+                <th className="px-2 py-1 border-b border-r table-cell">Unit</th>
+                <th className="px-2 py-1 border-b border-r table-cell">
+                  Quantity
+                </th>
+                <th className="px-2 py-1 border-b table-cell">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cartProductDisplay.map((product, index) => (
+                <tr key={product.id}>
+                  <td className="px-2 py-1 border-b border-r table-cell">
+                    {index + 1}
+                  </td>
+                  <td className="px-2 py-1 border-b border-r table-cell">
+                    {product.category}
+                  </td>
+                  <td className="px-2 py-1 border-b border-r table-cell">
+                    {product.name}
+                  </td>
+                  <td className="px-2 py-1 border-b border-r table-cell">
+                    {product.price}
+                  </td>
+                  <td className="px-2 py-1 border-b border-r table-cell">
+                    {product.unit}
+                  </td>
+                  <td className="px-2 py-1 border-b border-r table-cell">
+                    {product.qnt}
+                  </td>
+                  <td className="px-2 py-1 border-b table-cell">
+                    {(product.qnt * product.price).toFixed(2)}
+                  </td>
+                </tr>
+              ))}
+              <tr>
+                <td colSpan="5" className="text-center py-1 border-b"></td>
+                <td className="px-2 py-1 border-b text-right table-cell">
+                  Total
                 </td>
-                <td className="px-2 py-1 border-b border-r table-cell">
-                  {product.category}
-                </td>
-                <td className="px-2 py-1 border-b border-r table-cell">
-                  {product.name}
-                </td>
-                <td className="px-2 py-1 border-b border-r table-cell">
-                  {product.price}
-                </td>
-                <td className="px-2 py-1 border-b border-r table-cell">
-                  {product.unit}
-                </td>
-                <td className="px-2 py-1 border-b border-r table-cell">
-                  {product.qnt}
-                </td>
-                <td className="px-2 py-1 border-b table-cell">
-                  {(product.qnt * product.price).toFixed(2)}
+                <td className="px-2 py-1 border-b  table-cell">
+                  {cartTotalSum.toFixed(2)}
                 </td>
               </tr>
-            ))}
-            <tr>
-              <td colSpan="5" className="text-center py-1 border-b"></td>
-              <td className="px-2 py-1 border-b text-right table-cell">
-                Total
-              </td>
-              <td className="px-2 py-1 border-b  table-cell">
-                {cartTotalSum.toFixed(2)}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div className="text-center p-4">
-        <button
-          className="btn btn-primary mx-auto self-center"
-          onClick={() => {
-            // clearing and updating the table
-            localStorage.removeItem("userProducts");
-            navigate("/");
-          }}
-        >
-          Clear All
-        </button>
+            </tbody>
+          </table>
+        </div>
+        <div className="text-center p-4">
+          <button
+            className="btn btn-primary mx-auto self-center"
+            onClick={() => {
+              // clearing and updating the table
+              localStorage.removeItem("userProducts");
+              navigate("/");
+            }}
+          >
+            Clear All
+          </button>
+        </div>
       </div>
     </>
   );
