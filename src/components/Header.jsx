@@ -162,17 +162,6 @@ const Header = () => {
             <li>
               <ThemeSwitcher />
             </li>
-            <li className="border border-purple-700 rounded-full">
-              <a title="Favorites">
-                <img
-                  height="20px"
-                  width="20px"
-                  src="https://i.ibb.co/yyZvx7c/love-svgrepo-com.png"
-                  alt="Favorites"
-                  border="0"
-                />{" "}
-              </a>
-            </li>
 
             <li className="border border-purple-700 rounded-full">
               <Link to="/viewCart" title="Cart">

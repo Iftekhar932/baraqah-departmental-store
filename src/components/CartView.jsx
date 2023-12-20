@@ -92,7 +92,7 @@ const CartView = () => {
               </tr>
             </thead>
             <tbody>
-              {cartProductDisplay.map((product, index) => (
+              {cartProductDisplay?.map((product, index) => (
                 <tr key={product.id}>
                   <td className="px-2 py-1 border-b border-r table-cell">
                     {index + 1}

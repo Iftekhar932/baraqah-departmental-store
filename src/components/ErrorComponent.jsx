@@ -25,16 +25,6 @@ const ErrorComponent = () => {
       <p>Something went wrong...</p>
       <Link to="/" className="underline cursor-pointer">
         Go to home page. redirecting to login page in{" "}
-        {/* this function below needs testing */}
-        {/* this function below needs testing */}
-        {/* this function below needs testing */}
-        {/* this function below needs testing */}
-        {/* this function below needs testing */}
-        {() => {
-          let i = 3;
-          setTimeout(i - 1, 1000);
-          return i;
-        }}
       </Link>
     </div>
   );

@@ -22,7 +22,7 @@ const Product = (props) => {
           return addItem(response.data[0]._id);
         }
       })
-      .catch((err) => console.log(err, "line 21 product.js"));
+      .catch((err) => console.log(err, "line 25 product.js"));
     return response;
   };
 

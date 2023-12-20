@@ -29,29 +29,35 @@ function getItemAsync(key) {
   });
 }
 
+async function refreshAsync(key) {}
+
 // function to call api of refreshToken
-const refreshHandlingFunction = async () => {
+const refreshHandlingFunction = async (url) => {
   const accessToken = await getItemAsync("access_token");
   const userEmailAccount = await getItemAsync("userEmail");
-
-  const response = await axios.post(
-    "http://localhost:3001/refresh",
-    {
-      email: userEmailAccount,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
+  try {
+    const response = await axios.post(
+      "http://localhost:3001/refresh",
+      {
+        email: userEmailAccount,
       },
-    }
-  );
-  // replacing the old token with the new one in localStorage
-  localStorage.setItem("access_token", response?.data?.accessToken);
-  return response;
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    // replacing the old token with the new one in localStorage
+    localStorage.setItem("access_token", response?.data?.accessToken);
+    await JWTExpiryHandlerFunction(url);
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 // when jwt expires it'll invoke "refreshTokenHandlingFunction" above or it'll handle response
-const JWTExpiryHandlerFunction = async (url) => {
+async function JWTExpiryHandlerFunction(url) {
   const accessToken = await getItemAsync("access_token");
   if (!accessToken) {
     return;
@@ -65,16 +71,17 @@ const JWTExpiryHandlerFunction = async (url) => {
     })
     .catch(async function (err) {
       console.log(
-        "🚀 ~ file: routes.js:77 ~ JWTExpiryHandlerFunction ~ err:",
-        err
+        "🚀 ~ file: routes.js:71 ~ JWTExpiryHandlerFunction ~ err:",
+        err.response,
+        err.response.status
       );
       if (err?.response?.status === 403) {
-        return await refreshHandlingFunction();
+        return await refreshHandlingFunction(url);
       }
     });
   // console.log("line 84", response);
   return response;
-};
+}
 
 const router = createBrowserRouter([
   {
@@ -125,10 +132,12 @@ const router = createBrowserRouter([
       {
         path: "/userLogin",
         element: <UserLogin />,
+        errorElement: <ErrorComponent />,
       },
       {
         path: "/userRegister",
         element: <UserRegister />,
+        errorElement: <ErrorComponent />,
       },
       {
         path: "/adminOnly",
