@@ -50,6 +50,7 @@ const refreshHandlingFunction = async (url) => {
     // replacing the old token with the new one in localStorage
     localStorage.setItem("access_token", response?.data?.accessToken);
     await JWTExpiryHandlerFunction(url);
+    window.location.reload(); //! remove if this doesn't work against the blank page issue of adminPanel component
     return response;
   } catch (err) {
     console.log(err);
@@ -62,6 +63,7 @@ async function JWTExpiryHandlerFunction(url) {
   if (!accessToken) {
     return;
   }
+
   const response = await axios
     .get(url, {
       withCredentials: true,
@@ -79,6 +81,7 @@ async function JWTExpiryHandlerFunction(url) {
         return await refreshHandlingFunction(url);
       }
     });
+
   // console.log("line 84", response);
   return response;
 }
