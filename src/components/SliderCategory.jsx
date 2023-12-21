@@ -23,7 +23,6 @@ const responsive = {
 };
 
 const SliderCategory = () => {
-  const { user } = useFirebase();
   const loadedData = useLoaderData();
 
   // If there's no data, don't render the component

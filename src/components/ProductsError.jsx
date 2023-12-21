@@ -23,7 +23,7 @@ const ProductsError = () => {
       className="bg-purple-700 text-white font-bold rounded-lg border-l-4 border-purple-600 p-4"
       role="alert"
     >
-      <p className="font-bold">Not logged in!</p>
+      <p className="font-bold">Login to continue!</p>
       <p>Login to see products...</p>
       <Link to="/userLogin" className="underline cursor-pointer">
         Login here

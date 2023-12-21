@@ -17,21 +17,7 @@ import ForgotPasswordForm from "../components/ForgotPasswordForm";
 import ProductsError from "../components/ProductsError";
 import ErrorComponent from "../components/ErrorComponent";
 
-// items from localStorage
-/* const accessToken = localStorage?.getItem("access_token");
-const userEmailAccount = localStorage.getItem("userEmail"); // users whose accounts created with email sign up */
-
-// used "Promise" to use localStorage in asynchronous way(used in "JWTExpiryHandlerFunction")
-function getItemAsync(key) {
-  return new Promise((resolve) => {
-    const value = localStorage.getItem(key);
-    resolve(value);
-  });
-}
-
-async function refreshAsync(key) {}
-
-// * function to call api of refreshToken
+// * function to call api of refreshToken, setting new token in localStorage and then re-invoke "jwtExpiryFunction"
 const refreshHandlingFunction = async (url) => {
   const accessToken = await getItemAsync("access_token");
   const userEmailAccount = await getItemAsync("userEmail");
@@ -48,16 +34,20 @@ const refreshHandlingFunction = async (url) => {
       }
     );
     // replacing the old token with the new one in localStorage
-    localStorage.setItem("access_token", response?.data?.accessToken);
-    await JWTExpiryHandlerFunction(url);
-    // return response; // ! see if it causes any problems
+    await setItemAsync("access_token", response?.data?.accessToken);
+
+    return await JWTExpiryHandlerFunction(url);
   } catch (err) {
-    console.log(err);
+    console.log(
+      "✨ 🌟  refreshHandlingFunction  err 42:",
+      err.response,
+      err.response.status
+    );
   }
 };
 
 //* when jwt expires it'll invoke "refreshTokenHandlingFunction" above or it'll handle response
-async function JWTExpiryHandlerFunction(url) {
+async function JWTExpiryHandlerFunction(url, flag) {
   const accessToken = await getItemAsync("access_token");
   if (!accessToken) {
     return;
@@ -72,7 +62,7 @@ async function JWTExpiryHandlerFunction(url) {
     })
     .catch(async function (err) {
       console.log(
-        "🚀 ~ file: routes.js:71 ~ JWTExpiryHandlerFunction ~ err:",
+        "🚀 ~ file: routes.js:65 ~ JWTExpiryHandlerFunction ~ err:",
         err.response,
         err.response.status
       );
@@ -81,9 +71,23 @@ async function JWTExpiryHandlerFunction(url) {
       }
     });
 
-  // console.log("line 84", response);
-  console.log("line 84");
+  console.log("line 74", response, flag);
   return response;
+}
+
+// used "Promise" to use localStorage in asynchronous way(used in "JWTExpiryHandlerFunction" * "refreshHandlingFunction")
+function getItemAsync(key) {
+  return new Promise((resolve) => {
+    const value = localStorage.getItem(key);
+    resolve(value);
+  });
+}
+// used "Promise" to use localStorage in asynchronous way(used in "JWTExpiryHandlerFunction")
+function setItemAsync(key, value) {
+  return new Promise((resolve) => {
+    const task = localStorage.setItem(key, value);
+    resolve(task);
+  });
 }
 
 const router = createBrowserRouter([
@@ -103,7 +107,8 @@ const router = createBrowserRouter([
             errorElement: <ProductsError />,
             loader: async () => {
               return await JWTExpiryHandlerFunction(
-                "http://localhost:3001/getAllProducts"
+                "http://localhost:3001/getAllProducts",
+                "sliderCategory --- getAllProducts"
               );
             },
             children: [
@@ -113,7 +118,8 @@ const router = createBrowserRouter([
                 errorElement: <ProductsError />,
                 loader: async (req) => {
                   return await JWTExpiryHandlerFunction(
-                    `http://localhost:3001/getAllProductsCategoryWise/${req.params.category}`
+                    `http://localhost:3001/getAllProductsCategoryWise/${req.params.category}`,
+                    "products --- getAllProductsCategoryWise"
                   );
                 },
               },
@@ -128,7 +134,8 @@ const router = createBrowserRouter([
         errorElement: <ErrorComponent />,
         loader: async () => {
           return await JWTExpiryHandlerFunction(
-            "http://localhost:3001/getAllProducts"
+            "http://localhost:3001/getAllProducts",
+            "separate route Products --- getAllProducts seperate route"
           );
         },
       },
@@ -147,7 +154,8 @@ const router = createBrowserRouter([
         element: <AdminPanel />,
         loader: async () => {
           return await JWTExpiryHandlerFunction(
-            "http://localhost:3001/adminGetUsers"
+            "http://localhost:3001/adminGetUsers",
+            "AdminPanel --- adminGetUsers"
           );
         },
         errorElement: <ErrorComponent />,

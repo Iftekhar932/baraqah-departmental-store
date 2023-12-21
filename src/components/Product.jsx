@@ -3,7 +3,7 @@ import axios from "axios";
 import useCart from "../hooks/useCart";
 
 const Product = (props) => {
-  const { category, _id, name, unit, img, price } = props.productData;
+  const { category, _id, name, unit, img, price } = props?.productData;
   const { addItem, subItem } = useCart();
 
   // get product id and add it to localStorage cart with "addItem/subitem" function
@@ -17,9 +17,9 @@ const Product = (props) => {
       })
       .then((response) => {
         if (flag == true) {
-          return subItem(response.data[0]._id);
+          return subItem(response?.data[0]?._id);
         } else {
-          return addItem(response.data[0]._id);
+          return addItem(response?.data[0]?._id);
         }
       })
       .catch((err) => console.log(err, "line 25 product.js"));
