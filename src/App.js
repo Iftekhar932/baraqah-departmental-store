@@ -13,3 +13,5 @@ function App() {
 }
 
 export default App;
+
+fish, vegetables, meat, fish, soda, cake;
