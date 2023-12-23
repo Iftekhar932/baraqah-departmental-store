@@ -19,6 +19,7 @@ import ErrorComponent from "../components/ErrorComponent";
 
 // * function to call api of refreshToken, setting new token in localStorage and then re-invoke "jwtExpiryFunction"
 const refreshHandlingFunction = async (url) => {
+  console.log("ashse");
   const accessToken = await getItemAsync("access_token");
   const userEmailAccount = await getItemAsync("userEmail");
   try {
@@ -33,7 +34,10 @@ const refreshHandlingFunction = async (url) => {
         },
       }
     );
-    console.log(response);
+    console.log(
+      "🚀 ~ file: routes.js:37 ~ refreshHandlingFunction ~ response:",
+      response
+    );
     // replacing the old token with the new one in localStorage
     await setItemAsync("access_token", response?.data?.accessToken);
 
@@ -88,7 +92,7 @@ async function JWTExpiryHandlerFunction(url, flag) {
       }
     });
 
-  console.log("line 90", response, flag);
+  // console.log("line 90", response, flag);
   return response;
 }
 

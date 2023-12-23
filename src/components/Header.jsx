@@ -111,7 +111,7 @@ const Header = () => {
             )}
           </ul>
         </div>
-        <span className="font-bold ">Baraqah</span>
+        <span className="font-bold">Baraqah</span>
         {/* //* MOBILE 👆 */}
 
         {/* //* 👇 LARGE SCREEN */}

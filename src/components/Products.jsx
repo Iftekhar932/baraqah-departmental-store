@@ -3,7 +3,6 @@ import Card from "./Product";
 
 const Cards = () => {
   const loadedData = useLoaderData();
-  console.log("🚀 ~ file: Products.jsx:6 ~ Cards ~ loadedData:", loadedData);
 
   return (
     <>
