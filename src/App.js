@@ -4,8 +4,8 @@ import router from "./Routes/routes";
 /* 
 ! add deletion function for admin (TEST WITH GOOGLE ACCOUNTS)
 ! add refreshToken feature for google
+! add auto logout feature for google if somehow refreshToken is not regenerated 
 ! add footer
-! need to add more json data to mongodb
 */
 
 function App() {
@@ -13,5 +13,3 @@ function App() {
 }
 
 export default App;
-
-fish, vegetables, meat, fish, soda, cake;

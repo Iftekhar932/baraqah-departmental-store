@@ -33,6 +33,7 @@ const refreshHandlingFunction = async (url) => {
         },
       }
     );
+    console.log(response);
     // replacing the old token with the new one in localStorage
     await setItemAsync("access_token", response?.data?.accessToken);
 
@@ -41,8 +42,16 @@ const refreshHandlingFunction = async (url) => {
     console.log(
       "✨ 🌟  refreshHandlingFunction  err 42:",
       err.response,
-      err.response.status
+      err.response.status,
+      err.data.refreshTokenExpiry
     );
+    // if refreshToken is not regenerated somehow, user will be logged out
+    if (err?.data?.refreshTokenExpiry == true) {
+      localStorage.removeItem("userEmail");
+      localStorage.removeItem("userProducts");
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("role");
+    }
   }
 };
 
@@ -62,16 +71,24 @@ async function JWTExpiryHandlerFunction(url, flag) {
     })
     .catch(async function (err) {
       console.log(
-        "🚀 ~ file: routes.js:65 ~ JWTExpiryHandlerFunction ~ err:",
+        "🚀 ~ file: routes.js:72 ~ JWTExpiryHandlerFunction ~ err:",
         err.response,
-        err.response.status
+        err.response.status,
+        flag
       );
+      /*       if (!flag) {
+        console.log(flag);
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("role");
+        localStorage.removeItem("userEmail");
+        localStorage.removeItem("userProducts");
+      } */
       if (err?.response?.status === 403) {
         return await refreshHandlingFunction(url);
       }
     });
 
-  console.log("line 74", response, flag);
+  console.log("line 90", response, flag);
   return response;
 }
 
@@ -108,7 +125,7 @@ const router = createBrowserRouter([
             loader: async () => {
               return await JWTExpiryHandlerFunction(
                 "http://localhost:3001/getAllProducts",
-                "sliderCategory --- getAllProducts"
+                "component - sliderCategory --- API - getAllProducts"
               );
             },
             children: [
@@ -119,7 +136,7 @@ const router = createBrowserRouter([
                 loader: async (req) => {
                   return await JWTExpiryHandlerFunction(
                     `http://localhost:3001/getAllProductsCategoryWise/${req.params.category}`,
-                    "products --- getAllProductsCategoryWise"
+                    "component - products ---API - getAllProductsCategoryWise"
                   );
                 },
               },
@@ -135,7 +152,7 @@ const router = createBrowserRouter([
         loader: async () => {
           return await JWTExpiryHandlerFunction(
             "http://localhost:3001/getAllProducts",
-            "separate route Products --- getAllProducts seperate route"
+            "component - (separate route in header) Products --- API getAllProducts (separately used for header)"
           );
         },
       },
@@ -155,7 +172,7 @@ const router = createBrowserRouter([
         loader: async () => {
           return await JWTExpiryHandlerFunction(
             "http://localhost:3001/adminGetUsers",
-            "AdminPanel --- adminGetUsers"
+            "component - AdminPanel --- API adminGetUsers"
           );
         },
         errorElement: <ErrorComponent />,
