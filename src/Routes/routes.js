@@ -19,7 +19,6 @@ import ErrorComponent from "../components/ErrorComponent";
 
 // * function to call api of refreshToken, setting new token in localStorage and then re-invoke "jwtExpiryFunction"
 const refreshHandlingFunction = async (url) => {
-  console.log("ashse");
   const accessToken = await getItemAsync("access_token");
   const userEmailAccount = await getItemAsync("userEmail");
   try {
@@ -45,12 +44,11 @@ const refreshHandlingFunction = async (url) => {
   } catch (err) {
     console.log(
       "✨ 🌟  refreshHandlingFunction  err 42:",
-      err.response,
-      err.response.status,
-      err.data.refreshTokenExpiry
+      err?.response,
+      err?.response?.status,
+      err?.response?.data?.refreshTokenExpiry
     );
-    // if refreshToken is not regenerated somehow, user will be logged out
-    if (err?.data?.refreshTokenExpiry == true) {
+    if (err?.response?.data?.refreshTokenExpiry == true) {
       localStorage.removeItem("userEmail");
       localStorage.removeItem("userProducts");
       localStorage.removeItem("access_token");
@@ -76,21 +74,29 @@ async function JWTExpiryHandlerFunction(url, flag) {
     .catch(async function (err) {
       console.log(
         "🚀 ~ file: routes.js:72 ~ JWTExpiryHandlerFunction ~ err:",
-        err.response,
-        err.response.status,
+        // err?.response,
+        err?.response?.status,
+        err?.response?.data,
+        err?.data?.refreshTokenExpiry,
         flag
       );
-      /*       if (!flag) {
-        console.log(flag);
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("role");
+
+      if (err?.data?.refreshTokenExpiry == true) {
         localStorage.removeItem("userEmail");
         localStorage.removeItem("userProducts");
-      } */
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("role");
+      }
+
       if (err?.response?.status === 403) {
         return await refreshHandlingFunction(url);
       }
     });
+  console.log(
+    "🚀 ~ file: routes.js:87 ~ JWTExpiryHandlerFunction ~ response:",
+    response,
+    flag
+  );
 
   // console.log("line 90", response, flag);
   return response;
