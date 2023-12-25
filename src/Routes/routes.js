@@ -17,11 +17,14 @@ import ForgotPasswordForm from "../components/ForgotPasswordForm";
 import ProductsError from "../components/ProductsError";
 import ErrorComponent from "../components/ErrorComponent";
 
+import { fetchCartProducts } from "../components/CartView";
+
 // * function to call api of refreshToken, setting new token in localStorage and then re-invoke "jwtExpiryFunction"
-export const refreshHandlingFunction = async (url) => {
+export const refreshHandlingFunction = async (url, flag, separateFlag) => {
   const accessToken = await getItemAsync("access_token");
   const userEmailAccount = await getItemAsync("userEmail");
   console.log("token pawa age");
+
   try {
     const response = await axios.post(
       "http://localhost:3001/refresh",
@@ -42,8 +45,10 @@ export const refreshHandlingFunction = async (url) => {
     );
     // replacing the old token with the new one in localStorage
     await setItemAsync("access_token", response?.data?.accessToken);
-
-    return await JWTExpiryHandlerFunction(url);
+    if (separateFlag === true) {
+      console.log(flag);
+      return;
+    } else return await JWTExpiryHandlerFunction(url);
   } catch (err) {
     console.log(
       "✨ 🌟  refreshHandlingFunction  err 47:",
@@ -61,7 +66,7 @@ export const refreshHandlingFunction = async (url) => {
 };
 
 //* when jwt expires it'll invoke "refreshTokenHandlingFunction" above or it'll handle response
-async function JWTExpiryHandlerFunction(url, flag) {
+export async function JWTExpiryHandlerFunction(url, flag) {
   const accessToken = await getItemAsync("access_token");
   if (!accessToken) {
     return;
@@ -80,6 +85,7 @@ async function JWTExpiryHandlerFunction(url, flag) {
         // err?.response,
         err?.response?.status,
         err?.response?.data,
+        err?.data?.refreshTokenExpiry,
         flag
       );
 

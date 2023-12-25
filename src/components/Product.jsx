@@ -1,6 +1,10 @@
 import React from "react";
 import axios from "axios";
 import useCart from "../hooks/useCart";
+import {
+  refreshHandlingFunction,
+  JWTExpiryHandlerFunction,
+} from "../Routes/routes";
 
 const Product = (props) => {
   const { category, _id, name, unit, img, price } = props?.productData;
@@ -22,7 +26,17 @@ const Product = (props) => {
           return addItem(response?.data[0]?._id);
         }
       })
-      .catch((err) => console.log(err, "line 25 product.js"));
+      .catch(async (err) => {
+        console.log(err, "line 42 cartView.js");
+        console.log(err?.response);
+        if (err?.response?.status === 403) {
+          return await refreshHandlingFunction(
+            `http://localhost:3001/getAllProducts/${_id}`,
+            "component - products.jsx ------- api - getAllProducts/:productId",
+            true
+          );
+        }
+      });
     return response;
   };
 

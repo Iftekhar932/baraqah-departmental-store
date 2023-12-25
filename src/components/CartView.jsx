@@ -1,7 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { refreshHandlingFunction } from "../Routes/routes";
+import {
+  refreshHandlingFunction,
+  JWTExpiryHandlerFunction,
+} from "../Routes/routes";
+
+export let fetchCartProducts;
 
 const CartView = () => {
   const navigate = useNavigate();
@@ -9,7 +14,6 @@ const CartView = () => {
   const [cartTotalSum, setCartTotalSum] = useState(0); // total due payment of products purchased by user
 
   // need lexical scope to access everywhere so it's defined outside of useEffect's curly braces
-  let fetchCartProducts;
 
   useEffect(() => {
     if (!localStorage.getItem("userProducts")) return;
@@ -43,9 +47,19 @@ const CartView = () => {
               qnt: product?.qnt,
             };
           })
-          .catch((err) => {
+          .catch(async (err) => {
             console.log(err, "line 42 cartView.js");
-            // refreshHandlingFunction(`http://localhost:3001/getAllProducts/${product?.productId}`)
+            console.log(err?.response);
+            if (err?.response?.status === 403) {
+              return await refreshHandlingFunction(
+                `http://localhost:3001/getAllProducts/${product?.productId}`,
+                "component - CartView.jsx ------- api - getAllProducts/:productId",
+                true
+              );
+            }
+            /* refreshHandlingFunction(
+              `http://localhost:3001/getAllProducts/${product?.productId}`
+            ); */
           });
       });
 
