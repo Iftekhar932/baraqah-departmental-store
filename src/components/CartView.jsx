@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { refreshHandlingFunction } from "../Routes/routes";
 
 const CartView = () => {
   const navigate = useNavigate();
@@ -42,7 +43,10 @@ const CartView = () => {
               qnt: product?.qnt,
             };
           })
-          .catch((err) => console.log(err, "line 42 cartView.js"));
+          .catch((err) => {
+            console.log(err, "line 42 cartView.js");
+            // refreshHandlingFunction(`http://localhost:3001/getAllProducts/${product?.productId}`)
+          });
       });
 
       /* This whole function calls the api for every product asynchronously, so it makes sure after all promises are resolved it'll be set in 

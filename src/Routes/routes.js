@@ -18,9 +18,10 @@ import ProductsError from "../components/ProductsError";
 import ErrorComponent from "../components/ErrorComponent";
 
 // * function to call api of refreshToken, setting new token in localStorage and then re-invoke "jwtExpiryFunction"
-const refreshHandlingFunction = async (url) => {
+export const refreshHandlingFunction = async (url) => {
   const accessToken = await getItemAsync("access_token");
   const userEmailAccount = await getItemAsync("userEmail");
+  console.log("token pawa age");
   try {
     const response = await axios.post(
       "http://localhost:3001/refresh",
@@ -33,6 +34,8 @@ const refreshHandlingFunction = async (url) => {
         },
       }
     );
+
+    console.log("pawar pore");
     console.log(
       "🚀 ~ file: routes.js:37 ~ refreshHandlingFunction ~ response:",
       response
@@ -43,7 +46,7 @@ const refreshHandlingFunction = async (url) => {
     return await JWTExpiryHandlerFunction(url);
   } catch (err) {
     console.log(
-      "✨ 🌟  refreshHandlingFunction  err 42:",
+      "✨ 🌟  refreshHandlingFunction  err 47:",
       err?.response,
       err?.response?.status,
       err?.response?.data?.refreshTokenExpiry
@@ -73,11 +76,10 @@ async function JWTExpiryHandlerFunction(url, flag) {
     })
     .catch(async function (err) {
       console.log(
-        "🚀 ~ file: routes.js:72 ~ JWTExpiryHandlerFunction ~ err:",
+        "🚀 ~ file: routes.js:77 ~ JWTExpiryHandlerFunction ~ err:",
         // err?.response,
         err?.response?.status,
         err?.response?.data,
-        err?.data?.refreshTokenExpiry,
         flag
       );
 
@@ -93,7 +95,7 @@ async function JWTExpiryHandlerFunction(url, flag) {
       }
     });
   console.log(
-    "🚀 ~ file: routes.js:87 ~ JWTExpiryHandlerFunction ~ response:",
+    "🚀 ~ file: routes.js:97 ~ JWTExpiryHandlerFunction ~ response:",
     response,
     flag
   );

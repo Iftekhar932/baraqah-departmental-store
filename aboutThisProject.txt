@@ -2,4 +2,4 @@
 2. npm packages in front-end:
 firebase, react-router-dom, react-multi-carousel
 3. npm packages in back-end:
-    nodemon, mongoose,mongodb,jsonwebtoken(JWT),firebase-admin,express,dotenv,cors,bcrypt
+ nodemon, mongoose, mongodb, jsonwebtoken(JWT), firebase-admin, express, dotenv, cors, bcrypt
