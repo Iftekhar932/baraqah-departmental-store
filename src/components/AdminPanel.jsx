@@ -1,7 +1,8 @@
+import React from "react";
 import "daisyui/dist/full.css";
 import axios from "axios";
 import { useLoaderData } from "react-router-dom";
-import React from "react";
+import { refreshHandlingFunction } from "../Routes/routes";
 
 function AdminPanel() {
   const loadedData = useLoaderData();
@@ -25,7 +26,22 @@ function AdminPanel() {
       );
       return response;
     } catch (error) {
-      console.error("Error deleting user:", error.response);
+      async (err) => {
+        console.log(err, "line 30 AdminPanel.js");
+        console.log(
+          err?.response,
+          err?.response?.name,
+          err?.response?.message,
+          err?.response?.status
+        );
+        if (err?.response?.status === 403) {
+          return await refreshHandlingFunction(
+            null,
+            "component - AdminPanel.jsx ------- api - adminUserDeletion",
+            true
+          );
+        }
+      };
     }
   }
 
@@ -77,21 +93,3 @@ function AdminPanel() {
 }
 
 export default AdminPanel;
-
-/* 
-async function updateUser(uid) {
-  try {
-    const userRecord = await admin.auth().updateUser(uid, {
-      displayName: 'New Display Name',
-    });
-
-    console.log('Successfully updated user:', userRecord.uid);
-  } catch (error) {
-    console.error('Error updating user:', error);
-  }
-}
-
-// Call the function with the user's UID
-updateUser('userUid');
-
-*/

@@ -1,12 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  refreshHandlingFunction,
-  JWTExpiryHandlerFunction,
-} from "../Routes/routes";
+import { refreshHandlingFunction } from "../Routes/routes";
 
-export let fetchCartProducts;
+let fetchCartProducts;
 
 const CartView = () => {
   const navigate = useNavigate();
@@ -52,7 +49,7 @@ const CartView = () => {
             console.log(err?.response);
             if (err?.response?.status === 403) {
               return await refreshHandlingFunction(
-                `http://localhost:3001/getAllProducts/${product?.productId}`,
+                null,
                 "component - CartView.jsx ------- api - getAllProducts/:productId",
                 true
               );

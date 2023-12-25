@@ -34,15 +34,15 @@ const useFirebase = () => {
           "http://localhost:3001/jsonWebAccessToken",
           {
             uid,
-            email: user.email,
-            role: user.role,
+            email: user?.email,
+            role: user?.role,
           }
         );
 
         // ▶️👉 handling response
-        response.status === 200
-          ? localStorage.setItem("access_token", response.data)
-          : console.log(response.data, "login failed");
+        response?.status === 200
+          ? localStorage.setItem("access_token", response?.data)
+          : console.log(response?.data, "login failed");
 
         navigate("/");
         return response;

@@ -17,13 +17,11 @@ import ForgotPasswordForm from "../components/ForgotPasswordForm";
 import ProductsError from "../components/ProductsError";
 import ErrorComponent from "../components/ErrorComponent";
 
-import { fetchCartProducts } from "../components/CartView";
-
-// * function to call api of refreshToken, setting new token in localStorage and then re-invoke "jwtExpiryFunction"
+// * function to call api of refreshToken, setting new token in localStorage and then re-invoke "jwtExpiryFunction" & the outcome/response that is returned from that function is finally "return" returned from this function - happens only if access_token is expired
+// this function is imported in "CartView.jsx" and "Product.jsx" component
 export const refreshHandlingFunction = async (url, flag, separateFlag) => {
   const accessToken = await getItemAsync("access_token");
   const userEmailAccount = await getItemAsync("userEmail");
-  console.log("token pawa age");
 
   try {
     const response = await axios.post(
@@ -38,13 +36,13 @@ export const refreshHandlingFunction = async (url, flag, separateFlag) => {
       }
     );
 
-    console.log("pawar pore");
     console.log(
       "🚀 ~ file: routes.js:37 ~ refreshHandlingFunction ~ response:",
       response
     );
     // replacing the old token with the new one in localStorage
     await setItemAsync("access_token", response?.data?.accessToken);
+    // "separateFlag" is set to "true" when argument is sent from the components where this function is invoked/called
     if (separateFlag === true) {
       console.log(flag);
       return;
@@ -65,8 +63,8 @@ export const refreshHandlingFunction = async (url, flag, separateFlag) => {
   }
 };
 
-//* when jwt expires it'll invoke "refreshTokenHandlingFunction" above or it'll handle response
-export async function JWTExpiryHandlerFunction(url, flag) {
+//* when jwt expires it'll invoke "refreshTokenHandlingFunction" above or it'll handle response - when access_token expires the "return" keyword is returning response and returned again to the refreshHandlingFunction
+async function JWTExpiryHandlerFunction(url, flag) {
   const accessToken = await getItemAsync("access_token");
   if (!accessToken) {
     return;

@@ -1,10 +1,7 @@
 import React from "react";
 import axios from "axios";
 import useCart from "../hooks/useCart";
-import {
-  refreshHandlingFunction,
-  JWTExpiryHandlerFunction,
-} from "../Routes/routes";
+import { refreshHandlingFunction } from "../Routes/routes";
 
 const Product = (props) => {
   const { category, _id, name, unit, img, price } = props?.productData;
@@ -31,7 +28,7 @@ const Product = (props) => {
         console.log(err?.response);
         if (err?.response?.status === 403) {
           return await refreshHandlingFunction(
-            `http://localhost:3001/getAllProducts/${_id}`,
+            null,
             "component - products.jsx ------- api - getAllProducts/:productId",
             true
           );
