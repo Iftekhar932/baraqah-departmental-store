@@ -18,7 +18,7 @@ import ProductsError from "../components/ProductsError";
 import ErrorComponent from "../components/ErrorComponent";
 
 // * function to call api of refreshToken, setting new token in localStorage and then re-invoke "jwtExpiryFunction" & the outcome/response that is returned from that function is finally "return" returned from this function - happens only if access_token is expired
-// this function is imported in "CartView.jsx" and "Product.jsx" component
+//  this function is imported in "CartView.jsx" and "Product.jsx" component */
 export const refreshHandlingFunction = async (url, flag, separateFlag) => {
   const accessToken = await getItemAsync("access_token");
   const userEmailAccount = await getItemAsync("userEmail");
@@ -37,14 +37,17 @@ export const refreshHandlingFunction = async (url, flag, separateFlag) => {
     );
 
     console.log(
-      "🚀 ~ file: routes.js:37 ~ refreshHandlingFunction ~ response:",
+      "🚀 ~ file: routes.js:40 ~ refreshHandlingFunction ~ response:",
       response
     );
     // replacing the old token with the new one in localStorage
     await setItemAsync("access_token", response?.data?.accessToken);
     // "separateFlag" is set to "true" when argument is sent from the components where this function is invoked/called
     if (separateFlag === true) {
-      console.log(flag);
+      console.log(
+        "🚀 ~ file: routes.js:47 ~ refreshHandlingFunction ~ separateFlag:",
+        flag
+      );
       return;
     } else return await JWTExpiryHandlerFunction(url);
   } catch (err) {
@@ -79,7 +82,7 @@ async function JWTExpiryHandlerFunction(url, flag) {
     })
     .catch(async function (err) {
       console.log(
-        "🚀 ~ file: routes.js:77 ~ JWTExpiryHandlerFunction ~ err:",
+        "🚀 ~ file: routes.js:82 ~ JWTExpiryHandlerFunction ~ err:",
         // err?.response,
         err?.response?.status,
         err?.response?.data,
@@ -99,12 +102,12 @@ async function JWTExpiryHandlerFunction(url, flag) {
       }
     });
   console.log(
-    "🚀 ~ file: routes.js:97 ~ JWTExpiryHandlerFunction ~ response:",
+    "🚀 ~ file: routes.js:105 ~ JWTExpiryHandlerFunction ~ response:",
     response,
     flag
   );
 
-  // console.log("line 90", response, flag);
+  console.log("line 110", response, flag);
   return response;
 }
 

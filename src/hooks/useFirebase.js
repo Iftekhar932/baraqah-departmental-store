@@ -39,9 +39,15 @@ const useFirebase = () => {
           }
         );
 
+        const responseHandleFunc = () => {
+          localStorage.setItem("access_token", response?.data?.accessToken);
+          localStorage.setItem("userEmail", user?.email);
+          localStorage.setItem("role", user?.role);
+        };
+
         // ▶️👉 handling response
         response?.status === 200
-          ? localStorage.setItem("access_token", response?.data)
+          ? responseHandleFunc()
           : console.log(response?.data, "login failed");
 
         navigate("/");
@@ -51,7 +57,7 @@ const useFirebase = () => {
         // Handle Errors here.
         const errorCode = error.code;
         console.log(
-          "❌❌❌❌❌ ~ file: useFirebase.js:32 ~ .then ~ errorCode:",
+          "❌❌❌❌❌ ~ file: useFirebase.js:54 ~ .then ~ errorCode:",
           errorCode
         );
         const errorMessage = error.message;
