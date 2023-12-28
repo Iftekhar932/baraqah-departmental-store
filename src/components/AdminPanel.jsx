@@ -26,22 +26,20 @@ function AdminPanel() {
       );
       return response;
     } catch (error) {
-      async (err) => {
-        console.log(err, "line 30 AdminPanel.js");
-        console.log(
-          err?.response,
-          err?.response?.name,
-          err?.response?.message,
-          err?.response?.status
+      // console.log(error, "line 30 AdminPanel.js");
+      console.log(
+        error?.response,
+        error?.response?.name,
+        error?.response?.message,
+        error?.response?.status
+      );
+      if (error?.response?.status === 403) {
+        return await refreshHandlingFunction(
+          null,
+          "component - AdminPanel.jsx ------- api - adminUserDeletion",
+          true
         );
-        if (err?.response?.status === 403) {
-          return await refreshHandlingFunction(
-            null,
-            "component - AdminPanel.jsx ------- api - adminUserDeletion",
-            true
-          );
-        }
-      };
+      }
     }
   }
 

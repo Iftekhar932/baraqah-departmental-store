@@ -4,13 +4,6 @@ import useFirebase from "../hooks/useFirebase";
 // daisyUI component
 import ThemeSwitcher from "./ThemeSwitcher";
 
-// !change ui conditional rendering, NEEDS TESTING
-// !change ui conditional rendering, NEEDS TESTING
-// !change ui conditional rendering, NEEDS TESTING
-// !change ui conditional rendering, NEEDS TESTING
-// !change ui conditional rendering, NEEDS TESTING
-// !change ui conditional rendering, NEEDS TESTING
-
 const Header = () => {
   const { user, logOut } = useFirebase();
 
@@ -111,7 +104,7 @@ const Header = () => {
             )}
           </ul>
         </div>
-        <span className="font-bold">Baraqah</span>
+        <span className="font-bold sm:hidden">Baraqah</span>
         {/* //* MOBILE 👆 */}
 
         {/* //* 👇 LARGE SCREEN */}
