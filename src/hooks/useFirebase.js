@@ -57,18 +57,18 @@ const useFirebase = () => {
         // Handle Errors here.
         const errorCode = error.code;
         console.log(
-          "❌❌❌❌❌ ~ file: useFirebase.js:54 ~ .then ~ errorCode:",
+          "❌❌❌❌❌ ~ file: useFirebase.js:60 ~ .then ~ errorCode:",
           errorCode
         );
         const errorMessage = error.message;
         console.log(
-          "❌❌❌❌❌ ~ file: useFirebase.js:34 ~ .then ~ errorMessage:",
+          "❌❌❌❌❌ ~ file: useFirebase.js:65 ~ .then ~ errorMessage:",
           errorMessage
         );
         // The email of the user's account used.
         const email = error.customData.email;
         console.log(
-          "❌❌❌❌❌ ~ file: useFirebase.js:37 ~ .then ~ email:",
+          "❌❌❌❌❌ ~ file: useFirebase.js:71 ~ .then ~ email:",
           email
         );
       });
