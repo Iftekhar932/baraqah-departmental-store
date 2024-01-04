@@ -10,13 +10,17 @@ const Header = () => {
   const userEmail = localStorage.getItem("userEmail");
   const role = localStorage.getItem("role");
 
-  const logOutFunc = () => {
-    if (userEmail) {
+  /* //! if it doesn't work for firebase logout, try sending argument flags from the button and use it with if statement */
+  const logOutFunc = (e, flag) => {
+    e.preventDefault();
+    if (!flag) {
       localStorage.removeItem("userEmail");
       localStorage.removeItem("access_token");
       localStorage.removeItem("userProducts");
       localStorage.removeItem("role");
-    } else if (user) {
+      return;
+    } else if (flag) {
+      e.preventDefault();
       localStorage.removeItem("userEmail");
       localStorage.removeItem("access_token");
       localStorage.removeItem("userProducts");
@@ -93,7 +97,16 @@ const Header = () => {
 
             {Boolean(userEmail) || user?.email ? (
               <li className="bg-red-700">
-                <a href="#" onClick={logOutFunc}>
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    if (user?.email) {
+                      return logOutFunc(e, true);
+                    } else {
+                      return logOutFunc();
+                    }
+                  }}
+                >
                   Logout
                 </a>
               </li>
@@ -130,7 +143,16 @@ const Header = () => {
 
             <li>
               {Boolean(userEmail) || user?.email ? (
-                <a href="#" onClick={logOutFunc}>
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    if (user?.email) {
+                      return logOutFunc(e, true);
+                    } else {
+                      return logOutFunc();
+                    }
+                  }}
+                >
                   Logout
                 </a>
               ) : (

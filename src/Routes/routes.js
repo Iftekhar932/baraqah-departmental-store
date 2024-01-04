@@ -16,13 +16,16 @@ import ForgotPasswordForm from "../components/ForgotPasswordForm";
 // error components
 import ProductsError from "../components/ProductsError";
 import ErrorComponent from "../components/ErrorComponent";
+/*
+ * function to call api of refreshToken, setting new token in localStorage and then re-invoke "jwtExpiryFunction" & the outcome/response that
+ * is returned from that function is finally "return"
+ * returned from this function - happens only if access_token is expired
+ */
+//  this function is imported in "CartView.jsx" and "Product.jsx" component
 
-// * function to call api of refreshToken, setting new token in localStorage and then re-invoke "jwtExpiryFunction" & the outcome/response that is returned from that function is finally "return" returned from this function - happens only if access_token is expired
-//  this function is imported in "CartView.jsx" and "Product.jsx" component */
 export const refreshHandlingFunction = async (url, flag, separateFlag) => {
   const accessToken = await getItemAsync("access_token");
   const userEmailAccount = await getItemAsync("userEmail");
-
   try {
     const response = await axios.post(
       "http://localhost:3001/refresh",
@@ -42,14 +45,21 @@ export const refreshHandlingFunction = async (url, flag, separateFlag) => {
     );
     // replacing the old token with the new one in localStorage
     await setItemAsync("access_token", response?.data?.accessToken);
-    // "separateFlag" is set to "true" when argument is sent from the components where this function is invoked/called
+    /* 
+     "separateFlag" is set to "true" when ARGUMENT IS SENT FROM OTHER COMPONENTS 
+     where this function is invoked/called. In this case, "JWTExpiryHandlerFunction" 
+     this function is not needed to be invoked in this file as it is invoked in the components. 
+     */
     if (separateFlag === true) {
       console.log(
         "🚀 ~ file: routes.js:47 ~ refreshHandlingFunction ~ separateFlag:",
         flag
       );
       return;
-    } else return await JWTExpiryHandlerFunction(url);
+    } else {
+      console.log("NOTE SEPARATE FLAG");
+      return await JWTExpiryHandlerFunction(url);
+    }
   } catch (err) {
     console.log(
       "✨ 🌟  refreshHandlingFunction  err 47:",
@@ -107,7 +117,7 @@ async function JWTExpiryHandlerFunction(url, flag) {
     flag
   );
 
-  console.log("line 110", response, flag);
+  console.log("line 116", response, flag);
   return response;
 }
 

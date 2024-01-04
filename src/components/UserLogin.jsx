@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
 import axios from "axios";
 
@@ -26,6 +26,7 @@ const UserLogin = () => {
     try {
       e.preventDefault();
       if (flag == "google") {
+        // NOTE: receiving and setting accessToken in localStorage in "useFirebase.js" in "signInWithGoogle()" function
         signInWithGoogle();
         return;
       }
