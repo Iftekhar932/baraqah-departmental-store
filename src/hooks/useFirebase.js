@@ -21,7 +21,6 @@ const useFirebase = () => {
 
   /* 🔽⏬🔽⏬ SIGN IN WITH GOOGLE 🔽⏬🔽⏬ */
   const signInWithGoogle = () => {
-    console.log("242424");
     signInWithPopup(auth, googleProvider)
       .then(async (result) => {
         // The signed-in user info.
@@ -29,7 +28,6 @@ const useFirebase = () => {
         const uid = user.uid;
         user.role = "user";
         setUser(user);
-        console.log("32323232");
 
         //* This JWT api is for google sign in only
         const response = await axios.post(
@@ -44,14 +42,12 @@ const useFirebase = () => {
           "🚀 ~ file: useFirebase.js:43 ~ .then ~ response:",
           response
         );
-        console.log("42424242");
 
         const responseHandleFunc = () => {
           localStorage.setItem("access_token", response?.data?.accessToken);
           localStorage.setItem("userEmail", user?.email);
           localStorage.setItem("role", user?.role);
         };
-        console.log("48484848");
 
         // ▶️👉 handling response
         response?.status === 200
