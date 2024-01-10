@@ -46,7 +46,7 @@ export const refreshHandlingFunction = async (url, flag, separateFlag) => {
     // replacing the old token with the new one in localStorage
     await setItemAsync("access_token", response?.data?.accessToken);
     /* 
-     "separateFlag" is set to "true" when ARGUMENT IS SENT FROM OTHER COMPONENTS 
+     "separateFlag" is set to "true" when ARGUMENT IS SENT FROM OTHER COMPONENTs 
      where this function is invoked/called. In this case, "JWTExpiryHandlerFunction" 
      this function is not needed to be invoked in this file as it is invoked in the components. 
      */
@@ -187,17 +187,17 @@ const router = createBrowserRouter([
       },
       {
         path: "/userLogin",
-        element: <UserLogin />,
+        element: <UserLogin />, // this component has api in it's own file
         errorElement: <ErrorComponent />,
       },
       {
         path: "/userRegister",
-        element: <UserRegister />,
+        element: <UserRegister />, // this component has api in it's own file
         errorElement: <ErrorComponent />,
       },
       {
         path: "/adminOnly",
-        element: <AdminPanel />,
+        element: <AdminPanel />, // this component has an api in it's own file for user deletion
         loader: async () => {
           return await JWTExpiryHandlerFunction(
             "http://localhost:3001/adminGetUsers",
@@ -207,7 +207,7 @@ const router = createBrowserRouter([
         errorElement: <ErrorComponent />,
       },
 
-      { path: "/forgotPassword", element: <ForgotPasswordForm /> },
+      { path: "/forgotPassword", element: <ForgotPasswordForm /> }, // this component ha an api in it's own file for password reset
       { path: "/about", element: <AboutUs /> },
       { path: "/viewCart", element: <CartView /> }, // axios api called in component file "axios.get()" that uses productsID to get a single product
     ],

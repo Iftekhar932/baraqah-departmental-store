@@ -17,7 +17,7 @@ const Product = (props) => {
         },
       })
       .then((response) => {
-        if (flag == true) {
+        if (flag === true) {
           return subItem(response?.data[0]?._id);
         } else {
           return addItem(response?.data[0]?._id);
