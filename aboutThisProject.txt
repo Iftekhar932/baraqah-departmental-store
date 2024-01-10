@@ -1,5 +1,9 @@
 1. For comments used an extension named "better comments" to highlight some comments in this project in different colors that indicate intensity 
 2. npm packages in front-end:
-firebase, react-router-dom, react-multi-carousel
+ firebase,
+ react-router-dom,
+ react-multi-carousel
 3. npm packages in back-end:
- nodemon, mongoose, mongodb, jsonwebtoken(JWT), firebase-admin, express, dotenv, cors, bcrypt
+    nodemon, mongoose, mongodb, jsonwebtoken(JWT), firebase-admin, express, dotenv, cors, bcrypt
+4. I have implemented separate logic to generate & provide refreshToken for google login firebase and email login(mongoDB storage). but the token verification is in the same file
+5. 
