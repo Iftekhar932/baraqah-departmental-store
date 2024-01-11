@@ -1,7 +1,7 @@
 import { Link, Outlet, useLoaderData } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import Carousel from "react-multi-carousel";
-import useFirebase from "../hooks/useFirebase";
+import { motion } from "framer-motion";
 
 const responsive = {
   superLargeDesktop: {
@@ -41,7 +41,11 @@ const SliderCategory = () => {
   imgs = [...new Set(imgs)];
 
   return (
-    <div className={`${loadedData?.data?.length === 0 ? "hidden" : ""}`}>
+    <motion.div
+      className={`${loadedData?.data?.length === 0 ? "hidden" : ""}`}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1, transition: { duration: 1 } }}
+    >
       <Carousel
         swipeable={true}
         draggable={false}
@@ -74,7 +78,7 @@ const SliderCategory = () => {
         })}
       </Carousel>
       <Outlet />
-    </div>
+    </motion.div>
   );
 };
 

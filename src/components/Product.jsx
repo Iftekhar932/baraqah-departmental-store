@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import useCart from "../hooks/useCart";
 import { refreshHandlingFunction } from "../Routes/routes";
+import { motion } from "framer-motion";
 
 const Product = (props) => {
   const { category, _id, name, unit, img, price } = props?.productData;
@@ -38,7 +39,13 @@ const Product = (props) => {
   };
 
   return (
-    <div className="card card-compact min-w-0 w-full bg-base-100 shadow-xl">
+    <motion.div
+      className="card card-compact min-w-0 w-full bg-base-100 shadow-xl"
+      animate={{
+        scale: [0.5, 1.1, 1],
+        borderRadius: ["20%", "10%", "20%"],
+      }}
+    >
       <figure>
         <img src={img} className="w-full h-64 object-cover" alt={name} />
       </figure>
@@ -62,7 +69,7 @@ const Product = (props) => {
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

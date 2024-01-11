@@ -1,9 +1,13 @@
 import deliveryImg from "../images/delivery.svg";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
-    <div className="">
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1, transition: { duration: 2 } }}
+    >
       <div className="hero ">
         <div className="hero-content flex-col sm:flex-row-reverse min-h-full w-full sm:w-2/4 lg:w-3/4">
           <div className="w-full sm:w-2/4">
@@ -32,7 +36,7 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

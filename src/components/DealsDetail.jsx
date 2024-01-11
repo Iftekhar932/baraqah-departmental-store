@@ -1,6 +1,12 @@
+import { motion } from "framer-motion";
+
 const DealsDetail = () => {
   return (
-    <div className="mx-auto w-full sm:w-2/5 md:w-3/4 p-12 flex flex-col sm:flex-row gap-10 justify-center items-center place-items-center">
+    <motion.div
+      className="mx-auto w-full sm:w-2/5 md:w-3/4 p-12 flex flex-col sm:flex-row gap-10 justify-center items-center place-items-center"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1, transition: { duration: 2 } }}
+    >
       <article className="w-full block">
         <h1 className="font-bold text-2xl">
           Hot 🔥
@@ -50,7 +56,7 @@ const DealsDetail = () => {
           </div>
         </div>
       </article>
-    </div>
+    </motion.div>
   );
 };
 

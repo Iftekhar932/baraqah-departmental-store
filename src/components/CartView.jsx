@@ -155,6 +155,16 @@ const CartView = () => {
           >
             Clear All
           </button>
+          <button
+            className="btn btn-primary mx-auto self-center"
+            onClick={() => {
+              // clearing and updating the table
+              localStorage.removeItem("userProducts");
+              navigate("/");
+            }}
+          >
+            Confirm Purchase
+          </button>
         </div>
       </div>
     </>
