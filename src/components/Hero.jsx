@@ -6,7 +6,7 @@ const Hero = () => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1, transition: { duration: 2 } }}
+      whileInView={{ opacity: 1, transition: { duration: 1 } }}
     >
       <div className="hero ">
         <div className="hero-content flex-col sm:flex-row-reverse min-h-full w-full sm:w-2/4 lg:w-3/4">

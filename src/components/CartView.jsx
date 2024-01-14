@@ -10,7 +10,35 @@ const CartView = () => {
   const [cartProductDisplay, setCartProductDisplay] = useState([]); // selected products data to display on table
   const [cartTotalSum, setCartTotalSum] = useState(0); // total due payment of products purchased by user
 
-  // need lexical scope to access everywhere so it's defined outside of useEffect's curly braces
+  // a function that makes a list in .txt file format and auto downloads it in user's device, this is done without having access to user's storage
+  const handleDownload = () => {
+    const filename = "purchase-confirmation.txt";
+    let fileContent = "";
+
+    for (let i = 0; i < cartProductDisplay.length; i++) {
+      const element = cartProductDisplay[i];
+      console.log(element);
+      fileContent += `
+      Product: ${element?.name}
+       Price: $ ${element?.price} 
+       Quantity: ${element?.qnt} 
+       ------- ------`;
+    }
+
+    /* 
+new Blob - it is making a file like object
+createObjectURL - makes temporary download URL for the file that is created */
+    const blob = new Blob([fileContent], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+
+    /* creating a button while adding href & download attribute to it, after that it is clicked by itself which makes the it download the file automatically */
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    link.click();
+
+    URL.revokeObjectURL(url); // revokeObjectURL releases memory, prevents memory leaks.
+  };
 
   useEffect(() => {
     if (!localStorage.getItem("userProducts")) return;
@@ -159,8 +187,9 @@ const CartView = () => {
             className="btn btn-primary mx-auto self-center"
             onClick={() => {
               // clearing and updating the table
-              localStorage.removeItem("userProducts");
               navigate("/");
+              handleDownload();
+              localStorage.removeItem("userProducts");
             }}
           >
             Confirm Purchase
