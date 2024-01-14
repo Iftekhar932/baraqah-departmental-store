@@ -38,10 +38,6 @@ const useFirebase = () => {
             role: user?.role,
           }
         );
-        console.log(
-          "🚀 ~ file: useFirebase.js:43 ~ .then ~ response:",
-          response
-        );
 
         const responseHandleFunc = () => {
           localStorage.setItem("access_token", response?.data?.accessToken);
@@ -55,7 +51,6 @@ const useFirebase = () => {
           : console.log(response?.data, "login failed");
 
         navigate("/");
-        console.log("555555");
 
         return response;
       })

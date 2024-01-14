@@ -8,7 +8,6 @@ const ProductsError = () => {
 
   /*  NOTE: the condition with the state is to make sure if user stays on
    the error page for 3 seconds will be redirected unless it is this route - '/' (home route) */
-
   useEffect(() => {
     const timeToNavigate = () => {
       if (window.location.pathname != "/")

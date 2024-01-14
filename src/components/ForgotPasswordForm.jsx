@@ -33,10 +33,10 @@ const ForgotPasswordForm = () => {
       // handle response
       response.status === 200
         ? navigate("/")
-        : console.log(response.data, "change failed");
+        : window.alert(response?.data, "change failed");
       return response;
     } catch (error) {
-      console.error("Error during login line 45:", error.response?.data);
+      console.error("Error during login line 45:", error?.response?.data);
       setErrorMsg(error?.response?.data?.msg);
     }
   };
@@ -46,10 +46,6 @@ const ForgotPasswordForm = () => {
       <div className="w-3/4 hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold py-6">Change your password</h1>
-          {/* <p className="py-6">
-            Ours is one of the best online grocery shops around the city with
-            fresh, healthy, pure products along with fast delivery
-          </p> */}
         </div>
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <form className="card-body">

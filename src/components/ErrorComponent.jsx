@@ -7,7 +7,6 @@ const ErrorComponent = () => {
   const [userHere, setUserHere] = useState(false); // indicates whether in user's device this component is rendered or not
 
   // NOTE: the condition with the state is to make sure if user stays in this page error page for 3 seconds, will be redirected. Otherwise won't
-
   useEffect(() => {
     const timeToNavigate = () => {
       setTimeout(() => setUserHere(() => !userHere), 3000);

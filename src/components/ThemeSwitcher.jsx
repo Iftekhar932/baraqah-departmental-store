@@ -4,32 +4,17 @@ const themeNames = [
   "light",
   "dark",
   "cupcake",
-  "bumblebee",
-  "emerald",
-  "corporate",
   "synthwave",
-  "retro",
-  "cyberpunk",
-  "valentine",
-  "halloween",
   "garden",
   "forest",
-  "aqua",
-  "lofi",
   "pastel",
   "fantasy",
-  "wireframe",
-  "black",
   "luxury",
   "dracula",
-  "cmyk",
-  "autumn",
   "business",
-  "acid",
   "lemonade",
   "night",
   "coffee",
-  "winter",
 ];
 
 const ThemeSwitcher = () => {
@@ -37,7 +22,7 @@ const ThemeSwitcher = () => {
     window.localStorage.getItem("userSelectedTheme")
   ); // initial value is set in the useEffect
 
-  // "theme" attribute is set while this component is rendered
+  // "data-theme" attribute is set in HTML tag in "index.html" while this component is rendered in the header
   useEffect(() => {
     document.body.dataset.theme = userTheme;
     setUserTheme(window.localStorage.getItem("userSelectedTheme")); // setting initialValue on state above

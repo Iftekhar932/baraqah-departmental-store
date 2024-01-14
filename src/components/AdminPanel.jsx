@@ -8,7 +8,7 @@ function AdminPanel() {
   const loadedData = useLoaderData();
   const allUsers = loadedData?.data?.allUsers;
 
-  // account deletion by id or uid(firebase)
+  // function for account deletion by id or uid(firebase)
   async function deleteUser(id, flag) {
     try {
       const response = await axios.post(
@@ -26,7 +26,6 @@ function AdminPanel() {
       );
       return response;
     } catch (error) {
-      // console.log(error, "line 30 AdminPanel.js");
       console.log(
         error?.response,
         error?.response?.name,
@@ -43,6 +42,7 @@ function AdminPanel() {
     }
   }
 
+  // prompt confirmation of deletion of a user account
   const deletionOfUserByAdmin = (user) => {
     try {
       if (user?.uid) {
@@ -62,6 +62,7 @@ function AdminPanel() {
       );
     }
   };
+
   return (
     <div className="m-4">
       <div className="gap-2 flex flex-wrap justify-center">

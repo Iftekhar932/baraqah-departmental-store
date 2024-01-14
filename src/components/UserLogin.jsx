@@ -26,7 +26,7 @@ const UserLogin = () => {
     try {
       e.preventDefault();
       if (flag == "google") {
-        // NOTE: receiving and setting accessToken in localStorage in "useFirebase.js" in "signInWithGoogle()" function
+        // NOTE: receiving and setting accessToken in localStorage from "useFirebase.js" file, in "signInWithGoogle()" function
         signInWithGoogle();
         return;
       }
@@ -50,7 +50,7 @@ const UserLogin = () => {
       // handle response
       response.status === 200
         ? responseHandleFunc()
-        : console.log(response.data, "login failed");
+        : window?.alert(response.data, "Login failed, try again!");
       return response;
     } catch (error) {
       console.error("Error during login:", error.response?.data);

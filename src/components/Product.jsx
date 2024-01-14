@@ -9,6 +9,7 @@ const Product = (props) => {
   const { addItem, subItem } = useCart();
 
   // get product id and add it to localStorage cart with "addItem/subitem" function
+
   const itemSelection = async (_id, flag) => {
     const response = await axios
       .get(`http://localhost:3001/getAllProducts/${_id}`, {
@@ -18,6 +19,7 @@ const Product = (props) => {
         },
       })
       .then((response) => {
+        // flag indicates whether to use  addition or subtraction function
         if (flag === true) {
           return subItem(response?.data[0]?._id);
         } else {
@@ -25,7 +27,6 @@ const Product = (props) => {
         }
       })
       .catch(async (err) => {
-        console.log(err, "line 42 cartView.js");
         console.log(err?.response);
         if (err?.response?.status === 403) {
           return await refreshHandlingFunction(

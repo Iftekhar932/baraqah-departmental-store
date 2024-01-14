@@ -39,10 +39,6 @@ export const refreshHandlingFunction = async (url, flag, separateFlag) => {
       }
     );
 
-    console.log(
-      "🚀 ~ file: routes.js:40 ~ refreshHandlingFunction ~ response:",
-      response
-    );
     // replacing the old token with the new one in localStorage
     await setItemAsync("access_token", response?.data?.accessToken);
     /* 
@@ -51,13 +47,8 @@ export const refreshHandlingFunction = async (url, flag, separateFlag) => {
      this function is not needed to be invoked in this file as it is invoked in the components. 
      */
     if (separateFlag === true) {
-      console.log(
-        "🚀 ~ file: routes.js:47 ~ refreshHandlingFunction ~ separateFlag:",
-        flag
-      );
       return;
     } else {
-      console.log("NOTE SEPARATE FLAG");
       return await JWTExpiryHandlerFunction(url);
     }
   } catch (err) {
@@ -111,13 +102,7 @@ async function JWTExpiryHandlerFunction(url, flag) {
         return await refreshHandlingFunction(url);
       }
     });
-  console.log(
-    "🚀 ~ file: routes.js:105 ~ JWTExpiryHandlerFunction ~ response:",
-    response,
-    flag
-  );
 
-  console.log("line 116", response, flag);
   return response;
 }
 

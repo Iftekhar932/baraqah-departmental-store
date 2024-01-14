@@ -15,28 +15,22 @@ const CartView = () => {
     const filename = "purchase-confirmation.txt";
     let fileContent = "";
 
+    // writing the file of purchased products list
     for (let i = 0; i < cartProductDisplay.length; i++) {
       const element = cartProductDisplay[i];
-      console.log(element);
       fileContent += `
       Product: ${element?.name}  Price: $ ${element?.price}   Quantity:  ${element?.qnt}         
-       
-       
-
        ------- ------`;
     }
     fileContent += `
                                                           Total: ${cartTotalSum}
        `;
 
-    /* 
-new Blob - it is making a file like object
-createObjectURL - makes temporary download URL for the file that is created 
-*/
-    const blob = new Blob([fileContent], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
+    const blob = new Blob([fileContent], { type: "text/plain" }); // new Blob - it is making a file like object
+    const url = URL.createObjectURL(blob); // createObjectURL - makes temporary download URL for the file that is created
 
-    /* creating a button while adding href & download attribute to it, after that it is clicked by itself which makes the it download the file automatically */
+    /* creating a button while adding href & download attribute to it, 
+    after that it is clicked by itself which makes it download the file automatically */
     const link = document.createElement("a");
     link.href = url;
     link.download = filename;
@@ -51,10 +45,6 @@ createObjectURL - makes temporary download URL for the file that is created
     // getting every product by id that is stored in localStorage cart by user
     fetchCartProducts = async () => {
       const productRequests = products?.map(async (product) => {
-        console.log(
-          "🚀 ~ file: CartView.jsx:19 ~ productRequests ~ product:",
-          product
-        );
         return axios
           .get(`http://localhost:3001/getAllProducts/${product?.productId}`, {
             withCredentials: true,
@@ -78,7 +68,6 @@ createObjectURL - makes temporary download URL for the file that is created
             };
           })
           .catch(async (err) => {
-            console.log(err, "line 42 cartView.js");
             console.log(err?.response);
             if (err?.response?.status === 403) {
               return await refreshHandlingFunction(
@@ -179,8 +168,8 @@ createObjectURL - makes temporary download URL for the file that is created
             className="btn btn-primary mx-auto self-center"
             onClick={() => {
               // clearing and updating the table
-              localStorage.removeItem("userProducts");
               navigate("/");
+              localStorage.removeItem("userProducts"); // clearing cart
             }}
           >
             Clear All
@@ -190,8 +179,8 @@ createObjectURL - makes temporary download URL for the file that is created
             onClick={() => {
               // clearing and updating the table
               navigate("/");
-              handleDownload();
-              localStorage.removeItem("userProducts");
+              handleDownload(); // download purchased products list
+              localStorage.removeItem("userProducts"); // clearing cart
             }}
           >
             Confirm Purchase

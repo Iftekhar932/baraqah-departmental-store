@@ -8,6 +8,7 @@ const Home = () => {
     <>
       <Hero />
       <DealsDetail />
+      {/* outlet used for "SliderCategory.jsx" component */}
       <Outlet />
     </>
   );
