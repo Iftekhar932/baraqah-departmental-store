@@ -1,8 +1,12 @@
 import React from "react";
-
+import { motion } from "framer-motion";
 const AboutUs = () => {
   return (
-    <div className="max-w-7xl mx-auto px-4 pb-12 sm:px-6 lg:px-8">
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1, transition: { duration: 1 } }}
+      className="max-w-7xl mx-auto px-4 pb-12 sm:px-6 lg:px-8"
+    >
       <div className="p-8 shadow-md rounded-lg">
         <h1 className="text-3xl font-bold text-green-700">
           Baraqah: Your Gateway to a Healthier, Happier You
@@ -74,7 +78,7 @@ const AboutUs = () => {
           minds, and embrace a life filled with vitality and well-being.
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

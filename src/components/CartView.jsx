@@ -19,15 +19,20 @@ const CartView = () => {
       const element = cartProductDisplay[i];
       console.log(element);
       fileContent += `
-      Product: ${element?.name}
-       Price: $ ${element?.price} 
-       Quantity: ${element?.qnt} 
+      Product: ${element?.name}  Price: $ ${element?.price}   Quantity:  ${element?.qnt}         
+       
+       
+
        ------- ------`;
     }
+    fileContent += `
+                                                          Total: ${cartTotalSum}
+       `;
 
     /* 
 new Blob - it is making a file like object
-createObjectURL - makes temporary download URL for the file that is created */
+createObjectURL - makes temporary download URL for the file that is created 
+*/
     const blob = new Blob([fileContent], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
 
@@ -82,9 +87,6 @@ createObjectURL - makes temporary download URL for the file that is created */
                 true
               );
             }
-            /* refreshHandlingFunction(
-              `http://localhost:3001/getAllProducts/${product?.productId}`
-            ); */
           });
       });
 

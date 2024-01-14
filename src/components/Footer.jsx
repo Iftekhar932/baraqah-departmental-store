@@ -11,7 +11,11 @@ const Footer = () => {
       </nav>
       <nav>
         <div className="grid grid-flow-col gap-4">
-          <a href="https://www.github.com/iftekhar932" target="_blank">
+          <a
+            href="https://www.github.com/iftekhar932"
+            title="Github"
+            target="_blank"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               x="0px"
@@ -28,6 +32,7 @@ const Footer = () => {
           <a
             href="https://www.linkedin.com/in/iftekhar-bin-aziz-a273a2216/"
             target="_blank"
+            title="Linkedin"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

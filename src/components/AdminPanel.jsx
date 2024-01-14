@@ -63,7 +63,7 @@ function AdminPanel() {
     }
   };
   return (
-    <div className="h-screen">
+    <div className="m-4">
       <div className="gap-2 flex flex-wrap justify-center">
         {allUsers?.map((user) => (
           <div

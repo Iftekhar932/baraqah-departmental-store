@@ -12,7 +12,6 @@ const Header = () => {
 
   /* //! if it doesn't work for firebase logout, try sending argument flags from the button and use it with if statement */
   const logOutFunc = (e, flag) => {
-    e.preventDefault();
     if (!flag) {
       localStorage.removeItem("userEmail");
       localStorage.removeItem("access_token");
@@ -103,7 +102,7 @@ const Header = () => {
                     if (user?.email) {
                       return logOutFunc(e, true);
                     } else {
-                      return logOutFunc();
+                      return logOutFunc(e);
                     }
                   }}
                 >
@@ -149,7 +148,7 @@ const Header = () => {
                     if (user?.email) {
                       return logOutFunc(e, true);
                     } else {
-                      return logOutFunc();
+                      return logOutFunc(e);
                     }
                   }}
                 >

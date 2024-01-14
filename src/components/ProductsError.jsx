@@ -7,8 +7,8 @@ const ProductsError = () => {
   const [userHere, setUserHere] = useState(false);
 
   /*  NOTE: the condition with the state is to make sure if user stays on
-   the error page for 3 seconds will be redirected unless it is this route - '/' */
-  /* 
+   the error page for 3 seconds will be redirected unless it is this route - '/' (home route) */
+
   useEffect(() => {
     const timeToNavigate = () => {
       if (window.location.pathname != "/")
@@ -18,7 +18,7 @@ const ProductsError = () => {
     timeToNavigate();
     if (userHere) return navigate("/userLogin");
   }, [userHere]);
- */
+
   return (
     <div
       className="bg-purple-700 text-white font-bold rounded-lg border-l-4 border-purple-600 p-4"

@@ -43,7 +43,7 @@ const Product = (props) => {
       className="card card-compact min-w-0 w-full bg-base-100 shadow-xl"
       animate={{
         scale: [0.5, 1.1, 1],
-        borderRadius: ["20%", "10%", "20%"],
+        borderRadius: ["20%", "10%", "5%"],
       }}
     >
       <figure>
