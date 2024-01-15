@@ -12,7 +12,6 @@ const Header = () => {
   const userEmail = localStorage.getItem("userEmail");
   const role = localStorage.getItem("role");
 
-  /* //! if it doesn't work for firebase logout, try sending argument flags from the button and use it with if statement */
   const logOutFunc = (e, flag) => {
     if (!flag) {
       localStorage.removeItem("userEmail");
