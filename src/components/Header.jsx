@@ -68,12 +68,12 @@ const Header = () => {
 
             {role == "admin" && (
               <li className="rounded-full">
-                <Link to="/adminOnly" title="Account">
+                <Link to="/adminOnly" title="Accounts">
                   <img
                     height="20px"
                     width="20px"
                     src="https://i.ibb.co/GT1KM5g/person-svgrepo-com.png"
-                    alt="Account"
+                    alt="Accounts"
                     border="0"
                   />
                   Admin Panel
@@ -191,12 +191,12 @@ const Header = () => {
 
             {role == "admin" && (
               <li className="border border-purple-700 rounded-full">
-                <Link to="/adminOnly" title="Account">
+                <Link to="/adminOnly" title="Accounts">
                   <img
                     height="20px"
                     width="20px"
                     src="https://i.ibb.co/GT1KM5g/person-svgrepo-com.png"
-                    alt="Account"
+                    alt="Accounts"
                     border="0"
                   />
                 </Link>

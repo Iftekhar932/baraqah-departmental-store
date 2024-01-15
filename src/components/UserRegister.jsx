@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
 import axios from "axios";
 
@@ -9,6 +9,8 @@ const UserRegister = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+
+  const navigate = useNavigate();
 
   // info collection of user
   const infoCollection = (e) => {
@@ -25,6 +27,7 @@ const UserRegister = () => {
       e.preventDefault();
       if (flag == "google") {
         signInWithGoogle();
+        navigate("/");
         return;
       }
 
@@ -33,9 +36,14 @@ const UserRegister = () => {
         password: userPassword,
       });
 
+      const handleLoginSuccess = () => {
+        console.log(response.data, "login Successful");
+        navigate("/");
+      };
+
       // Handle response
       response.status === 201
-        ? console.log(response.data, "login Successful")
+        ? handleLoginSuccess()
         : console.log(response.data, "login failed");
 
       return response;
