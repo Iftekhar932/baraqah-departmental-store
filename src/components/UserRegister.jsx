@@ -27,7 +27,6 @@ const UserRegister = () => {
       e.preventDefault();
       if (flag == "google") {
         signInWithGoogle();
-        navigate("/");
         return;
       }
 
