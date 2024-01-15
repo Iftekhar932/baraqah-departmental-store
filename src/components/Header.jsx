@@ -1,11 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
 // daisyUI component
 import ThemeSwitcher from "./ThemeSwitcher";
 
 const Header = () => {
   const { user, logOut } = useFirebase();
+
+  const navigate = useNavigate();
 
   const userEmail = localStorage.getItem("userEmail");
   const role = localStorage.getItem("role");
