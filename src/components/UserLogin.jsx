@@ -23,6 +23,7 @@ const UserLogin = () => {
   // info submit to server
   const submitFunction = async (e, flag) => {
     setErrorMsg("");
+
     try {
       e.preventDefault();
       if (flag == "google") {

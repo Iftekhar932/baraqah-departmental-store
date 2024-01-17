@@ -99,6 +99,7 @@ async function JWTExpiryHandlerFunction(url, flag) {
       }
 
       if (err?.response?.status === 403) {
+        window.location.replace = "/login";
         return await refreshHandlingFunction(url);
       }
     });

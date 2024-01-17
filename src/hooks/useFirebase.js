@@ -38,7 +38,6 @@ const useFirebase = () => {
             role: user?.role,
           }
         );
-
         const responseHandleFunc = () => {
           localStorage.setItem("access_token", response?.data?.accessToken);
           localStorage.setItem("userEmail", user?.email);

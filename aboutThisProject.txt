@@ -7,3 +7,28 @@
     nodemon, mongoose, mongodb, jsonwebtoken(JWT), firebase-admin, express, dotenv, cors, bcrypt
 4. I have implemented separate logic to generate & provide refreshToken for google login firebase and email login(mongoDB storage). but the token verification is in the same file
 5. 
+
+
+
+{
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/src/routes/api/$1" },
+    {
+      "source": "/register",
+      "destination": "/src/controllers/registerController.js"
+    },
+    {
+      "source": "/login",
+      "destination": "/src/controllers/loginController.js"
+    },
+    {
+      "source": "/passwordReset",
+      "destination": "/src/controllers/forgotPasswordController.js"
+    },
+    {
+      "source": "/jsonWebAccessToken",
+      "destination": "/src/controllers/tokenGeneratorController.js"
+    },
+    { "source": "/(.*)", "destination": "/src/index.js" }
+  ]
+}
