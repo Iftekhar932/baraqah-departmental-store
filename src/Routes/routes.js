@@ -139,7 +139,7 @@ const router = createBrowserRouter([
             errorElement: <ProductsError />,
             loader: async () => {
               return await JWTExpiryHandlerFunction(
-                "http://localhost:3001/getAllProducts",
+                "https://baraqah-departmental-store-server.onrender.com/getAllProducts",
                 "component - sliderCategory --- API - getAllProducts"
               );
             },
@@ -150,7 +150,7 @@ const router = createBrowserRouter([
                 errorElement: <ProductsError />,
                 loader: async (req) => {
                   return await JWTExpiryHandlerFunction(
-                    `http://localhost:3001/getAllProductsCategoryWise/${req.params.category}`,
+                    `https://baraqah-departmental-store-server.onrender.com/getAllProductsCategoryWise/${req.params.category}`,
                     "component - products ---API - getAllProductsCategoryWise"
                   );
                 },
@@ -166,7 +166,7 @@ const router = createBrowserRouter([
         errorElement: <ErrorComponent />,
         loader: async () => {
           return await JWTExpiryHandlerFunction(
-            "http://localhost:3001/getAllProducts",
+            "https://baraqah-departmental-store-server.onrender.com/getAllProducts",
             "component - (separate route in header) Products --- API getAllProducts (separately used for header)"
           );
         },
