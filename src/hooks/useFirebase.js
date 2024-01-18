@@ -34,7 +34,7 @@ const useFirebase = () => {
 
         //* This JWT api is for google sign in only
         const response = await axios.post(
-          "https://baraqah-departmental-store-server.onrender.com/jsonWebAccessToken",
+          "http://localhost:3001/jsonWebAccessToken",
           {
             uid,
             email: user?.email,

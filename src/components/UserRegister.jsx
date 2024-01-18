@@ -30,13 +30,10 @@ const UserRegister = () => {
         return;
       }
 
-      const response = await axios.post(
-        "https://baraqah-departmental-store-server.onrender.com/register",
-        {
-          email: userEmail,
-          password: userPassword,
-        }
-      );
+      const response = await axios.post("http://localhost:3001/register", {
+        email: userEmail,
+        password: userPassword,
+      });
 
       const handleLoginSuccess = () => {
         console.log(response.data, "login Successful");

@@ -9,6 +9,7 @@ const CartView = () => {
   const navigate = useNavigate();
   const [cartProductDisplay, setCartProductDisplay] = useState([]); // selected products data to display on table
   const [cartTotalSum, setCartTotalSum] = useState(0); // total due payment of products purchased by user
+  const [emptyMSG, setEmptyMSG] = useState(false);
 
   // a function that makes a list in .txt file format and auto downloads it in user's device, this is done without having access to user's storage
   const handleDownload = () => {
@@ -26,6 +27,14 @@ const CartView = () => {
                                                           Total: ${cartTotalSum}
        `;
 
+    if (cartTotalSum == 0) {
+      setEmptyMSG(true);
+      console.log(emptyMSG);
+      return;
+    } else {
+      setEmptyMSG(false);
+    }
+
     const blob = new Blob([fileContent], { type: "text/plain" }); // new Blob - it is making a file like object
     const url = URL.createObjectURL(blob); // createObjectURL - makes temporary download URL for the file that is created
 
@@ -37,6 +46,7 @@ const CartView = () => {
     link.click();
 
     URL.revokeObjectURL(url); // revokeObjectURL releases memory, prevents memory leaks.
+    navigate("/");
   };
 
   useEffect(() => {
@@ -46,15 +56,12 @@ const CartView = () => {
     fetchCartProducts = async () => {
       const productRequests = products?.map(async (product) => {
         return axios
-          .get(
-            `https://baraqah-departmental-store-server.onrender.com/getAllProducts/${product?.productId}`,
-            {
-              withCredentials: true,
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-              },
-            }
-          )
+          .get(`http://localhost:3001/getAllProducts/${product?.productId}`, {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+            },
+          })
           .then((response) => {
             const { _id, category, categoryImg, id, img, name, price, unit } =
               response?.data[0];
@@ -178,7 +185,6 @@ const CartView = () => {
             className="btn btn-primary mx-auto self-center"
             onClick={() => {
               // clearing and updating the table
-              navigate("/");
               handleDownload(); // download purchased products list
               localStorage.removeItem("userProducts"); // clearing cart
             }}
@@ -186,6 +192,13 @@ const CartView = () => {
             Confirm Purchase
           </button>
         </div>
+        <p
+          className={`text-purple-900 font-bold text-center bg-purple-400 ${
+            emptyMSG ? "" : "hidden"
+          }`}
+        >
+          Cart Is empty
+        </p>
       </div>
     </>
   );

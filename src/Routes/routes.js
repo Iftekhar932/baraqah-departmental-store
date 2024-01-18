@@ -28,6 +28,7 @@ export const refreshHandlingFunction = async (url, flag, separateFlag) => {
   const userEmailAccount = await getItemAsync("userEmail");
 
   try {
+    console.log("age");
     const response = await axios.post(
       "http://localhost:3001/refresh",
       {
@@ -39,6 +40,7 @@ export const refreshHandlingFunction = async (url, flag, separateFlag) => {
         },
       }
     );
+    console.log(response?.data, "pore");
 
     // replacing the old token with the new one in localStorage
     await setItemAsync("access_token", response?.data?.accessToken);
@@ -54,7 +56,7 @@ export const refreshHandlingFunction = async (url, flag, separateFlag) => {
     }
   } catch (err) {
     console.log(
-      "✨ 🌟  refreshHandlingFunction  err 47:",
+      "✨ 🌟  refreshHandlingFunction  err 57:",
       err?.response,
       err?.response?.status,
       err?.response?.data?.refreshTokenExpiry
@@ -86,7 +88,7 @@ async function JWTExpiryHandlerFunction(url, flag) {
     .catch(async function (err) {
       console.log(
         "🚀 ~ file: routes.js:82 ~ JWTExpiryHandlerFunction ~ err:",
-        // err?.response,
+        err?.response,
         err?.response?.status,
         err?.response?.data,
         err?.data?.refreshTokenExpiry,
@@ -140,7 +142,7 @@ const router = createBrowserRouter([
             errorElement: <ProductsError />,
             loader: async () => {
               return await JWTExpiryHandlerFunction(
-                "https://baraqah-departmental-store-server.onrender.com/getAllProducts",
+                "http://localhost:3001/getAllProducts",
                 "component - sliderCategory --- API - getAllProducts"
               );
             },
@@ -151,7 +153,7 @@ const router = createBrowserRouter([
                 errorElement: <ProductsError />,
                 loader: async (req) => {
                   return await JWTExpiryHandlerFunction(
-                    `https://baraqah-departmental-store-server.onrender.com/getAllProductsCategoryWise/${req.params.category}`,
+                    `http://localhost:3001/getAllProductsCategoryWise/${req.params.category}`,
                     "component - products ---API - getAllProductsCategoryWise"
                   );
                 },
@@ -167,7 +169,7 @@ const router = createBrowserRouter([
         errorElement: <ErrorComponent />,
         loader: async () => {
           return await JWTExpiryHandlerFunction(
-            "https://baraqah-departmental-store-server.onrender.com/getAllProducts",
+            "http://localhost:3001/getAllProducts",
             "component - (separate route in header) Products --- API getAllProducts (separately used for header)"
           );
         },
@@ -187,7 +189,7 @@ const router = createBrowserRouter([
         element: <AdminPanel />, // this component has an api in it's own file for user deletion
         loader: async () => {
           return await JWTExpiryHandlerFunction(
-            "https://baraqah-departmental-store-server.onrender.com/adminGetUsers",
+            "http://localhost:3001/adminGetUsers",
             "component - AdminPanel --- API adminGetUsers"
           );
         },
