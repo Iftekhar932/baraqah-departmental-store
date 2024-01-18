@@ -1,8 +1,16 @@
 import { useLoaderData } from "react-router-dom";
 import Card from "./Product";
+import useFirebase from "../hooks/useFirebase";
 
 const Cards = () => {
   const loadedData = useLoaderData();
+  const { loading, setLoading } = useFirebase();
+
+  if (loadedData?.data?.length) {
+    setLoading(false);
+  } else {
+    setLoading(true);
+  }
 
   return (
     <>

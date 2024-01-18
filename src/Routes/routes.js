@@ -58,6 +58,7 @@ export const refreshHandlingFunction = async (url, flag, separateFlag) => {
       err?.response?.status,
       err?.response?.data?.refreshTokenExpiry
     );
+
     if (err?.response?.data?.refreshTokenExpiry == true) {
       localStorage.removeItem("userEmail");
       localStorage.removeItem("userProducts");
@@ -99,7 +100,7 @@ async function JWTExpiryHandlerFunction(url, flag) {
       }
 
       if (err?.response?.status === 403) {
-        window.location.replace = "/login";
+        window.location.replace = "/";
         return await refreshHandlingFunction(url);
       }
     });
@@ -186,7 +187,7 @@ const router = createBrowserRouter([
         element: <AdminPanel />, // this component has an api in it's own file for user deletion
         loader: async () => {
           return await JWTExpiryHandlerFunction(
-            "http://localhost:3001/adminGetUsers",
+            "https://baraqah-departmental-store-server.onrender.com/adminGetUsers",
             "component - AdminPanel --- API adminGetUsers"
           );
         },

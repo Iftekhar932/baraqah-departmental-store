@@ -22,7 +22,7 @@ const ForgotPasswordForm = () => {
     try {
       e.preventDefault();
       const response = await axios.post(
-        "http://localhost:3001/passwordReset",
+        "https://baraqah-departmental-store-server.onrender.com/passwordReset",
         {
           email: userEmail,
           password: userPassword,

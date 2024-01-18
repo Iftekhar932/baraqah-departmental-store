@@ -16,7 +16,10 @@ const googleProvider = new GoogleAuthProvider();
 
 const useFirebase = () => {
   const auth = getAuth(app);
+
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   /* 🔽⏬🔽⏬ SIGN IN WITH GOOGLE 🔽⏬🔽⏬ */
@@ -31,7 +34,7 @@ const useFirebase = () => {
 
         //* This JWT api is for google sign in only
         const response = await axios.post(
-          "http://localhost:3001/jsonWebAccessToken",
+          "https://baraqah-departmental-store-server.onrender.com/jsonWebAccessToken",
           {
             uid,
             email: user?.email,
@@ -106,6 +109,8 @@ const useFirebase = () => {
     setUser,
     signInWithGoogle,
     logOut,
+    loading,
+    setLoading,
   };
 };
 

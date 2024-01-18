@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
 import axios from "axios";
+import LoadingSpinner from "./LoadingSpinner";
 
 const UserLogin = () => {
-  const { signInWithGoogle } = useFirebase();
+  const { signInWithGoogle, loading, setLoading } = useFirebase();
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
@@ -22,6 +23,7 @@ const UserLogin = () => {
 
   // info submit to server
   const submitFunction = async (e, flag) => {
+    setLoading(true);
     setErrorMsg("");
 
     try {
@@ -45,6 +47,7 @@ const UserLogin = () => {
         localStorage.setItem("access_token", response.data.accessToken);
         localStorage.setItem("userEmail", response.data.email);
         localStorage.setItem("role", response.data.role);
+        setLoading(false);
         navigate("/");
       };
 
@@ -127,6 +130,7 @@ const UserLogin = () => {
             >
               Sign In with google
             </button>
+            {<LoadingSpinner /> && loading == true}
           </form>
         </div>
       </div>

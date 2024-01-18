@@ -12,7 +12,7 @@ function AdminPanel() {
   async function deleteUser(id, flag) {
     try {
       const response = await axios.post(
-        "http://localhost:3001/adminUserDeletion",
+        "https://baraqah-departmental-store-server.onrender.com/adminUserDeletion",
         {
           userIdToDelete: id,
           flag,

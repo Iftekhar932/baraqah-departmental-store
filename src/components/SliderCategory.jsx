@@ -2,6 +2,8 @@ import { Link, Outlet, useLoaderData } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import Carousel from "react-multi-carousel";
 import { motion } from "framer-motion";
+import LoadingSpinner from "./LoadingSpinner";
+import useFirebase from "../hooks/useFirebase";
 
 const responsive = {
   superLargeDesktop: {
@@ -24,10 +26,14 @@ const responsive = {
 
 const SliderCategory = () => {
   const loadedData = useLoaderData();
+  const { setLoading, loading } = useFirebase();
 
-  // If there's no data, don't render the component
+  // If there's no data, don't render the component and set loading true
   if (!loadedData?.data?.length) {
+    setLoading(true);
     return null;
+  } else {
+    setLoading(false);
   }
 
   let category = loadedData?.data?.map((image) => {
@@ -46,6 +52,7 @@ const SliderCategory = () => {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1, transition: { duration: 1 } }}
     >
+      {loading == true && <LoadingSpinner />}
       <Carousel
         swipeable={true}
         draggable={false}
