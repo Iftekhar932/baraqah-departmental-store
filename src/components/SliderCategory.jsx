@@ -30,10 +30,8 @@ const SliderCategory = () => {
 
   // If there's no data, don't render the component and set loading true
   if (!loadedData?.data?.length) {
-    setLoading(true);
+    // setLoading(true);
     return null;
-  } else {
-    setLoading(false);
   }
 
   let category = loadedData?.data?.map((image) => {
@@ -52,7 +50,7 @@ const SliderCategory = () => {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1, transition: { duration: 1 } }}
     >
-      {loading == true && <LoadingSpinner />}
+      {/* {loading == true && <LoadingSpinner />} */}
       <Carousel
         swipeable={true}
         draggable={false}

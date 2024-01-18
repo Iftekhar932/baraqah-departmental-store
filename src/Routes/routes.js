@@ -26,6 +26,7 @@ import ErrorComponent from "../components/ErrorComponent";
 export const refreshHandlingFunction = async (url, flag, separateFlag) => {
   const accessToken = await getItemAsync("access_token");
   const userEmailAccount = await getItemAsync("userEmail");
+
   try {
     const response = await axios.post(
       "http://localhost:3001/refresh",
@@ -100,7 +101,6 @@ async function JWTExpiryHandlerFunction(url, flag) {
       }
 
       if (err?.response?.status === 403) {
-        window.location.replace = "/";
         return await refreshHandlingFunction(url);
       }
     });

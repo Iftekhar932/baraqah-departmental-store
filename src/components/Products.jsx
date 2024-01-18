@@ -6,11 +6,11 @@ const Cards = () => {
   const loadedData = useLoaderData();
   const { loading, setLoading } = useFirebase();
 
-  if (loadedData?.data?.length) {
+  /* if (loadedData?.data?.length) {
     setLoading(false);
   } else {
     setLoading(true);
-  }
+  } */
 
   return (
     <>

@@ -23,7 +23,7 @@ const UserLogin = () => {
 
   // info submit to server
   const submitFunction = async (e, flag) => {
-    setLoading(true);
+    // setLoading(true);
     setErrorMsg("");
 
     try {
@@ -47,7 +47,7 @@ const UserLogin = () => {
         localStorage.setItem("access_token", response.data.accessToken);
         localStorage.setItem("userEmail", response.data.email);
         localStorage.setItem("role", response.data.role);
-        setLoading(false);
+        // setLoading(false);
         navigate("/");
       };
 
@@ -130,7 +130,7 @@ const UserLogin = () => {
             >
               Sign In with google
             </button>
-            {<LoadingSpinner /> && loading == true}
+            {/* {<LoadingSpinner /> && loading == true} */}
           </form>
         </div>
       </div>
