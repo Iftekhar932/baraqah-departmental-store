@@ -28,7 +28,6 @@ export const refreshHandlingFunction = async (url, flag, separateFlag) => {
   const userEmailAccount = await getItemAsync("userEmail");
 
   try {
-    console.log("age");
     const response = await axios.post(
       "http://localhost:3001/refresh",
       {
@@ -40,7 +39,6 @@ export const refreshHandlingFunction = async (url, flag, separateFlag) => {
         },
       }
     );
-    console.log(response?.data, "pore");
 
     // replacing the old token with the new one in localStorage
     await setItemAsync("access_token", response?.data?.accessToken);
@@ -106,7 +104,7 @@ async function JWTExpiryHandlerFunction(url, flag) {
         return await refreshHandlingFunction(url);
       }
     });
-
+  console.log(url, flag, response);
   return response;
 }
 

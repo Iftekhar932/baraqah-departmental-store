@@ -27,10 +27,11 @@ const responsive = {
 const SliderCategory = () => {
   const loadedData = useLoaderData();
   const { setLoading, loading } = useFirebase();
+  // console.log("🚀 ~ SliderCategory ~ loadedData:", loadedData);
+  // setLoading(Boolean(loadedData[0]));
 
   // If there's no data, don't render the component and set loading true
   if (!loadedData?.data?.length) {
-    // setLoading(true);
     return null;
   }
 
@@ -50,7 +51,6 @@ const SliderCategory = () => {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1, transition: { duration: 1 } }}
     >
-      {/* {loading == true && <LoadingSpinner />} */}
       <Carousel
         swipeable={true}
         draggable={false}
@@ -65,10 +65,10 @@ const SliderCategory = () => {
         className="h-64 mx-auto md:w-[500px]"
       >
         {/* while I'm looping over "imgs" I'm getting the 
-        elements of "category" array with "map()'s index, e.g map(element,index)"  
-        index is increasing by 1 with every element,
-         so I'm basically putting it like this "category[index]", I get all the elements of "category" array at the same time in this way
-        */}
+          elements of "category" array with "map()'s index, e.g map(element,index)"  
+          index is increasing by 1 with every element,
+          so I'm basically putting it like this "category[index]", I get all the elements of "category" array at the same time in this way
+          */}
         {imgs?.map((img, index) => {
           return (
             <div key={index} className="m-10 md:mr-5 lg:mr-0">
@@ -82,6 +82,7 @@ const SliderCategory = () => {
           );
         })}
       </Carousel>
+      <LoadingSpinner specifiedClass={loading ? "" : "hidden"} />
       {/* used outlet to display products on clicking on the products icon */}
       <Outlet />
     </motion.div>

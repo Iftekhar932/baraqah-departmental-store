@@ -3,14 +3,19 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
 import axios from "axios";
+import LoadingSpinner from "./LoadingSpinner";
 
 const UserRegister = () => {
-  const { signInWithGoogle } = useFirebase();
+  const { signInWithGoogle, loading, setLoading } = useFirebase();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
   const navigate = useNavigate();
+  // logged in user should be navigated
+  if (localStorage.getItem("userEmail")) {
+    navigate("/");
+  }
 
   // info collection of user
   const infoCollection = (e) => {
@@ -120,6 +125,7 @@ const UserRegister = () => {
             >
               Sign In with google
             </button>
+            <LoadingSpinner specifiedClass={loading ? "" : "hidden"} />
           </form>
         </div>
       </div>

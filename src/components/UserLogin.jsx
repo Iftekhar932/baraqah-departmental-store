@@ -13,6 +13,11 @@ const UserLogin = () => {
 
   const navigate = useNavigate();
 
+  // logged in user should be navigated
+  if (localStorage.getItem("userEmail")) {
+    navigate("/");
+  }
+
   // info collection of user
   const infoCollection = (e) => {
     const email = e.target.form.email.value;
@@ -23,7 +28,7 @@ const UserLogin = () => {
 
   // info submit to server
   const submitFunction = async (e, flag) => {
-    // setLoading(true);
+    setLoading(true);
     setErrorMsg("");
 
     try {
@@ -130,7 +135,7 @@ const UserLogin = () => {
             >
               Sign In with google
             </button>
-            {/* {<LoadingSpinner /> && loading == true} */}
+            <LoadingSpinner specifiedClass={loading ? "" : "hidden"} />
           </form>
         </div>
       </div>

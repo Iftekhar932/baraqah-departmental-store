@@ -6,6 +6,7 @@ import router from "./Routes/routes";
 // ! solve both token dead, site not rendering problem
 
 /* 
+! both are calling data solve it
 ! it was supposed to renew my access_token
 */
 

@@ -18,7 +18,7 @@ const useFirebase = () => {
   const auth = getAuth(app);
 
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // for loadingSpinner
 
   const navigate = useNavigate();
 

@@ -20,16 +20,18 @@ const CartView = () => {
     for (let i = 0; i < cartProductDisplay.length; i++) {
       const element = cartProductDisplay[i];
       fileContent += `
-      Product: ${element?.name}  Price: $ ${element?.price}   Quantity:  ${element?.qnt}         
+      User Account: ${localStorage.getItem("userEmail")}
+      Product: ${element?.name}  Price: $ ${element?.price}   Quantity:  ${
+        element?.qnt
+      }         
        ------- ------`;
     }
     fileContent += `
                                                           Total: ${cartTotalSum}
        `;
 
-    if (cartTotalSum == 0) {
+    if (cartTotalSum === 0) {
       setEmptyMSG(true);
-      console.log(emptyMSG);
       return;
     } else {
       setEmptyMSG(false);
@@ -63,7 +65,7 @@ const CartView = () => {
             },
           })
           .then((response) => {
-            const { _id, category, categoryImg, id, img, name, price, unit } =
+            const { category, categoryImg, id, img, name, price, unit } =
               response?.data[0];
 
             return {
