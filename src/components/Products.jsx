@@ -6,6 +6,9 @@ import LoadingSpinner from "./LoadingSpinner";
 const Cards = () => {
   const loadedData = useLoaderData();
   const { loading, setLoading } = useFirebase();
+  
+  console.log(Boolean(loadedData[0]));
+  // setLoading(Boolean(loadedData[0]));
 
   return (
     <>

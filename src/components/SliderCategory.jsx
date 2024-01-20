@@ -82,7 +82,6 @@ const SliderCategory = () => {
           );
         })}
       </Carousel>
-      <LoadingSpinner specifiedClass={loading ? "" : "hidden"} />
       {/* used outlet to display products on clicking on the products icon */}
       <Outlet />
     </motion.div>

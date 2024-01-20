@@ -5,7 +5,7 @@ const LoadingSpinner = ({ specifiedClass }) => {
     console.log("yeeee", specifiedClass);
   }
   return (
-    <div className={`text-center ${specifiedClass}`}>
+    <div className={`text-center my-4 ${specifiedClass}`}>
       <span className="text-purple-400 loading loading-ring loading-lg"></span>
       <span className="text-purple-800 loading loading-ring loading-lg"></span>
       <span className="text-purple-600 loading loading-ring loading-lg"></span>
