@@ -125,7 +125,7 @@ const UserRegister = () => {
             >
               Sign In with google
             </button>
-            <LoadingSpinner specifiedClass={loading ? "" : "hidden"} />
+            <LoadingSpinner loading={loading} />
           </form>
         </div>
       </div>

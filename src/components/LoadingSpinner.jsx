@@ -1,11 +1,8 @@
 import React from "react";
 
-const LoadingSpinner = ({ specifiedClass }) => {
-  if (!specifiedClass == "hidden") {
-    console.log("yeeee", specifiedClass);
-  }
+const LoadingSpinner = ({ loading }) => {
   return (
-    <div className={`text-center my-4 ${specifiedClass}`}>
+    <div className={`text-center my-4 ${loading ? "hidden" : ""}`}>
       <span className="text-purple-400 loading loading-ring loading-lg"></span>
       <span className="text-purple-800 loading loading-ring loading-lg"></span>
       <span className="text-purple-600 loading loading-ring loading-lg"></span>

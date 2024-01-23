@@ -16,14 +16,19 @@ import ForgotPasswordForm from "../components/ForgotPasswordForm";
 // error components
 import ProductsError from "../components/ProductsError";
 import ErrorComponent from "../components/ErrorComponent";
-/*
- * function to call api of refreshToken, setting new token in localStorage and then re-invoke "jwtExpiryFunction" & the outcome/response that
- * is returned from that function is finally "return"
- * returned from this function - happens only if access_token is expired
- */
-//  this function is imported in "CartView.jsx" and "Product.jsx" component
 
-export const refreshHandlingFunction = async (url, flag, separateFlag) => {
+/*
+ * function to call api of refreshToken, setting new token in localStorage and then re-invoke *    "jwtExpiryFunction" & the outcome/response that
+ * is returned from that function is finally
+ * returned from this function - only if access_token is expired this functions is used
+ */
+//  this function is imported in "CartView.jsx", "SliderCategory.jsx" and "Product.jsx"  component
+
+export const refreshHandlingFunction = async (
+  url,
+  flag,
+  alreadyFetchedFlag
+) => {
   const accessToken = await getItemAsync("access_token");
   const userEmailAccount = await getItemAsync("userEmail");
 
@@ -39,15 +44,15 @@ export const refreshHandlingFunction = async (url, flag, separateFlag) => {
         },
       }
     );
-
     // replacing the old token with the new one in localStorage
     await setItemAsync("access_token", response?.data?.accessToken);
+
     /* 
-     "separateFlag" is set to "true" when ARGUMENT IS SENT FROM OTHER COMPONENTs 
+     "alreadyFetchedFlag" is set to "true" when ARGUMENT IS SENT FROM OTHER COMPONENTS
      where this function is invoked/called. In this case, "JWTExpiryHandlerFunction" 
-     this function is not needed to be invoked in this file as it is invoked in the components. 
+     this function is not needed to be invoked in this file as it is invoked in the component file. (preventing it to call api twice)
      */
-    if (separateFlag === true) {
+    if (alreadyFetchedFlag === true) {
       return;
     } else {
       return await JWTExpiryHandlerFunction(url);
@@ -69,8 +74,12 @@ export const refreshHandlingFunction = async (url, flag, separateFlag) => {
   }
 };
 
-//* when jwt expires it'll invoke "refreshTokenHandlingFunction" above or it'll handle response - when access_token expires the "return" keyword is returning response and returned again to the refreshHandlingFunction
-async function JWTExpiryHandlerFunction(url, flag) {
+/* when jwt expires it'll invoke "refreshTokenHandlingFunction" above or it'll handle API response - when access_token expires,
+------------------------------------------------------------------------------------------------
+NOTE: if "refreshTokenHandlingFunction" is used after a token is expired  the final response will be returned from the place "jwtExpiryHandlingFunction" is invoked and returned, which is in the try-catch block of "refreshTokenHandlingFunction". (This'll only happen once after the renewal of accessToken )
+*/
+//  this function is imported in "CartView.jsx", "SliderCategory.jsx" and "Product.jsx"  component
+export async function JWTExpiryHandlerFunction(url, flag) {
   const accessToken = await getItemAsync("access_token");
   if (!accessToken) {
     return;
@@ -104,8 +113,6 @@ async function JWTExpiryHandlerFunction(url, flag) {
         return await refreshHandlingFunction(url);
       }
     });
-  console.log(url, flag, response);
-
   return response;
 }
 
@@ -138,13 +145,14 @@ const router = createBrowserRouter([
           {
             path: "/",
             element: <SliderCategory />,
-            errorElement: <ProductsError />,
             loader: async () => {
-              return await JWTExpiryHandlerFunction(
+              return JWTExpiryHandlerFunction(
                 "http://localhost:3001/getAllProducts",
-                "component - sliderCategory --- API - getAllProducts"
+                "SliderCategory.jsx - API getAllProducts"
               );
             },
+            errorElement: <ProductsError />,
+
             children: [
               {
                 path: "/products/:category",
@@ -153,7 +161,7 @@ const router = createBrowserRouter([
                 loader: async (req) => {
                   return await JWTExpiryHandlerFunction(
                     `http://localhost:3001/getAllProductsCategoryWise/${req.params.category}`,
-                    "component - products ---API - getAllProductsCategoryWise"
+                    "Products.jsx || API - getAllProductsCategoryWise"
                   );
                 },
               },
@@ -166,12 +174,6 @@ const router = createBrowserRouter([
         path: "/products",
         element: <Products />,
         errorElement: <ErrorComponent />,
-        loader: async () => {
-          return await JWTExpiryHandlerFunction(
-            "http://localhost:3001/getAllProducts",
-            "component - (separate route in header) Products --- API getAllProducts (separately used for header)"
-          );
-        },
       },
       {
         path: "/userLogin",

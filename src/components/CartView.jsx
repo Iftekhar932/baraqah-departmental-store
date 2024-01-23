@@ -93,6 +93,7 @@ const CartView = () => {
 
       /* This whole function calls the api for every product asynchronously, so it makes sure after all promises are resolved it'll be set in 
       "cartTotalSum" state. */
+
       const cartProducts = await Promise.all(productRequests);
 
       // adding up all selected products price and setting it to state
@@ -136,27 +137,27 @@ const CartView = () => {
             </thead>
             <tbody>
               {cartProductDisplay?.map((product, index) => (
-                <tr key={product.id}>
+                <tr key={product?.id}>
                   <td className="px-2 py-1 border-b border-r table-cell">
                     {index + 1}
                   </td>
                   <td className="px-2 py-1 border-b border-r table-cell">
-                    {product.category}
+                    {product?.category}
                   </td>
                   <td className="px-2 py-1 border-b border-r table-cell">
-                    {product.name}
+                    {product?.name}
                   </td>
                   <td className="px-2 py-1 border-b border-r table-cell">
-                    {product.price}
+                    {product?.price}
                   </td>
                   <td className="px-2 py-1 border-b border-r table-cell">
-                    {product.unit}
+                    {product?.unit}
                   </td>
                   <td className="px-2 py-1 border-b border-r table-cell">
-                    {product.qnt}
+                    {product?.qnt}
                   </td>
                   <td className="px-2 py-1 border-b table-cell">
-                    {(product.qnt * product.price).toFixed(2)}
+                    {(product?.qnt * product?.price).toFixed(2)}
                   </td>
                 </tr>
               ))}

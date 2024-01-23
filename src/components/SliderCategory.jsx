@@ -3,7 +3,6 @@ import "react-multi-carousel/lib/styles.css";
 import Carousel from "react-multi-carousel";
 import { motion } from "framer-motion";
 import LoadingSpinner from "./LoadingSpinner";
-import useFirebase from "../hooks/useFirebase";
 
 const responsive = {
   superLargeDesktop: {
@@ -26,20 +25,19 @@ const responsive = {
 
 const SliderCategory = () => {
   const loadedData = useLoaderData();
-  const { setLoading, loading } = useFirebase();
-  // console.log("🚀 ~ SliderCategory ~ loadedData:", loadedData);
-  // setLoading(Boolean(loadedData[0]));
 
   // If there's no data, don't render the component and set loading true
-  if (!loadedData?.data?.length) {
+  if (loadedData?.data?.length == 0) {
     return null;
   }
 
+  // collecting category names while preventing clone element in the array
   let category = loadedData?.data?.map((image) => {
     return image.category;
   });
   category = [...new Set(category)];
 
+  // collecting category image names while preventing clone element in the array
   let imgs = loadedData?.data?.map((image) => {
     return image.categoryImg;
   });
@@ -69,6 +67,7 @@ const SliderCategory = () => {
           index is increasing by 1 with every element,
           so I'm basically putting it like this "category[index]", I get all the elements of "category" array at the same time in this way
           */}
+
         {imgs?.map((img, index) => {
           return (
             <div key={index} className="m-10 md:mr-5 lg:mr-0">
