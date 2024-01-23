@@ -21,13 +21,14 @@ const CartView = () => {
       const element = cartProductDisplay[i];
       fileContent += `
       User Account: ${localStorage.getItem("userEmail")}
-      Product: ${element?.name}  Price: $ ${element?.price}   Quantity:  ${
+      Product: ${element?.name}  Price: $${element?.price}   Quantity:  ${
         element?.qnt
-      }         
+      }    = $${element?.qnt * element?.price}     
        ------- ------`;
     }
     fileContent += `
-                                                          Total: ${cartTotalSum}
+                                                          Total: $${cartTotalSum}
+                                                          -------------------------
        `;
 
     if (cartTotalSum === 0) {
