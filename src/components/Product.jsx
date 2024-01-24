@@ -12,12 +12,15 @@ const Product = (props) => {
 
   const itemSelection = async (_id, flag) => {
     const response = await axios
-      .get(`http://localhost:3001/getAllProducts/${_id}`, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      })
+      .get(
+        `https://baraqah-departmental-store-server.onrender.com/getAllProducts/${_id}`,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+        }
+      )
       .then((response) => {
         // flag indicates whether to use  addition or subtraction function
         if (flag === true) {

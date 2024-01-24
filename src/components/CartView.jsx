@@ -59,12 +59,15 @@ const CartView = () => {
     fetchCartProducts = async () => {
       const productRequests = products?.map(async (product) => {
         return axios
-          .get(`http://localhost:3001/getAllProducts/${product?.productId}`, {
-            withCredentials: true,
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-            },
-          })
+          .get(
+            `https://baraqah-departmental-store-server.onrender.com/getAllProducts/${product?.productId}`,
+            {
+              withCredentials: true,
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+              },
+            }
+          )
           .then((response) => {
             const { category, categoryImg, id, img, name, price, unit } =
               response?.data[0];

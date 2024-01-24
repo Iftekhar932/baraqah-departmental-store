@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
 import axios from "axios";
@@ -14,9 +14,11 @@ const UserLogin = () => {
   const navigate = useNavigate();
 
   // logged in user should be navigated
-  if (localStorage.getItem("userEmail")) {
-    navigate("/");
-  }
+  useEffect(() => {
+    if (localStorage.getItem("userEmail")) {
+      navigate("/");
+    }
+  }, []);
 
   // info collection of user
   const infoCollection = (e) => {
@@ -28,19 +30,23 @@ const UserLogin = () => {
 
   // info submit to server
   const submitFunction = async (e, flag) => {
-    setLoading(true);
-    setErrorMsg("");
-
     try {
       e.preventDefault();
+      console.log("ekhane");
+      setErrorMsg("");
+
       if (flag == "google") {
         // NOTE: receiving and setting accessToken in localStorage from "useFirebase.js" file, in "signInWithGoogle()" function
         signInWithGoogle();
         return;
       }
+      if ((userEmail || userPassword) == "") {
+        setErrorMsg("Enter credentials");
+        return;
+      }
 
       const response = await axios.post(
-        "http://localhost:3001/login",
+        "https://baraqah-departmental-store-server.onrender.com/login",
         {
           email: userEmail,
           password: userPassword,
@@ -49,21 +55,23 @@ const UserLogin = () => {
       );
 
       const responseHandleFunc = () => {
+        setLoading(false);
         localStorage.setItem("access_token", response.data.accessToken);
         localStorage.setItem("userEmail", response.data.email);
         localStorage.setItem("role", response.data.role);
-        // setLoading(false);
+        setLoading(true);
         navigate("/");
       };
-
+      console.log(response);
       // handle response
       response.status === 200
         ? responseHandleFunc()
         : window?.alert(response.data, "Login failed, try again!");
+
       return response;
     } catch (error) {
       console.error("Error during login:", error.response?.data);
-      setErrorMsg(error?.response?.data?.msg);
+      // setErrorMsg(error?.response?.data?.msg);
     }
   };
 
@@ -77,6 +85,8 @@ const UserLogin = () => {
             fresh, healthy, pure products along with fast delivery
           </p>
         </div>
+        <LoadingSpinner loading={loading} />
+
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <form className="card-body">
             <div className="form-control">
@@ -135,7 +145,6 @@ const UserLogin = () => {
             >
               Sign In with google
             </button>
-            <LoadingSpinner loading={loading} />
           </form>
         </div>
       </div>

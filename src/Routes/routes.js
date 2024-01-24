@@ -34,7 +34,7 @@ export const refreshHandlingFunction = async (
 
   try {
     const response = await axios.post(
-      "http://localhost:3001/refresh",
+      "https://baraqah-departmental-store-server.onrender.com/refresh",
       {
         email: userEmailAccount,
       },
@@ -147,7 +147,7 @@ const router = createBrowserRouter([
             element: <SliderCategory />,
             loader: async () => {
               return JWTExpiryHandlerFunction(
-                "http://localhost:3001/getAllProducts",
+                "https://baraqah-departmental-store-server.onrender.com/getAllProducts",
                 "SliderCategory.jsx - API getAllProducts"
               );
             },
@@ -160,7 +160,7 @@ const router = createBrowserRouter([
                 errorElement: <ProductsError />,
                 loader: async (req) => {
                   return await JWTExpiryHandlerFunction(
-                    `http://localhost:3001/getAllProductsCategoryWise/${req.params.category}`,
+                    `https://baraqah-departmental-store-server.onrender.com/getAllProductsCategoryWise/${req.params.category}`,
                     "Products.jsx || API - getAllProductsCategoryWise"
                   );
                 },
@@ -190,7 +190,7 @@ const router = createBrowserRouter([
         element: <AdminPanel />, // this component has an api in it's own file for user deletion
         loader: async () => {
           return await JWTExpiryHandlerFunction(
-            "http://localhost:3001/adminGetUsers",
+            "https://baraqah-departmental-store-server.onrender.com/adminGetUsers",
             "component - AdminPanel --- API adminGetUsers"
           );
         },

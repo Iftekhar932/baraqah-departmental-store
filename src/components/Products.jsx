@@ -16,7 +16,7 @@ const Cards = () => {
   // this function is mainly used for loading all products data in "products" route, fetching from this component
   const initialDataFetcher = () => {
     JWTExpiryHandlerFunction(
-      "http://localhost:3001/getAllProducts",
+      "https://baraqah-departmental-store-server.onrender.com/getAllProducts",
       "Products.jsx - API - getAllProducts"
     )
       .then((data) => {
