@@ -8,14 +8,15 @@ const ErrorComponent = () => {
 
   // NOTE: the condition with the state is to make sure if user stays in this page error page for 3 seconds, will be redirected. Otherwise won't
   // if user is logged in it won't navigate
+
+  const timeToNavigate = () => {
+    setTimeout(() => setUserHere(() => !userHere), 3000);
+    if (userHere) return navigate("/userLogin");
+  };
+
   useEffect(() => {
     if (!localStorage.getItem("userEmail")) {
-      const timeToNavigate = () => {
-        setTimeout(() => setUserHere(() => !userHere), 3000);
-      };
       timeToNavigate();
-
-      if (userHere) return navigate("/userLogin");
     }
   }, [userHere]);
 

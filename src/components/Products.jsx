@@ -1,12 +1,22 @@
+import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Card from "./Product";
 import useFirebase from "../hooks/useFirebase";
 import LoadingSpinner from "./LoadingSpinner";
-import { useEffect, useState } from "react";
 import {
   JWTExpiryHandlerFunction,
   refreshHandlingFunction,
 } from "../Routes/routes";
+
+import ProductsError from "./ProductsError";
+
+/* 
+NOTE: This component is used for 2 purposes currently,
+ One - to display all products at once, 
+Two - to display products categoryWise in sliderCategory.jsx component in the place of Outlet,
+Below The Api in initialDataFetcher function is used to get all products,
+while useLoaderData() is used to load products categoryWise
+*/
 
 const Cards = () => {
   const { loading, setLoading } = useFirebase();
@@ -22,7 +32,7 @@ const Cards = () => {
       .then((data) => {
         setLoading(false);
         setLoadedData(data);
-        setLoading(Boolean(loadedData?.data[0]));
+        setLoading(Boolean(data?.data[0]));
       })
       .catch(async (err) => {
         console.log(err?.response);
@@ -46,9 +56,14 @@ const Cards = () => {
     }
     if (loaderData?.data[0]) {
       setLoadedData(loaderData);
+      setLoading(true);
     }
   }, [loaderData, loading]);
 
+  if (!localStorage.getItem("userEmail")) {
+    // setLoading(true);
+    return <ProductsError />;
+  }
   return (
     <>
       <LoadingSpinner loading={loading} />

@@ -1,23 +1,25 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const ProductsError = () => {
   const navigate = useNavigate();
-  const [userHere, setUserHere] = useState(false);
+  const [userHere, setUserHere] = useState(false); // indicates whether in user's device this component is rendered or not
 
   /*  NOTE: the condition with the state is to make sure if user stays on
-   the error page for 3 seconds will be redirected unless it is this route - '/' (home route) */
+     the error page for 3 seconds will be redirected unless it is this route - '/' (home route) */
   // if user is logged in it won't navigate
+  const timeToNavigate = () => {
+    if (window.location.pathname != "/") {
+      setTimeout(() => setUserHere(!userHere), 3000);
+    }
+    if (userHere) {
+      navigate("/userLogin");
+    }
+  };
+
   useEffect(() => {
     if (!localStorage.getItem("userEmail")) {
-      const timeToNavigate = () => {
-        if (window.location.pathname != "/")
-          setTimeout(() => setUserHere(() => !userHere), 3000);
-      };
-
       timeToNavigate();
-      if (userHere) return navigate("/userLogin");
     }
   }, [userHere]);
 

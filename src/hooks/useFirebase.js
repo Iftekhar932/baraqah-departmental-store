@@ -45,14 +45,13 @@ const useFirebase = () => {
           localStorage.setItem("access_token", response?.data?.accessToken);
           localStorage.setItem("userEmail", user?.email);
           localStorage.setItem("role", user?.role);
+          navigate("/");
         };
 
         // ▶️👉 handling response
         response?.status === 200
           ? responseHandleFunc()
           : console.log(response?.data, "login failed");
-
-        navigate("/");
 
         return response;
       })

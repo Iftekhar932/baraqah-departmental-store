@@ -31,7 +31,7 @@ const Hero = () => {
               100% Fresh products for you
             </p>
             <Link to="/products">
-              <button className="btn btn-primary">Show Now</button>
+              <button className="btn btn-primary">Shop Now</button>
             </Link>
           </div>
         </div>

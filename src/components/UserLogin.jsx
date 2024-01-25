@@ -34,6 +34,7 @@ const UserLogin = () => {
       e.preventDefault();
       console.log("ekhane");
       setErrorMsg("");
+      setLoading(false);
 
       if (flag == "google") {
         // NOTE: receiving and setting accessToken in localStorage from "useFirebase.js" file, in "signInWithGoogle()" function
@@ -55,7 +56,6 @@ const UserLogin = () => {
       );
 
       const responseHandleFunc = () => {
-        setLoading(false);
         localStorage.setItem("access_token", response.data.accessToken);
         localStorage.setItem("userEmail", response.data.email);
         localStorage.setItem("role", response.data.role);

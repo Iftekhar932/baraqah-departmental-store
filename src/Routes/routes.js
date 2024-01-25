@@ -15,7 +15,6 @@ import ForgotPasswordForm from "../components/ForgotPasswordForm";
 
 // error components
 import ProductsError from "../components/ProductsError";
-import ErrorComponent from "../components/ErrorComponent";
 
 /*
  * function to call api of refreshToken, setting new token in localStorage and then re-invoke *    "jwtExpiryFunction" & the outcome/response that
@@ -135,12 +134,12 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
-    errorElement: <ErrorComponent />,
+    errorElement: <ProductsError />,
     children: [
       {
         path: "/",
         element: <Home />,
-        errorElement: <ErrorComponent />,
+        errorElement: <ProductsError />,
         children: [
           {
             path: "/",
@@ -173,17 +172,17 @@ const router = createBrowserRouter([
       {
         path: "/products",
         element: <Products />,
-        errorElement: <ErrorComponent />,
+        errorElement: <ProductsError />,
       },
       {
         path: "/userLogin",
         element: <UserLogin />, // this component has api in it's own file
-        errorElement: <ErrorComponent />,
+        errorElement: <ProductsError />,
       },
       {
         path: "/userRegister",
         element: <UserRegister />, // this component has api in it's own file
-        errorElement: <ErrorComponent />,
+        errorElement: <ProductsError />,
       },
       {
         path: "/adminOnly",
@@ -194,7 +193,7 @@ const router = createBrowserRouter([
             "component - AdminPanel --- API adminGetUsers"
           );
         },
-        errorElement: <ErrorComponent />,
+        errorElement: <ProductsError />,
       },
 
       { path: "/forgotPassword", element: <ForgotPasswordForm /> }, // this component ha an api in it's own file for password reset
