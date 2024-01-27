@@ -32,7 +32,6 @@ const UserLogin = () => {
   const submitFunction = async (e, flag) => {
     try {
       e.preventDefault();
-      console.log("ekhane");
       setErrorMsg("");
       setLoading(false);
 
