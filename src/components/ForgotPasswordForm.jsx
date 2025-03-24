@@ -36,8 +36,12 @@ const ForgotPasswordForm = () => {
         : window.alert(response?.data, "change failed");
       return response;
     } catch (error) {
-      console.error("Error during login line 45:", error?.response?.data);
-      setErrorMsg(error?.response?.data?.msg);
+      console.error("Error during submit:", error?.response);
+      if (error?.response?.status === 400) {
+        setErrorMsg(error?.response?.data?.msg || "Invalid email or password"); // Handle specific error message
+      } else {
+        setErrorMsg("An error occurred. Please try again later."); // Generic error message for other cases
+      }
     }
   };
 

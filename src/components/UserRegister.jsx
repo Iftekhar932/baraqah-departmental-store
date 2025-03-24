@@ -104,12 +104,6 @@ const UserRegister = () => {
               />
               <label className="label">
                 <Link
-                  to="/forgotPassword"
-                  className="label-text-alt link link-hover"
-                >
-                  Forgot password?
-                </Link>
-                <Link
                   to="/userLogin"
                   className="label-text-alt link link-hover"
                 >

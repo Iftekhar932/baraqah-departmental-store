@@ -10,14 +10,6 @@ import {
 
 import ProductsError from "./ProductsError";
 
-/* 
-NOTE: This component is used for 2 purposes currently,
- One - to display all products at once, 
-Two - to display products categoryWise in sliderCategory.jsx component in the place of Outlet,
-Below The Api in initialDataFetcher function is used to get all products,
-while useLoaderData() is used to load products categoryWise
-*/
-
 const Cards = () => {
   const { loading, setLoading } = useFirebase();
   const [loadedData, setLoadedData] = useState([]);

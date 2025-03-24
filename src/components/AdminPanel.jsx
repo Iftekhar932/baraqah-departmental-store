@@ -8,15 +8,12 @@ function AdminPanel() {
   const loadedData = useLoaderData();
   const allUsers = loadedData?.data?.allUsers;
 
-  // function for account deletion by id or uid(firebase)
+  // Function for account deletion by id or uid (firebase)
   async function deleteUser(id, flag) {
     try {
       const response = await axios.post(
         "https://baraqah-departmental-store-server.onrender.com/adminUserDeletion",
-        {
-          userIdToDelete: id,
-          flag,
-        },
+        { userIdToDelete: id, flag },
         {
           withCredentials: true,
           headers: {
@@ -24,42 +21,46 @@ function AdminPanel() {
           },
         }
       );
-      return response;
+      return response; // Return the response for potential further use
     } catch (error) {
-      console.log(
-        error?.response,
-        error?.response?.name,
-        error?.response?.message,
-        error?.response?.status
-      );
+      console.error("Error deleting user:", error);
+      // Handle errors more specifically based on status codes or error messages
       if (error?.response?.status === 403) {
-        return await refreshHandlingFunction(
+        await refreshHandlingFunction(
           null,
           "component - AdminPanel.jsx ------- api - adminUserDeletion",
           true
         );
+        // Reattempt deletion after refresh (consider adding a retry limit)
+        return deleteUser(id, flag); // Retry deletion if token refresh succeeds
       }
+      // Handle other potential errors here (e.g., network errors, server errors)
+      // Consider displaying user-friendly error messages based on the error type
     }
   }
 
-  // prompt confirmation of deletion of a user account
-  const deletionOfUserByAdmin = (user) => {
-    try {
-      if (user?.uid) {
-        if (window.confirm("Are you sure you want to delete this user?"))
-          return deleteUser(user.uid, "uid");
-      }
+  // Confirmation prompt for user account deletion (improved structure)
+  const deletionOfUserByAdmin = async (user) => {
+    if (!user) {
+      return; // Handle potential undefined user case
+    }
 
-      if (user?._id) {
-        if (window.confirm("Are you sure you want to delete this user?")) {
-          deleteUser(user._id, "_id");
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      try {
+        let userId;
+        if (user?.uid) {
+          userId = user.uid;
+        } else if (user?._id) {
+          userId = user._id;
+        } else {
+          console.error("User object missing required identifier (uid or _id)");
+          return; // Handle missing identifier more gracefully
         }
+        await deleteUser(userId, user?.uid ? "uid" : "_id");
+      } catch (error) {
+        console.error("Error deleting user:", error);
+        // Handle errors as in deleteUser function
       }
-    } catch (error) {
-      console.log(
-        "🚀 ~ file: AdminPanel.jsx:28 ~ deletionOfUserByAdmin ~ error:",
-        error
-      );
     }
   };
 
@@ -78,7 +79,9 @@ function AdminPanel() {
               Role: {user?.role ? user?.role : "user"}
             </span>
             <button
-              className="btn btn-error "
+              className={`btn btn-error ${
+                user?.role === "admin" && "disabled"
+              }`}
               onClick={() => deletionOfUserByAdmin(user)}
               disabled={user?.role === "admin"}
             >

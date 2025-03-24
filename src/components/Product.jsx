@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import useCart from "../hooks/useCart";
 import { refreshHandlingFunction } from "../Routes/routes";
@@ -6,10 +6,15 @@ import { motion } from "framer-motion";
 
 const Product = (props) => {
   const { category, _id, name, unit, img, price } = props?.productData;
-  const { addItem, subItem } = useCart();
+  const { addItem, subItem, getItemQuantity } = useCart();
+  const [quantity, setQuantity] = useState(0);
+
+  useEffect(() => {
+    const initialQuantity = getItemQuantity ? getItemQuantity(_id) : 0;
+    setQuantity(initialQuantity);
+  }, [_id, getItemQuantity, quantity]);
 
   // get product id and add it to localStorage cart with "addItem/subitem" function
-
   const itemSelection = async (_id, flag) => {
     const response = await axios
       .get(
@@ -24,13 +29,14 @@ const Product = (props) => {
       .then((response) => {
         // flag indicates whether to use  addition or subtraction function
         if (flag === true) {
-          return subItem(response?.data[0]?._id);
+          subItem(response?.data[0]?._id);
+          setQuantity((prev) => Math.max(prev - 1, 0)); // Prevent going below 0
         } else {
-          return addItem(response?.data[0]?._id);
+          addItem(response?.data[0]?._id);
+          setQuantity((prev) => prev + 1);
         }
       })
       .catch(async (err) => {
-        console.log(err?.response);
         if (err?.response?.status === 403) {
           return await refreshHandlingFunction(
             null,
@@ -65,6 +71,7 @@ const Product = (props) => {
           >
             +{" "}
           </button>
+          <span className="text-lg font-bold px-4">{quantity}</span>
           <button
             className="btn btn-primary w-full sm:w-auto"
             onClick={() => itemSelection(_id, true)}

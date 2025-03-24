@@ -3,6 +3,21 @@ import React, { useState } from "react";
 const useCart = () => {
   const [userCart, setUserCart] = useState([]);
 
+  // Function to get quantity of an item
+  const getItemQuantity = (itemId) => {
+    let products = localStorage.getItem("userProducts");
+
+    if (!products) return 0; // If no products, return 0
+
+    products = JSON.parse(products);
+
+    const product = products.find(
+      (singleProduct) => singleProduct.productId === itemId
+    );
+
+    return product ? product.qnt : 0; // Return quantity if found, otherwise 0
+  };
+
   const addItem = (itemId) => {
     let products = localStorage.getItem("userProducts");
 
@@ -49,7 +64,7 @@ const useCart = () => {
       localStorage.setItem("userProducts", JSON.stringify(products));
     }
   };
-  return { addItem, subItem };
+  return { addItem, subItem, getItemQuantity };
 };
 
 export default useCart;

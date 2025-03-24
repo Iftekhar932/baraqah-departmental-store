@@ -2,7 +2,6 @@ import { Link, Outlet, useLoaderData } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import Carousel from "react-multi-carousel";
 import { motion } from "framer-motion";
-import LoadingSpinner from "./LoadingSpinner";
 
 const responsive = {
   superLargeDesktop: {
@@ -32,7 +31,14 @@ const SliderCategory = () => {
   }
 
   // collecting category names while preventing clone element in the array
-  let category = loadedData?.data?.map((image) => {
+  const category = [
+    ...new Set(loadedData?.data?.map((image) => image.category)),
+  ];
+  const imgs = [
+    ...new Set(loadedData?.data?.map((image) => image.categoryImg)),
+  ];
+
+  /*  let category = loadedData?.data?.map((image) => {
     return image.category;
   });
   category = [...new Set(category)];
@@ -41,7 +47,7 @@ const SliderCategory = () => {
   let imgs = loadedData?.data?.map((image) => {
     return image.categoryImg;
   });
-  imgs = [...new Set(imgs)];
+  imgs = [...new Set(imgs)]; */
 
   return (
     <motion.div
@@ -62,10 +68,10 @@ const SliderCategory = () => {
         itemClass="carousel-item-padding-40-px"
         className="h-64 mx-auto md:w-[500px]"
       >
-        {/* while I'm looping over "imgs" I'm getting the 
+        {/* while looping over "imgs" getting the 
           elements of "category" array with "map()'s index, e.g map(element,index)"  
           index is increasing by 1 with every element,
-          so I'm basically putting it like this "category[index]", I get all the elements of "category" array at the same time in this way
+          so  basically putting it like this "category[index]", I get all the elements of "category" array at the same time in this way
           */}
 
         {imgs?.map((img, index) => {
