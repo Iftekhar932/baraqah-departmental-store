@@ -38,17 +38,6 @@ const SliderCategory = () => {
     ...new Set(loadedData?.data?.map((image) => image.categoryImg)),
   ];
 
-  /*  let category = loadedData?.data?.map((image) => {
-    return image.category;
-  });
-  category = [...new Set(category)];
-
-  // collecting category image names while preventing clone element in the array
-  let imgs = loadedData?.data?.map((image) => {
-    return image.categoryImg;
-  });
-  imgs = [...new Set(imgs)]; */
-
   return (
     <motion.div
       className={`${loadedData?.data?.length === 0 ? "hidden" : ""}`}
@@ -62,7 +51,8 @@ const SliderCategory = () => {
         infinite={true}
         responsive={responsive}
         ssr={true} // means to render carousel on server-side.
-        autoPlaySpeed={1000}
+        autoPlaySpeed={10000}
+        autoPlay={true}
         keyBoardControl={true}
         containerClass="carousel-container"
         itemClass="carousel-item-padding-40-px"
@@ -76,12 +66,13 @@ const SliderCategory = () => {
 
         {imgs?.map((img, index) => {
           return (
-            <div key={index} className="m-10 md:mr-5 lg:mr-0">
-              <Link
-                to={`products/${category[index]}`}
-                title={`${category[index]}`}
-              >
-                <img src={img} alt="" />
+            <div
+              key={index}
+              className="tooltip m-10 md:mr-5 lg:mr-0"
+              data-tip={category[index]}
+            >
+              <Link to={`products/${category[index]}`}>
+                <img src={img} alt={category[index]} />
               </Link>
             </div>
           );
