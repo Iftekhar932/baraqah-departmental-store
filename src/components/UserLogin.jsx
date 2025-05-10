@@ -60,11 +60,15 @@ const UserLogin = () => {
       }
     } catch (error) {
       console.error("Login error:", error);
-
-      if (error.code === "ECONNABORTED") {
+      if (error.response) {
+        // Handles 401, 403, etc.
+        if (error.response.status === 401 || error.response.status === 403) {
+          setErrorMsg("Invalid email or password");
+        } else {
+          setErrorMsg(error.response.data?.msg || "Something went wrong");
+        }
+      } else if (error.code === "ECONNABORTED") {
         setErrorMsg("Server is taking too long to respond. Try again later.");
-      } else if (error.response) {
-        setErrorMsg(error.response.data?.msg || "Invalid credentials");
       } else {
         setErrorMsg("Network error. Please check your internet connection.");
       }
