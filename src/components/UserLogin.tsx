@@ -14,7 +14,6 @@ const UserLogin = () => {
   const navigate = useNavigate();
 
   //! check if user created account with google or email, if google then disable other input boxes to make user login with gmail only
-
   // Redirect logged-in users
   useEffect(() => {
     if (localStorage.getItem("userEmail")) {
