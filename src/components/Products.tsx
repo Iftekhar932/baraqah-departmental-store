@@ -10,10 +10,14 @@ import {
 
 import ProductsError from "./ProductsError";
 
+import { ProductDataStructure } from "../types/interfaces";
+
 const Cards = () => {
   const { loading, setLoading } = useFirebase();
-  const [loadedData, setLoadedData] = useState([]);
-  const loaderData = useLoaderData([]); // categoryWise data loaded
+  const [loadedData, setLoadedData] = useState<{
+    data: ProductDataStructure[];
+  }>({ data: [] });
+  const loaderData = useLoaderData() as { data: ProductDataStructure[] }; // categoryWise data loaded, as for the typescript part loaderData is an object containing the data array
 
   // this function is mainly used for loading all products data in "products" route, fetching from this component
   const initialDataFetcher = () => {

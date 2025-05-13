@@ -2,6 +2,7 @@ import { Link, Outlet, useLoaderData } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import Carousel from "react-multi-carousel";
 import { motion } from "framer-motion";
+import { ProductDataStructure } from "../types/interfaces";
 
 const responsive = {
   superLargeDesktop: {
@@ -23,7 +24,7 @@ const responsive = {
 };
 
 const SliderCategory = () => {
-  const loadedData = useLoaderData();
+  const loadedData = useLoaderData() as { data: ProductDataStructure[] };
 
   // If there's no data, don't render the component and set loading true
   if (loadedData?.data?.length == 0) {
@@ -31,12 +32,12 @@ const SliderCategory = () => {
   }
 
   // collecting category names while preventing clone element in the array
-  const category = [
-    ...new Set(loadedData?.data?.map((image) => image.category)),
-  ];
-  const imgs = [
-    ...new Set(loadedData?.data?.map((image) => image.categoryImg)),
-  ];
+  const category = Array.from(
+    new Set(loadedData?.data?.map((image) => image.category))
+  );
+  const imgs = Array.from(
+    new Set(loadedData?.data?.map((image) => image.categoryImg))
+  );
 
   return (
     <motion.div

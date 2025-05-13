@@ -24,9 +24,9 @@ import ProductsError from "../components/ProductsError";
 //  this function is imported in "CartView.jsx", "SliderCategory.jsx" and "Product.jsx"  component
 
 export const refreshHandlingFunction = async (
-  url,
-  flag,
-  alreadyFetchedFlag
+  url: string | null,
+  compName: string = "", // this compName parameter is used to identify the component name to locate in which components this function is used
+  alreadyFetchedFlag: boolean = false //
 ) => {
   const accessToken = await getItemAsync("access_token");
   const userEmailAccount = await getItemAsync("userEmail");
@@ -73,12 +73,16 @@ export const refreshHandlingFunction = async (
   }
 };
 
-/* when jwt expires it'll invoke "refreshTokenHandlingFunction" above or it'll handle API response - when access_token expires,
+/* when jwt "access_token" expires it'll invoke "refreshHandlingFunction" above or it'll handle API response - when access_token expires,
 ------------------------------------------------------------------------------------------------
-NOTE: if "refreshTokenHandlingFunction" is used after a token is expired  the final response will be returned from the place "jwtExpiryHandlingFunction" is invoked and returned, which is in the try-catch block of "refreshTokenHandlingFunction". (This'll only happen once after the renewal of accessToken )
+NOTE: if "refreshHandlingFunction" is used after a token is expired  the final response will be returned from the place "jwtExpiryHandlingFunction" is invoked and returned, which is in the try-catch block of "refreshHandlingFunction". (This'll only happen once after the renewal of accessToken )
 */
-//  this function is imported in "CartView.jsx", "SliderCategory.jsx" and "Product.jsx"  component
-export async function JWTExpiryHandlerFunction(url, flag) {
+//  this function is imported in "CartView.jsx", "SliderCategory.jsx" and "Product.jsx"  component,
+export async function JWTExpiryHandlerFunction(
+  url: string,
+  compName: string = ""
+) {
+  // compName parameter is used to identify the component name to locate in which components this function is used
   const accessToken = await getItemAsync("access_token");
   if (!accessToken) {
     return;
@@ -98,7 +102,7 @@ export async function JWTExpiryHandlerFunction(url, flag) {
         err?.response?.status,
         err?.response?.data,
         err?.data?.refreshTokenExpiry,
-        flag
+        compName
       );
 
       if (err?.data?.refreshTokenExpiry == true) {
@@ -116,14 +120,14 @@ export async function JWTExpiryHandlerFunction(url, flag) {
 }
 
 // used "Promise" to use localStorage in asynchronous way(used in "JWTExpiryHandlerFunction" * "refreshHandlingFunction")
-function getItemAsync(key) {
+function getItemAsync(key: string) {
   return new Promise((resolve) => {
     const value = localStorage.getItem(key);
     resolve(value);
   });
 }
 // used "Promise" to use localStorage in asynchronous way(used in "JWTExpiryHandlerFunction")
-function setItemAsync(key, value) {
+function setItemAsync(key: string, value: string) {
   return new Promise((resolve) => {
     const task = localStorage.setItem(key, value);
     resolve(task);

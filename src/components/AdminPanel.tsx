@@ -4,12 +4,32 @@ import axios from "axios";
 import { useLoaderData } from "react-router-dom";
 import { refreshHandlingFunction } from "../Routes/routes";
 
+interface UserStructureBase {
+  email: string;
+  displayName: string;
+  role?: string;
+}
+
+// explanation of this type: it's a union type that can be either
+// { _id: string; uid?: never } or { uid: string; _id?: never }
+type UserStructure = UserStructureBase &
+({ _id: string; uid?: never } | { uid: string; _id?: never });
+
+interface LoaderData {
+  data: {
+    allUsers: UserStructure[];
+  };
+}
+
 function AdminPanel() {
-  const loadedData = useLoaderData();
-  const allUsers = loadedData?.data?.allUsers;
+
+  const loadedData = useLoaderData() as LoaderData; // Ensure the type matches LoaderData
+  const allUsers: UserStructure[] = loadedData?.data?.allUsers || [];
+  console.log("✨ 🌟 AdminPanel loadedData:", loadedData);
+  console.log("✨ 🌟 AdminPanel allUsers:", allUsers);
 
   // Function for account deletion by id or uid (firebase)
-  async function deleteUser(id, flag) {
+  async function deleteUser(id: number, flag: string) {
     try {
       const response = await axios.post(
         "https://baraqah-departmental-store-server.onrender.com/adminUserDeletion",
@@ -24,7 +44,7 @@ function AdminPanel() {
       return response; // Return the response for potential further use
     } catch (error) {
       console.error("Error deleting user:", error);
-      // Handle errors more specifically based on status codes or error messages
+      // Handle errors
       if (error?.response?.status === 403) {
         await refreshHandlingFunction(
           null,

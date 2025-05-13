@@ -6,12 +6,14 @@ import LoadingSpinner from "./LoadingSpinner";
 
 const UserLogin = () => {
   const { signInWithGoogle } = useFirebase();
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
-  const [loading, setLoading] = useState(false); // Defined locally
+  const [userEmail, setUserEmail] = useState<string>("");
+  const [userPassword, setUserPassword] = useState<string>("");
+  const [errorMsg, setErrorMsg] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false); // Defined locally
 
   const navigate = useNavigate();
+
+  //! check if user created account with google or email, if google then disable other input boxes to make user login with gmail only
 
   // Redirect logged-in users
   useEffect(() => {
@@ -27,12 +29,17 @@ const UserLogin = () => {
   };
 
   // Handle form submission
-  const submitFunction = async (e, flag) => {
+  const submitFunction = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+    flag: string = ""
+  ) => {
+    // flag argument's value is later checked with strict equality for boolean value
     try {
       e.preventDefault();
       setErrorMsg("");
       setLoading(true);
 
+      // on clicking on form button making sure both way of signing in is not initiated
       if (flag === "google") {
         signInWithGoogle();
         return;
@@ -87,7 +94,8 @@ const UserLogin = () => {
             fresh, healthy, pure products along with fast delivery.
           </p>
         </div>
-        {loading ? <LoadingSpinner /> : null} {/* Show spinner if loading */}
+        {loading ? <LoadingSpinner loading={loading} /> : null}{" "}
+        {/* Show spinner if loading */}
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <form className="card-body">
             <div className="form-control">
@@ -137,7 +145,7 @@ const UserLogin = () => {
             <div className="form-control mt-6">
               <button
                 className="btn btn-primary"
-                onClick={submitFunction}
+                onClick={(e) => submitFunction(e)}
                 disabled={loading}
               >
                 {loading ? "Logging in..." : "Login"}

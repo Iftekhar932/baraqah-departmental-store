@@ -1,37 +1,36 @@
-import React, { useState } from "react";
+import React from "react";
 
 const useCart = () => {
-  const [userCart, setUserCart] = useState([]);
-
-  // Function to get quantity of an item
-  const getItemQuantity = (itemId) => {
-    let products = localStorage.getItem("userProducts");
-
-    if (!products) return 0; // If no products, return 0
-
-    products = JSON.parse(products);
+  // 🟦🟦🟦🟦🟦🟦🟦Function to get quantity of an item🟦🟦🟦🟦🟦🟦🟦
+  const getItemQuantity = (itemId: string) => {
+    let products: { productId: string; qnt: number }[] = JSON.parse(
+      localStorage.getItem("userProducts")
+    );
+    if (!products) return 0;
 
     const product = products.find(
       (singleProduct) => singleProduct.productId === itemId
     );
-
     return product ? product.qnt : 0; // Return quantity if found, otherwise 0
   };
 
-  const addItem = (itemId) => {
-    let products = localStorage.getItem("userProducts");
+  // 🟦🟦🟦🟦🟦🟦🟦 Function to add item to cart 🟦🟦🟦🟦🟦🟦🟦🟦
+  const addItem = (itemId: string) => {
+    const productsToParse: string | null =
+      localStorage?.getItem("userProducts");
+    let products: { productId: string; qnt: number }[] = productsToParse
+      ? JSON.parse(productsToParse)
+      : [];
 
     // if products array is not there it'll create one for product list
-    if (!products) {
-      products = localStorage.setItem(
-        "userProducts",
-        JSON.stringify([{ productId: itemId, qnt: 1 }])
-      );
+    if (!productsToParse) {
+      products = [{ productId: itemId, qnt: 1 }];
+      localStorage.setItem("userProducts", JSON.stringify(products));
     }
 
     // if products array is there then product objects will be added in the array or quantity will be increased of product
-    else if (products) {
-      products = JSON.parse(products);
+    else if (productsToParse) {
+      products = JSON.parse(productsToParse);
 
       const productQntIncrement = products.find((singleProduct) => {
         if (singleProduct.productId === itemId) return (singleProduct.qnt += 1);
@@ -43,13 +42,13 @@ const useCart = () => {
     }
   };
 
-  //! testing needed
-  const subItem = (itemId) => {
-    let products = localStorage.getItem("userProducts");
+  // 🟦🟦🟦🟦🟦🟦🟦 Function to subtract item from cart 🟦🟦🟦🟦🟦🟦🟦🟦
+  const subItem = (itemId: string) => {
+    let products: { productId: string; qnt: number }[];
 
     // if products array is there then product objects will be added in the array or quantity will be increased
-    if (products) {
-      products = JSON.parse(products);
+    if (localStorage?.getItem("userProducts")) {
+      products = JSON.parse(localStorage?.getItem("userProducts"));
 
       const productQntDecrement = products.findIndex((singleProduct) => {
         return singleProduct.productId === itemId;

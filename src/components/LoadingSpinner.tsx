@@ -1,6 +1,6 @@
 import React from "react";
 
-const LoadingSpinner = ({ loading }) => {
+const LoadingSpinner = ({ loading }: { loading: boolean }) => {
   return (
     <div className={`text-center my-4 ${loading ? "hidden" : ""}`}>
       <span className="text-purple-400 loading loading-ring loading-lg"></span>

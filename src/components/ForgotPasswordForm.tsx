@@ -1,23 +1,15 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import useFirebase from "../hooks/useFirebase";
 import axios from "axios";
-import LoadingSpinner from "./LoadingSpinner";
 
-const UserRegister = () => {
-  const { signInWithGoogle, loading, setLoading } = useFirebase();
+const ForgotPasswordForm = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
   const navigate = useNavigate();
-  // logged in user should be navigated
-  if (localStorage.getItem("userEmail")) {
-    navigate("/");
-  }
 
-  // info collection of user
+  // email & password collection
   const infoCollection = (e) => {
     const email = e.target.form.email.value;
     const password = e.target.form.password.value;
@@ -25,50 +17,39 @@ const UserRegister = () => {
     setUserPassword(password);
   };
 
-  // info submit to server
-  const submitFunction = async (e, flag) => {
+  const submitFunction = async (e) => {
     setErrorMsg("");
     try {
       e.preventDefault();
-      if (flag == "google") {
-        signInWithGoogle();
-        return;
-      }
-
       const response = await axios.post(
-        "https://baraqah-departmental-store-server.onrender.com/register",
+        "https://baraqah-departmental-store-server.onrender.com/passwordReset",
         {
           email: userEmail,
           password: userPassword,
-        }
+        },
+        { withCredentials: true }
       );
 
-      const handleLoginSuccess = () => {
-        console.log(response.data, "login Successful");
-        navigate("/");
-      };
-
-      // Handle response
-      response.status === 201
-        ? handleLoginSuccess()
-        : console.log(response.data, "login failed");
-
+      // handle response
+      response.status === 200
+        ? navigate("/")
+        : window.alert(`${response?.data}, change failed`);
       return response;
     } catch (error) {
-      console.error("Error during login:", error.response.data);
-      setErrorMsg(error.response.data.msg);
+      console.error("Error during submit:", error?.response);
+      if (error?.response?.status === 400) {
+        setErrorMsg(error?.response?.data?.msg || "Invalid email or password"); // Handle specific error message
+      } else {
+        setErrorMsg("An error occurred. Please try again later."); // Generic error message for other cases
+      }
     }
   };
 
   return (
     <div className="hero min-h-screen bg-base-200">
-      <div className="w-3/4  hero-content flex-col lg:flex-row-reverse">
+      <div className="w-3/4 hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Register now!</h1>
-          <p className="py-6">
-            Ours is one of the best online grocery shops around the city with
-            fresh, healthy, pure products along with fast delivery
-          </p>
+          <h1 className="text-5xl font-bold py-6">Change your password</h1>
         </div>
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <form className="card-body">
@@ -87,42 +68,41 @@ const UserRegister = () => {
                 required
               />
             </div>
-            {errorMsg && <span className="text-red-500">{errorMsg}</span>}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Password</span>
               </label>
               <input
                 type="password"
-                placeholder="password"
+                placeholder="Type your new password"
                 className="input input-bordered"
                 name="password"
                 onKeyUp={(e) => {
                   infoCollection(e);
                 }}
-                required
               />
               <label className="label">
                 <Link
                   to="/userLogin"
                   className="label-text-alt link link-hover"
                 >
-                  Already have an account?
+                  Login here
+                </Link>
+                <Link
+                  to="/userRegister"
+                  className="label-text-alt link link-hover"
+                >
+                  Don't have an account?
                 </Link>
               </label>
             </div>
+            {errorMsg && <span className="text-red-500">{errorMsg}</span>}
+
             <div className="form-control mt-6">
               <button className="btn btn-primary" onClick={submitFunction}>
-                Register
+                Change
               </button>
             </div>
-            <button
-              className="btn btn-primary"
-              onClick={(e) => submitFunction(e, "google")}
-            >
-              Sign In with google
-            </button>
-            <LoadingSpinner loading={loading} />
           </form>
         </div>
       </div>
@@ -130,4 +110,4 @@ const UserRegister = () => {
   );
 };
 
-export default UserRegister;
+export default ForgotPasswordForm;

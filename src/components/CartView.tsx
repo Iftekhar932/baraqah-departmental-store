@@ -166,7 +166,7 @@ const CartView = () => {
                 </tr>
               ))}
               <tr>
-                <td colSpan="5" className="text-center py-1 border-b"></td>
+                <td colSpan={5} className="text-center py-1 border-b"></td>
                 <td className="px-2 py-1 border-b text-right table-cell">
                   Total
                 </td>

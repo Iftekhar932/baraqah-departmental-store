@@ -6,13 +6,20 @@ import ThemeSwitcher from "./ThemeSwitcher";
 
 const Header = () => {
   const { user, logOut } = useFirebase();
+  const [cartFill,setCartFill] = React.useState<boolean>(false);
 
-  const navigate = useNavigate();
+  React.useEffect(() => {
+    const productsString = localStorage.getItem("userProducts");
+    const products: { productId: string; qnt: number }[] = productsString
+      ? JSON.parse(productsString)
+      : [];
+    setCartFill(products.length > 0); // Set cartFill based on whether products exist
+  }, []);
+  const userEmail: string | null = localStorage.getItem("userEmail");
+  const role: string | null = localStorage.getItem("role");
 
-  const userEmail = localStorage.getItem("userEmail");
-  const role = localStorage.getItem("role");
 
-  const logOutFunc = (e, flag) => {
+  const logOutFunc = (e: React.MouseEvent<HTMLAnchorElement>, flag = false) => {
     if (!flag) {
       localStorage.removeItem("userEmail");
       localStorage.removeItem("access_token");
@@ -75,7 +82,7 @@ const Header = () => {
                     width="20px"
                     src="https://i.ibb.co/GT1KM5g/person-svgrepo-com.png"
                     alt="Accounts"
-                    border="0"
+                    style={{ border: "0" }}
                   />
                   Admin Panel
                 </Link>
@@ -88,7 +95,7 @@ const Header = () => {
                   width="20px"
                   src="https://i.ibb.co/5s9HH42/cart-shopping-svgrepo-com.png"
                   alt="cart"
-                  border="0"
+                  style={{ border: "0" }}
                 />{" "}
                 Cart
               </Link>
@@ -167,7 +174,7 @@ const Header = () => {
                 <img
                   src="https://i.ibb.co/vPhPLjL/email-1-svgrepo-com.png"
                   alt="email-1-svgrepo-com"
-                  border="0"
+                  style={{ border: "0" }}
                   height="22px"
                   width="22px"
                 />
@@ -185,7 +192,7 @@ const Header = () => {
                   width="20px"
                   src="https://i.ibb.co/5s9HH42/cart-shopping-svgrepo-com.png"
                   alt="cart"
-                  border="0"
+                  style={{ border: "0" }}
                 />{" "}
               </Link>
             </li>
@@ -198,7 +205,7 @@ const Header = () => {
                     width="20px"
                     src="https://i.ibb.co/GT1KM5g/person-svgrepo-com.png"
                     alt="Accounts"
-                    border="0"
+                    style={{ border: "0" }}
                   />
                 </Link>
               </li>

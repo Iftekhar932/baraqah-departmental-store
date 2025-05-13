@@ -1,10 +1,12 @@
 import React from "react";
 import { motion } from "framer-motion";
+
 const AboutUs = () => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1, transition: { duration: 1 } }}
+      viewport={{ once: true }} // Add this line
       className="max-w-7xl mx-auto px-4 pb-12 sm:px-6 lg:px-8"
     >
       <div className="p-8 shadow-md rounded-lg">

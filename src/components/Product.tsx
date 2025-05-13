@@ -15,7 +15,7 @@ const Product = (props) => {
   }, [_id, getItemQuantity, quantity]);
 
   // get product id and add it to localStorage cart with "addItem/subitem" function
-  const itemSelection = async (_id, flag) => {
+  const itemSelection = async (_id: number, flag: boolean = false) => {
     const response = await axios
       .get(
         `https://baraqah-departmental-store-server.onrender.com/getAllProducts/${_id}`,
