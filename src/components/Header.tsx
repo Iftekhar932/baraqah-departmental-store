@@ -6,7 +6,7 @@ import ThemeSwitcher from "./ThemeSwitcher";
 
 const Header = () => {
   const { user, logOut } = useFirebase();
-  const [cartFill,setCartFill] = React.useState<boolean>(false);
+  const [cartFill, setCartFill] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     const productsString = localStorage.getItem("userProducts");
@@ -17,7 +17,6 @@ const Header = () => {
   }, []);
   const userEmail: string | null = localStorage.getItem("userEmail");
   const role: string | null = localStorage.getItem("role");
-
 
   const logOutFunc = (e: React.MouseEvent<HTMLAnchorElement>, flag = false) => {
     if (!flag) {
@@ -185,7 +184,11 @@ const Header = () => {
               <ThemeSwitcher />
             </li>
 
-            <li className="border border-purple-700 rounded-full">
+            <li
+              className={`border border-purple-700 rounded-full ${
+                cartFill ? "animate-bounceTwice" : ""
+              }`}
+            >
               <Link to="/viewCart" title="Cart">
                 <img
                   height="20px"
