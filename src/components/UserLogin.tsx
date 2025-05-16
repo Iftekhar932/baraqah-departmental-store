@@ -5,15 +5,14 @@ import axios from "axios";
 import LoadingSpinner from "./LoadingSpinner";
 
 const UserLogin = () => {
-  const { signInWithGoogle } = useFirebase();
+  const { signInWithGoogle, loading, setLoading } = useFirebase();
   const [userEmail, setUserEmail] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
   const [errorMsg, setErrorMsg] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false); // Defined locally
+  // const [loading, setLoading] = useState<boolean>(false); // Defined locally
 
   const navigate = useNavigate();
 
-  //! check if user created account with google or email, if google then disable other input boxes to make user login with gmail only
   // Redirect logged-in users
   useEffect(() => {
     if (localStorage.getItem("userEmail")) {
@@ -53,7 +52,7 @@ const UserLogin = () => {
       const response = await axios.post(
         "https://baraqah-departmental-store-server.onrender.com/login",
         { email: userEmail, password: userPassword },
-        { withCredentials: true, timeout: 10000 } // ⏳ 10s timeout
+        { withCredentials: true, timeout: 60000 } // ⏳ 60 seconds timeout
       );
 
       if (response.status === 200) {

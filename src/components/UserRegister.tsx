@@ -1,8 +1,7 @@
-import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import useFirebase from "../hooks/useFirebase";
 import axios from "axios";
+import useFirebase from "../hooks/useFirebase";
 import LoadingSpinner from "./LoadingSpinner";
 
 const UserRegister = () => {
