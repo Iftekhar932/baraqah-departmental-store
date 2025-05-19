@@ -14,7 +14,7 @@ const googleProvider = new GoogleAuthProvider();
 const useFirebase = () => {
   const auth = getAuth(app);
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // for loadingSpinner
+  const [loading, setLoading] = useState(false); // for loadingSpinner
   const navigate = useNavigate();
 
   const signInWithGoogle = async () => {
@@ -54,7 +54,6 @@ const useFirebase = () => {
       console.error("Error during sign out:", error);
     }
   };
-
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(setUser);
     return unsubscribe;
