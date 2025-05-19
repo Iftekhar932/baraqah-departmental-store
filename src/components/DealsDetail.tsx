@@ -52,8 +52,8 @@ const DealsDetail = () => {
               alt=""
               width="50px"
             />
-            <span>Fast</span>
-            <span>Enjoy shopping for the fastest delivery ever</span>
+            <span>Fast </span>
+            <span> Enjoy shopping for the fastest delivery ever</span>
           </div>
         </div>
       </article>

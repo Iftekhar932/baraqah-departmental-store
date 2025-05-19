@@ -1,6 +1,9 @@
 import React from "react";
 
+let cartFill: boolean = false; // for cart icon animation
 const useCart = () => {
+  // const [cartFill, setCartFill] = React.useState<boolean>(false); // for cart icon animation
+
   // 🟦🟦🟦🟦🟦🟦🟦Function to get quantity of an item🟦🟦🟦🟦🟦🟦🟦
   const getItemQuantity = (itemId: string) => {
     let products: { productId: string; qnt: number }[] = JSON.parse(
@@ -11,7 +14,9 @@ const useCart = () => {
     const product = products.find(
       (singleProduct) => singleProduct.productId === itemId
     );
-    return product ? product.qnt : 0; // Return quantity if found, otherwise 0
+    // product?.qnt > 0 ? setCartFill(true) : setCartFill(false); // Set cartFill based on quantity
+    cartFill = product?.qnt ? true : false; // Set cartFill based on quantity
+    return product ? () => product.qnt : 0; // Return quantity if found, otherwise 0
   };
 
   // 🟦🟦🟦🟦🟦🟦🟦 Function to add item to cart 🟦🟦🟦🟦🟦🟦🟦🟦
@@ -63,7 +68,7 @@ const useCart = () => {
       localStorage.setItem("userProducts", JSON.stringify(products));
     }
   };
-  return { addItem, subItem, getItemQuantity };
+  return { addItem, subItem, getItemQuantity, cartFill };
 };
 
 export default useCart;
