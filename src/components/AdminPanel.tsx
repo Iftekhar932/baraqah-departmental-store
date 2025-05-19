@@ -13,7 +13,7 @@ interface UserStructureBase {
 // explanation of this type: it's a union type that can be either
 // { _id: string; uid?: never } or { uid: string; _id?: never }
 type UserStructure = UserStructureBase &
-({ _id: string; uid?: never } | { uid: string; _id?: never });
+  ({ _id: string; uid?: never } | { uid: string; _id?: never });
 
 interface LoaderData {
   data: {
@@ -22,11 +22,8 @@ interface LoaderData {
 }
 
 function AdminPanel() {
-
   const loadedData = useLoaderData() as LoaderData; // Ensure the type matches LoaderData
   const allUsers: UserStructure[] = loadedData?.data?.allUsers || [];
-  console.log("✨ 🌟 AdminPanel loadedData:", loadedData);
-  console.log("✨ 🌟 AdminPanel allUsers:", allUsers);
 
   // Function for account deletion by id or uid (firebase)
   async function deleteUser(id: number, flag: string) {

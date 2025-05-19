@@ -54,7 +54,7 @@ const UserRegister = () => {
       }
 
       const response = await axios.post(
-        "https://baraqah-departmental-store-server.onrender.com/register",
+        "http://localhost:3001/register",
         {
           email: userEmail,
           password: userPassword,

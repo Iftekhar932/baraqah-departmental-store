@@ -1,20 +1,15 @@
-import React from "react";
+import React, { use, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
 // daisyUI component
 import ThemeSwitcher from "./ThemeSwitcher";
+import useCart from "../hooks/useCart";
 
 const Header = () => {
   const { user, logOut } = useFirebase();
+  const { cartFill: cartCheck } = useCart();
   const [cartFill, setCartFill] = React.useState<boolean>(false);
-
-  React.useEffect(() => {
-    const productsString = localStorage.getItem("userProducts");
-    const products: { productId: string; qnt: number }[] = productsString
-      ? JSON.parse(productsString)
-      : [];
-    setCartFill(products.length > 0); // Set cartFill based on whether products exist
-  }, []);
+//  need fix for the loading animation
   const userEmail: string | null = localStorage.getItem("userEmail");
   const role: string | null = localStorage.getItem("role");
 
