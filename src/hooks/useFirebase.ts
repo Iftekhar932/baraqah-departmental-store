@@ -25,14 +25,14 @@ const useFirebase = () => {
 
       const response = await axios.post(
         "https://baraqah-departmental-store-server.onrender.com/jsonWebAccessToken",
-        { uid, email, role: "user" } // Preset role for google sign in
+        { uid, email, role: "user" } // default role for google sign in
       );
 
       if (response.status === 200) {
         const { accessToken } = response.data;
         localStorage.setItem("access_token", accessToken);
         localStorage.setItem("userEmail", email);
-        localStorage.setItem("role", "user"); // Preset role for google sign in
+        localStorage.setItem("role", "user"); // default role for google sign in
         setUser(result.user);
         navigate("/");
       } else {

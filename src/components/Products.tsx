@@ -39,7 +39,8 @@ const Cards = () => {
             true
           );
         }
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   /* 

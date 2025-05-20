@@ -4,23 +4,6 @@ import useFirebase from "../hooks/useFirebase";
 import axios from "axios";
 import LoadingSpinner from "./LoadingSpinner";
 
-// Regex for strong password: at least 1 uppercase, 1 lowercase, 1 number, 1 special character
-/* const strongPWD =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
-      this.password
-    ); */
-
-//! check if user created account with google or email, if google then disable other input boxes to make user login with gmail only
-
-//?Study schema design patterns (e.g., polymorphic, bucket patterns)?
-//? Common ways to structure data (polymorphic, bucket, outlier, etc.).
-//?JSON Web Tokens are used for stateless authentication ok, what's used for authentication with state then?
-
-//? express advanced routing? can i implement in this project to learn it?
-//?if find is a method in mognodb then what's aggregation teach me that while implementing in this project
-//? Docker: Containerize your backend for easier deployment. can i learn it by implementing here in this project
-//? Implement advanced middleware (e.g., rate-limiting, request validation). can i learn it by implementing here in this project
-
 const UserLogin = () => {
   const { signInWithGoogle, loading, setLoading } = useFirebase();
   const [userEmail, setUserEmail] = useState<string>("");
@@ -71,7 +54,6 @@ const UserLogin = () => {
         { email: userEmail, password: userPassword },
         { withCredentials: true, timeout: 60000 } // ⏳ 60 seconds timeout
       );
-      console.log(response);
 
       if (response.status === 200) {
         localStorage.setItem("access_token", response.data.accessToken);
