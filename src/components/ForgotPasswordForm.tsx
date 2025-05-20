@@ -37,7 +37,7 @@ const ForgotPasswordForm = () => {
       return response;
     } catch (error) {
       console.error("Error during submit:", error?.response);
-      if (error?.response?.status === 400) {
+      if (error?.response?.status === 400 || 409) {
         setErrorMsg(error?.response?.data?.msg || "Invalid email or password"); // Handle specific error message
       } else {
         setErrorMsg("An error occurred. Please try again later."); // Generic error message for other cases
