@@ -24,6 +24,8 @@ interface LoaderData {
 function AdminPanel() {
   const loadedData = useLoaderData() as LoaderData; // Ensure the type matches LoaderData
   const allUsers: UserStructure[] = loadedData?.data?.allUsers || [];
+  const [displayUsers, setDisplayUsers] = React.useState(allUsers);
+  const [errMessage, setErrMessage] = React.useState("");
 
   // Function for account deletion by id or uid (firebase)
   async function deleteUser(id: number, flag: string) {
@@ -51,8 +53,7 @@ function AdminPanel() {
         // Reattempt deletion after refresh (consider adding a retry limit)
         return deleteUser(id, flag); // Retry deletion if token refresh succeeds
       }
-      // Handle other potential errors here (e.g., network errors, server errors)
-      // Consider displaying user-friendly error messages based on the error type
+      return false;
     }
   }
 
@@ -73,9 +74,16 @@ function AdminPanel() {
           console.error("User object missing required identifier (uid or _id)");
           return; // Handle missing identifier more gracefully
         }
-        await deleteUser(userId, user?.uid ? "uid" : "_id");
+        const success = await deleteUser(userId, user?.uid ? "uid" : "_id");
+        if (success) {
+          // ✅ remove the deleted user from display
+          setDisplayUsers((prevUsers) =>
+            prevUsers.filter((u) => (u._id || u.uid) !== (user._id || user.uid))
+          );
+        }
       } catch (error) {
         console.error("Error deleting user:", error);
+
         // Handle errors as in deleteUser function
       }
     }
@@ -84,7 +92,7 @@ function AdminPanel() {
   return (
     <div className="m-4">
       <div className="gap-2 flex flex-wrap justify-center">
-        {allUsers?.map((user) => (
+        {displayUsers?.map((user) => (
           <div
             key={user?._id || user?.uid}
             className="md:w-1/2 lg:w-1/3 p-2 border rounded flex flex-col justify-center items-center"

@@ -30,9 +30,14 @@ const ForgotPasswordForm = () => {
         { withCredentials: true }
       );
 
+      const successHandler = (msg: string) => {
+        window.alert(msg);
+        navigate("/");
+      };
+
       // handle response
       response.status === 200
-        ? navigate("/")
+        ? successHandler("SuccessFully Changed")
         : window.alert(`${response?.data}, change failed`);
       return response;
     } catch (error) {
