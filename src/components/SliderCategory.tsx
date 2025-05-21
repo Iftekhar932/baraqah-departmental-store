@@ -73,7 +73,7 @@ const SliderCategory = () => {
               data-tip={category[index]}
             >
               <Link to={`products/${category[index]}`}>
-                <img src={img} alt={category[index]} />
+                <img src={img} alt={category[index]} loading="lazy" />
               </Link>
             </div>
           );
