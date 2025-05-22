@@ -13,17 +13,6 @@ const Header = () => {
   const role: null | string = localStorage.getItem("role");
 
   useEffect(() => {
-    // here the handler function runs when "cartUpdated" event is dispatched
-    /*  const handler = () => {
-      const products: { productId: string; qnt: number }[] = JSON.parse(
-        localStorage.getItem("userProducts") || "[]"
-      );
-      if (Array.isArray(products) && products.length > 0) {
-        setActivateAnimation(true);
-      } else {
-        setActivateAnimation(false);
-      }
-    }; */
     const products: { productId: string; qnt: number }[] = JSON.parse(
       localStorage.getItem("userProducts") || "[]"
     );
