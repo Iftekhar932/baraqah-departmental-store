@@ -3,25 +3,18 @@ import { Link, useNavigate } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
 // daisyUI component
 import ThemeSwitcher from "./ThemeSwitcher";
-import useCart from "../hooks/useCart";
+import { createCartUpdatedHandler } from "../utils/Handler";
 
-// write a function in useCart that'll send the updated cartFill if the value changes
 const Header = () => {
+  const [activateAnimation, setActivateAnimation] = useState<boolean>(false);
   const { user, logOut } = useFirebase();
 
   const userEmail: null | string = localStorage.getItem("userEmail");
   const role: null | string = localStorage.getItem("role");
-  const cartItemsExists: { productId: string; qnt: number }[] = JSON.parse(
-    localStorage.getItem("userProducts") || "[]"
-  );
-
-  const [activateAnimation, setActivateAnimation] = useState<boolean>(false);
-
-  /*//! changing the dependency value is not re-rendering the component
-  //! re-rendering the component is the solution for animation */
 
   useEffect(() => {
-    const handler = () => {
+    // here the handler function runs when "cartUpdated" event is dispatched
+    /*  const handler = () => {
       const products: { productId: string; qnt: number }[] = JSON.parse(
         localStorage.getItem("userProducts") || "[]"
       );
@@ -30,12 +23,23 @@ const Header = () => {
       } else {
         setActivateAnimation(false);
       }
-    };
+    }; */
+    const products: { productId: string; qnt: number }[] = JSON.parse(
+      localStorage.getItem("userProducts") || "[]"
+    );
+    if (Array.isArray(products) && products.length > 0) {
+      setActivateAnimation(true);
+    } else {
+      setActivateAnimation(false);
+    }
 
+    const handler = createCartUpdatedHandler(setActivateAnimation);
     window.addEventListener("cartUpdated", handler);
 
-    return () => window.removeEventListener("cartUpdated", handler);
-  }, [activateAnimation]);
+    return () => {
+      window.removeEventListener("cartUpdated", handler);
+    };
+  }, []);
 
   const logOutFunc = async (
     e: React.MouseEvent<HTMLAnchorElement>,
