@@ -1,22 +1,19 @@
-import React from "react";
-
-let cartFill: boolean = false; // for cart icon animation
 const useCart = () => {
-  // const [cartFill, setCartFill] = React.useState<boolean>(false); // for cart icon animation
-
   // 🟦🟦🟦🟦🟦🟦🟦Function to get quantity of an item🟦🟦🟦🟦🟦🟦🟦
-  const getItemQuantity = (itemId: string) => {
+  const getItemQuantity = (itemId: string): number => {
+    // ? i want to know why doesn't it display any compile error even if the variable is assigned with null? if i want it to display error i should use generic type right "<>"?
     let products: { productId: string; qnt: number }[] = JSON.parse(
       localStorage.getItem("userProducts")
     );
+
     if (!products) return 0;
 
     const product = products.find(
       (singleProduct) => singleProduct.productId === itemId
     );
-    // product?.qnt > 0 ? setCartFill(true) : setCartFill(false); // Set cartFill based on quantity
-    cartFill = product?.qnt ? true : false; // Set cartFill based on quantity
-    return product ? () => product.qnt : 0; // Return quantity if found, otherwise 0
+
+    return product ? product.qnt : 0; // Return quantity if found, otherwise 0
+    // return product ? () => product.qnt : 0; // Return quantity if found, otherwise 0
   };
 
   // 🟦🟦🟦🟦🟦🟦🟦 Function to add item to cart 🟦🟦🟦🟦🟦🟦🟦🟦
@@ -31,6 +28,7 @@ const useCart = () => {
     if (!productsToParse) {
       products = [{ productId: itemId, qnt: 1 }];
       localStorage.setItem("userProducts", JSON.stringify(products));
+      window.dispatchEvent(new Event("cartUpdated"));
     }
 
     // if products array is there then product objects will be added in the array or quantity will be increased of product
@@ -44,6 +42,7 @@ const useCart = () => {
         : products.push({ productId: itemId, qnt: 1 });
 
       localStorage.setItem("userProducts", JSON.stringify(products));
+      window.dispatchEvent(new Event("cartUpdated"));
     }
   };
 
@@ -66,9 +65,14 @@ const useCart = () => {
       }
 
       localStorage.setItem("userProducts", JSON.stringify(products));
+      window.dispatchEvent(new Event("cartUpdated"));
     }
   };
-  return { addItem, subItem, getItemQuantity, cartFill };
+  return {
+    addItem,
+    subItem,
+    getItemQuantity,
+  };
 };
 
 export default useCart;
