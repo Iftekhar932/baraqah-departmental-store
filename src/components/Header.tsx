@@ -1,32 +1,58 @@
-import React, { use, useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
 // daisyUI component
 import ThemeSwitcher from "./ThemeSwitcher";
 import useCart from "../hooks/useCart";
 
+// write a function in useCart that'll send the updated cartFill if the value changes
 const Header = () => {
   const { user, logOut } = useFirebase();
-  const { cartFill: cartCheck } = useCart();
-  const [cartFill, setCartFill] = React.useState<boolean>(false);
-//  need fix for the loading animation
-  const userEmail: string | null = localStorage.getItem("userEmail");
-  const role: string | null = localStorage.getItem("role");
 
-  const logOutFunc = (e: React.MouseEvent<HTMLAnchorElement>, flag = false) => {
+  const userEmail: null | string = localStorage.getItem("userEmail");
+  const role: null | string = localStorage.getItem("role");
+  const cartItemsExists: { productId: string; qnt: number }[] = JSON.parse(
+    localStorage.getItem("userProducts") || "[]"
+  );
+
+  const [activateAnimation, setActivateAnimation] = useState<boolean>(false);
+
+  /*//! changing the dependency value is not re-rendering the component
+  //! re-rendering the component is the solution for animation */
+
+  useEffect(() => {
+    const handler = () => {
+      const products: { productId: string; qnt: number }[] = JSON.parse(
+        localStorage.getItem("userProducts") || "[]"
+      );
+      if (Array.isArray(products) && products.length > 0) {
+        setActivateAnimation(true);
+      } else {
+        setActivateAnimation(false);
+      }
+    };
+
+    window.addEventListener("cartUpdated", handler);
+
+    return () => window.removeEventListener("cartUpdated", handler);
+  }, [activateAnimation]);
+
+  const logOutFunc = async (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    flag: boolean = false
+  ) => {
+    //?what should the return type of this function
     if (!flag) {
-      localStorage.removeItem("userEmail");
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("userProducts");
-      localStorage.removeItem("role");
-      return;
+      ["userEmail", "access_token", "userProducts", "role"].forEach((key) =>
+        localStorage.removeItem(key)
+      );
     } else if (flag) {
       e.preventDefault();
       localStorage.removeItem("userEmail");
       localStorage.removeItem("access_token");
       localStorage.removeItem("userProducts");
       localStorage.removeItem("role");
-      return logOut();
+      await logOut();
     }
   };
 
@@ -65,7 +91,7 @@ const Header = () => {
               <Link to="/about">About us</Link>
             </li>
             <li className={` ${userEmail || user?.email ? "" : "hidden"}`}>
-              <a href="#">Logged in: {user?.email || userEmail}</a>
+              <span>Logged in: {user?.email || userEmail}</span>
             </li>
 
             {role == "admin" && (
@@ -99,7 +125,7 @@ const Header = () => {
             {Boolean(userEmail) || user?.email ? (
               <li className="bg-red-700">
                 <a
-                  href="#"
+                  href=""
                   onClick={(e) => {
                     if (user?.email) {
                       return logOutFunc(e, true);
@@ -122,7 +148,7 @@ const Header = () => {
         {/* //* MOBILE 👆 */}
 
         {/* //* 👇 LARGE SCREEN */}
-        <div className="w-full mx-auto hidden md:flex justify-between">
+        <div className="w-full mx-auto hidden md:flex justify-between ">
           <ul className="menu menu-horizontal px-1">
             <li>
               <Link className="font-medium text-xl" to="/">
@@ -145,7 +171,7 @@ const Header = () => {
             <li>
               {Boolean(userEmail) || user?.email ? (
                 <a
-                  href="#"
+                  href=""
                   onClick={(e) => {
                     if (user?.email) {
                       return logOutFunc(e, true);
@@ -164,7 +190,7 @@ const Header = () => {
           <ul className="menu menu-horizontal px-1 items-center">
             {/* "user?.email" is for google account sign in (firebase) || "userEmail" is manually email account signed in */}
             <li className={` ${userEmail || user?.email ? "" : "hidden"}`}>
-              <a href="#">
+              <a href="">
                 <img
                   src="https://i.ibb.co/vPhPLjL/email-1-svgrepo-com.png"
                   alt="email-1-svgrepo-com"
@@ -181,7 +207,7 @@ const Header = () => {
 
             <li
               className={`border border-purple-700 rounded-full ${
-                cartFill ? "animate-bounceTwice" : ""
+                activateAnimation ? "animate-bounceTwice" : ""
               }`}
             >
               <Link to="/viewCart" title="Cart">
