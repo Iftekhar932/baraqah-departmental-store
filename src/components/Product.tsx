@@ -12,7 +12,7 @@ const Product = (props) => {
   useEffect(() => {
     const initialQuantity = getItemQuantity ? getItemQuantity(_id) : 0;
     setQuantity(initialQuantity);
-  }, [_id, getItemQuantity, quantity]);
+  }, [_id, getItemQuantity]);
 
   // get product id and add it to localStorage cart with "addItem/subitem" function
   const itemSelection = async (_id: number, flag: boolean = false) => {
