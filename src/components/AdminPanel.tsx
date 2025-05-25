@@ -4,6 +4,8 @@ import axios from "axios";
 import { useLoaderData } from "react-router-dom";
 import { refreshHandlingFunction } from "../Routes/routes";
 
+// ? overall  what can i improve in this component suggest me along with my mistakes of typescript or any room for improvement like using a better hook of react(i only use usestate and useffect, also lazy loading, suspense etc. teach me as much of them as u can by helping me implement, after this one i'll give you  more components, my intention is to learn through implementation and at the same time making this project a better one), for example i think in this component there are many places where i haven't specified TS type but i could if i wanted to and i should cuz i'm here to learn
+// ? the comments where i use "?" u'll answer those comments considering them as prompt for you
 interface UserStructureBase {
   email: string;
   displayName: string;
@@ -24,13 +26,17 @@ interface LoaderData {
 function AdminPanel() {
   const loadedData = useLoaderData() as LoaderData; // Ensure the type matches LoaderData
   const allUsers: UserStructure[] = loadedData?.data?.allUsers || [];
-  const [displayUsers, setDisplayUsers] = React.useState(allUsers);
-  const [errMessage, setErrMessage] = React.useState("");
+  const [displayUsers, setDisplayUsers] =
+    React.useState<UserStructure[]>(allUsers);
+  const [errMessage, setErrMessage] = React.useState<string>(""); // ? do i need to specify string here or is it overkill? i mean it's obvious from the initial value of state
+  //! set error message box in ui
 
   // Function for account deletion by id or uid (firebase)
   async function deleteUser(id: number, flag: string) {
+    //? i didn't use any type for what the function is going to return, do i need to?
     try {
       const response = await axios.post(
+        //? i didn't specify type for response, do i have to?
         "https://baraqah-departmental-store-server.onrender.com/adminUserDeletion",
         { userIdToDelete: id, flag },
         {
@@ -42,6 +48,7 @@ function AdminPanel() {
       );
       return response; // Return the response for potential further use
     } catch (error) {
+      // ? do i need to put type of error here for TS?
       console.error("Error deleting user:", error);
       // Handle errors
       if (error?.response?.status === 403) {
