@@ -53,6 +53,17 @@ const UserRegister = () => {
         return;
       }
 
+      // Password validation
+      const strongPWD =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{8,}$/;
+      if (!strongPWD.test(userPassword)) {
+        setErrorMsg(
+          "Password must be at least 8 characters, include uppercase, lowercase, number, and special character."
+        );
+        setLoading(false);
+        return;
+      }
+
       const response = await axios.post(
         "https://baraqah-departmental-store-server.onrender.com/register",
         {

@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import useFirebase from "../hooks/useFirebase";
+import LoadingSpinner from "./LoadingSpinner";
 
 const ForgotPasswordForm = () => {
+  const { loading, setLoading } = useFirebase();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -18,16 +21,36 @@ const ForgotPasswordForm = () => {
   };
 
   const submitFunction = async (e) => {
-    setErrorMsg("");
     try {
       e.preventDefault();
+      setErrorMsg("");
+      setLoading(true);
+
+      if (!userEmail || !userPassword) {
+        setErrorMsg("Enter credentials");
+        setLoading(false); // Stop loading if fields are empty
+        return;
+      }
+
+      const strongPWD =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@#$!%*?&]{8,}$/;
+
+      // Password validation
+      if (!strongPWD.test(userPassword)) {
+        setErrorMsg(
+          "Password must be at least 8 characters, include uppercase, lowercase, number, and special character."
+        );
+        setLoading(false);
+        return;
+      }
+
       const response = await axios.post(
         "https://baraqah-departmental-store-server.onrender.com/passwordReset",
         {
           email: userEmail,
           password: userPassword,
         },
-        { withCredentials: true }
+        { withCredentials: true,timeout: 60000 } // ⏳ 60 seconds timeout 
       );
 
       const successHandler = (msg: string) => {
@@ -47,6 +70,8 @@ const ForgotPasswordForm = () => {
       } else {
         setErrorMsg("An error occurred. Please try again later."); // Generic error message for other cases
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -56,6 +81,7 @@ const ForgotPasswordForm = () => {
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold py-6">Change your password</h1>
         </div>
+        {loading ? <LoadingSpinner loading={loading} /> : null}{" "}
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <form className="card-body">
             <div className="form-control">
