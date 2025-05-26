@@ -1,9 +1,16 @@
-import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import useFirebase from "../hooks/useFirebase";
 import axios from "axios";
+import useFirebase from "../hooks/useFirebase";
 import LoadingSpinner from "./LoadingSpinner";
+
+// ! implement password criteria
+
+// Regex for strong password: at least 1 uppercase, 1 lowercase, 1 number, 1 special character
+/* const strongPWD =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+      this.password
+    ); */
 
 const UserRegister = () => {
   const { signInWithGoogle, loading, setLoading } = useFirebase();
@@ -30,11 +37,30 @@ const UserRegister = () => {
     e: React.MouseEvent<HTMLButtonElement>,
     flag: string = ""
   ) => {
-    setErrorMsg("");
     try {
       e.preventDefault();
+      setErrorMsg("");
+      setLoading(true);
+
       if (flag == "google") {
         signInWithGoogle();
+        return;
+      }
+
+      if (!userEmail || !userPassword) {
+        setErrorMsg("Credentials Missing");
+        setLoading(false); // Stop loading if fields are empty
+        return;
+      }
+
+      // Password validation
+      const strongPWD =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{8,}$/;
+      if (!strongPWD.test(userPassword)) {
+        setErrorMsg(
+          "Password must be at least 8 characters, include uppercase, lowercase, number, and special character."
+        );
+        setLoading(false);
         return;
       }
 
@@ -43,23 +69,44 @@ const UserRegister = () => {
         {
           email: userEmail,
           password: userPassword,
-        }
+        },
+        { withCredentials: true, timeout: 60000 } // ⏳ 60 seconds timeout
       );
 
       const handleLoginSuccess = () => {
-        console.log(response.data, "login Successful");
+        console.log(response.data, "Registration Successful");
         navigate("/");
       };
 
       // Handle response
       response.status === 201
         ? handleLoginSuccess()
-        : console.log(response.data, "login failed");
+        : console.log(response.data, "Registration failed");
 
       return response;
     } catch (error) {
-      console.error("Error during login:", error.response.data);
-      setErrorMsg(error.response.data.msg);
+      // console.error("Error during login:", error?.response?.data);
+      if (axios.isAxiosError(error)) {
+        console.log(error);
+        if (error.response) {
+          // Handles 401, 403, etc.
+          if (error.response.status === 401 || error.response.status === 403) {
+            setErrorMsg("Invalid email or password");
+          } else {
+            setErrorMsg(error.response.data?.msg || "Something went wrong");
+          }
+        } else if (error.code === "ECONNABORTED") {
+          setErrorMsg("Server is taking too long to respond. Try again later.");
+        } else {
+          setErrorMsg("Network error. Please check your internet connection.");
+        }
+        console.error("Axios error:", error.message, error.response?.data);
+      } else {
+        setErrorMsg("An unexpected error occurred.");
+        console.error("Unknown error:", error);
+      }
+    } finally {
+      setLoading(false); // ✅ Always stop loading
     }
   };
 

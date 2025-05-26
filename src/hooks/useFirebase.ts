@@ -14,7 +14,7 @@ const googleProvider = new GoogleAuthProvider();
 const useFirebase = () => {
   const auth = getAuth(app);
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // for loadingSpinner
+  const [loading, setLoading] = useState(false); // for loadingSpinner
   const navigate = useNavigate();
 
   const signInWithGoogle = async () => {
@@ -25,14 +25,14 @@ const useFirebase = () => {
 
       const response = await axios.post(
         "https://baraqah-departmental-store-server.onrender.com/jsonWebAccessToken",
-        { uid, email, role: "user" } // Preset role for google sign in
+        { uid, email, role: "user" } // default role for google sign in
       );
 
       if (response.status === 200) {
         const { accessToken } = response.data;
         localStorage.setItem("access_token", accessToken);
         localStorage.setItem("userEmail", email);
-        localStorage.setItem("role", "user"); // Preset role for google sign in
+        localStorage.setItem("role", "user"); // default role for google sign in
         setUser(result.user);
         navigate("/");
       } else {
@@ -54,7 +54,6 @@ const useFirebase = () => {
       console.error("Error during sign out:", error);
     }
   };
-
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(setUser);
     return unsubscribe;

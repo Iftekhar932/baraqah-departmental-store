@@ -15,6 +15,7 @@ const Hero = () => {
               src={deliveryImg}
               alt="delivery guy"
               className="rounded-full"
+              loading="lazy"
             />
           </div>
 

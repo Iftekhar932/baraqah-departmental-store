@@ -4,48 +4,32 @@ import useCart from "../hooks/useCart";
 import { refreshHandlingFunction } from "../Routes/routes";
 import { motion } from "framer-motion";
 
-const Product = (props) => {
-  const { category, _id, name, unit, img, price } = props?.productData;
+import { ProductDataStructure } from "../types/interfaces";
+
+
+interface CardProps {
+  productData: ProductDataStructure;
+}
+
+const Product = React.memo(({productData}:CardProps) => {
+  const { category, _id, name, unit, img, price } = productData;
   const { addItem, subItem, getItemQuantity } = useCart();
   const [quantity, setQuantity] = useState(0);
 
   useEffect(() => {
     const initialQuantity = getItemQuantity ? getItemQuantity(_id) : 0;
     setQuantity(initialQuantity);
-  }, [_id, getItemQuantity, quantity]);
+  }, [_id, getItemQuantity]);
 
   // get product id and add it to localStorage cart with "addItem/subitem" function
-  const itemSelection = async (_id: number, flag: boolean = false) => {
-    const response = await axios
-      .get(
-        `https://baraqah-departmental-store-server.onrender.com/getAllProducts/${_id}`,
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-        }
-      )
-      .then((response) => {
-        // flag indicates whether to use  addition or subtraction function
-        if (flag === true) {
-          subItem(response?.data[0]?._id);
-          setQuantity((prev) => Math.max(prev - 1, 0)); // Prevent going below 0
-        } else {
-          addItem(response?.data[0]?._id);
-          setQuantity((prev) => prev + 1);
-        }
-      })
-      .catch(async (err) => {
-        if (err?.response?.status === 403) {
-          return await refreshHandlingFunction(
-            null,
-            "component - products.jsx ------- api - getAllProducts/:productId",
-            true
-          );
-        }
-      });
-    return response;
+  const itemSelection = async (_id: string, flag: boolean = false) => {
+    if (flag) {
+      subItem(_id);
+      setQuantity((prev) => Math.max(prev - 1, 0));
+    } else {
+      addItem(_id);
+      setQuantity((prev) => prev + 1);
+    }
   };
 
   return (
@@ -82,6 +66,6 @@ const Product = (props) => {
       </div>
     </motion.div>
   );
-};
+});
 
 export default Product;

@@ -4,16 +4,26 @@ import useFirebase from "../hooks/useFirebase";
 import axios from "axios";
 import LoadingSpinner from "./LoadingSpinner";
 
+//! check if user created account with google or email, if google then disable other input boxes to make user login with gmail only
+
+//?Study schema design patterns (e.g., polymorphic, bucket patterns)?
+//? Common ways to structure data (polymorphic, bucket, outlier, etc.).
+//?JSON Web Tokens are used for stateless authentication ok, what's used for authentication with state then?
+
+//? express advanced routing? can i implement in this project to learn it?
+//?if find is a method in mognodb then what's aggregation teach me that while implementing in this project
+//? Docker: Containerize your backend for easier deployment. can i learn it by implementing here in this project
+//? Implement advanced middleware (e.g., rate-limiting, request validation). can i learn it by implementing here in this project
+
 const UserLogin = () => {
-  const { signInWithGoogle } = useFirebase();
+  const { signInWithGoogle, loading, setLoading } = useFirebase();
   const [userEmail, setUserEmail] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
   const [errorMsg, setErrorMsg] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false); // Defined locally
+  // const [loading, setLoading] = useState<boolean>(false); // Defined locally
 
   const navigate = useNavigate();
 
-  //! check if user created account with google or email, if google then disable other input boxes to make user login with gmail only
   // Redirect logged-in users
   useEffect(() => {
     if (localStorage.getItem("userEmail")) {
@@ -50,10 +60,21 @@ const UserLogin = () => {
         return;
       }
 
+      // Password validation
+      const strongPWD =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{8,}$/;
+      if (!strongPWD.test(userPassword)) {
+        setErrorMsg(
+          "Password must be at least 8 characters, include uppercase, lowercase, number, and special character."
+        );
+        setLoading(false);
+        return;
+      }
+
       const response = await axios.post(
         "https://baraqah-departmental-store-server.onrender.com/login",
         { email: userEmail, password: userPassword },
-        { withCredentials: true, timeout: 10000 } // ⏳ 10s timeout
+        { withCredentials: true, timeout: 60000 } // ⏳ 60 seconds timeout
       );
 
       if (response.status === 200) {
@@ -66,17 +87,21 @@ const UserLogin = () => {
       }
     } catch (error) {
       console.error("Login error:", error);
-      if (error.response) {
-        // Handles 401, 403, etc.
-        if (error.response.status === 401 || error.response.status === 403) {
-          setErrorMsg("Invalid email or password");
+
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          if (error.response.status === 401 || error.response.status === 403) {
+            setErrorMsg("Invalid email or password");
+          } else {
+            setErrorMsg(error.response.data?.msg || "Something went wrong");
+          }
+        } else if (error.code === "ECONNABORTED") {
+          setErrorMsg("Server is taking too long to respond. Try again later.");
         } else {
-          setErrorMsg(error.response.data?.msg || "Something went wrong");
+          setErrorMsg("Network error. Please check your internet connection.");
         }
-      } else if (error.code === "ECONNABORTED") {
-        setErrorMsg("Server is taking too long to respond. Try again later.");
       } else {
-        setErrorMsg("Network error. Please check your internet connection.");
+        setErrorMsg("An unexpected error occurred.");
       }
     } finally {
       setLoading(false); // ✅ Always stop loading
