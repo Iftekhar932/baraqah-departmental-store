@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
 // daisyUI component
 import ThemeSwitcher from "./ThemeSwitcher";
-import { createCartUpdatedHandler } from "../utils/Handler";
 
 const Header = () => {
   const [activateAnimation, setActivateAnimation] = useState<boolean>(false);
@@ -13,21 +12,20 @@ const Header = () => {
   const role: null | string = localStorage.getItem("role");
 
   useEffect(() => {
-    const products: { productId: string; qnt: number }[] = JSON.parse(
-      localStorage.getItem("userProducts") || "[]"
-    );
-    if (Array.isArray(products) && products.length > 0) {
-      setActivateAnimation(true);
-    } else {
-      setActivateAnimation(false);
-    }
+    const handler = () => {
+      const products: { productId: string; qnt: number }[] = JSON.parse(
+        localStorage.getItem("userProducts") || "[]"
+      );
+      if (Array.isArray(products) && products.length > 0) {
+        setActivateAnimation(true);
+      } else {
+        setActivateAnimation(false);
+      }
+    };
 
-    const handler = createCartUpdatedHandler(setActivateAnimation);
     window.addEventListener("cartUpdated", handler);
 
-    return () => {
-      window.removeEventListener("cartUpdated", handler);
-    };
+    // return () => window.removeEventListener("cartUpdated", handler);
   }, []);
 
   const logOutFunc = async (
