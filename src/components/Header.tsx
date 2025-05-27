@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import useFirebase from "../hooks/useFirebase";
 // daisyUI component
 import ThemeSwitcher from "./ThemeSwitcher";
-import { createCartUpdatedHandler } from "../utils/Handler";
 
 const Header = () => {
   const [activateAnimation, setActivateAnimation] = useState<boolean>(false);
