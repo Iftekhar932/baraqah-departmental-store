@@ -11,6 +11,11 @@ const CartView = () => {
   const [cartTotalSum, setCartTotalSum] = useState(0); // total due payment of products purchased by user
   const [emptyMSG, setEmptyMSG] = useState(false);
 
+  const cartClearingFunction = () => {
+    localStorage.removeItem("userProducts");
+    navigate("/");
+  };
+
   // a function that makes a list in .txt file format and auto downloads it in user's device, this is done without having access to user's storage
   const handleDownload = () => {
     const filename = "purchase-confirmation.txt";
@@ -180,11 +185,7 @@ const CartView = () => {
         <div className="text-center p-4">
           <button
             className="btn btn-primary mx-auto self-center"
-            onClick={() => {
-              // clearing and updating the table
-              navigate("/");
-              localStorage.removeItem("userProducts"); // clearing cart
-            }}
+            onClick={cartClearingFunction}
           >
             Clear All
           </button>
