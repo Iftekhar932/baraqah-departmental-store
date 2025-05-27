@@ -12,12 +12,17 @@ const Header = () => {
   const role: null | string = localStorage.getItem("role");
 
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout | null = null;
     const handler = () => {
       const products: { productId: string; qnt: number }[] = JSON.parse(
         localStorage.getItem("userProducts") || "[]"
       );
       if (Array.isArray(products) && products.length > 0) {
         setActivateAnimation(true);
+        // Clear previous timeout if exists
+        if (timeoutId) clearTimeout(timeoutId);
+        // Set animation off after 1 second (adjust as needed)
+        timeoutId = setTimeout(() => setActivateAnimation(false), 3000);
       } else {
         setActivateAnimation(false);
       }
@@ -25,7 +30,10 @@ const Header = () => {
 
     window.addEventListener("cartUpdated", handler);
 
-    // return () => window.removeEventListener("cartUpdated", handler);
+    return () => {
+      window.removeEventListener("cartUpdated", handler);
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, []);
 
   const logOutFunc = async (
