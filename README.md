@@ -11,7 +11,7 @@ A full-stack e-commerce web app for a departmental store, featuring secure login
 ---
 
 ## 📸 Screenshots
-![Home Page](./screenshots/screenshot.png)
+![Home Page](./screenshot.png)
 
 
 ## 👥 User Roles
