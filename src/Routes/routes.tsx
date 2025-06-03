@@ -1,10 +1,12 @@
+import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import axios from "axios";
 
 // components
 import Products from "../components/Products";
 import Home from "../components/Home";
-import SliderCategory from "../components/SliderCategory";
+// import SliderCategory from "../components/SliderCategory";
+
 import UserLogin from "../components/UserLogin";
 import UserRegister from "../components/UserRegister";
 import AdminPanel from "../components/AdminPanel";
@@ -15,6 +17,8 @@ import ForgotPasswordForm from "../components/ForgotPasswordForm";
 
 // error components
 import ProductsError from "../components/ProductsError";
+
+const SliderCategory = lazy(() => import("../components/SliderCategory"));
 
 /*
  * function to call api of refreshToken, setting new token in localStorage and then re-invoke *    "jwtExpiryFunction" & the outcome/response that
