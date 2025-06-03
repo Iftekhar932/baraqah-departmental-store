@@ -4,11 +4,20 @@ A full-stack e-commerce web app for a departmental store, featuring secure login
 
 ---
 
+⚠️ Heads Up: The backend is hosted on Render's free tier, which goes to sleep after inactivity. So the first load may take ~30s. After that, it works smoothly.
+
+I'm keeping it free right now, but open to hosting upgrades or feedback!
+
+
 ## 🚀 Live Demo
 
 [Click here to try the app](https://baraqah-departmental-store.netlify.app/) <!-- replace with real link -->
 
 ---
+
+## 📸 Screenshots
+![Home Page](./screenshot.png)
+
 
 ## 👥 User Roles
 
