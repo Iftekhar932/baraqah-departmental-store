@@ -17,7 +17,6 @@ import ForgotPasswordForm from "../components/ForgotPasswordForm";
 
 // error components
 import ProductsError from "../components/ProductsError";
-
 const SliderCategory = lazy(() => import("../components/SliderCategory"));
 
 /*
