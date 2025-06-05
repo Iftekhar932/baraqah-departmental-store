@@ -27,12 +27,12 @@ const responsive = {
 const SliderCategory = () => {
   const { loading, setLoading } = useFirebase();
   const loadedData = useLoaderData() as { data: ProductDataStructure[] };
-
+  /* 
   // If there's no data, don't render the component and set loading true
   if (loadedData?.data?.length == 0) {
     setLoading(true);
     return null;
-  }
+  } */
 
   // collecting category names while preventing clone element in the array
   const category = Array.from(
