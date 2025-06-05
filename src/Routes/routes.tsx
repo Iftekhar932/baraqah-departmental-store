@@ -5,8 +5,6 @@ import axios from "axios";
 // components
 import Products from "../components/Products";
 import Home from "../components/Home";
-// import SliderCategory from "../components/SliderCategory";
-
 import UserLogin from "../components/UserLogin";
 import UserRegister from "../components/UserRegister";
 import AdminPanel from "../components/AdminPanel";
@@ -14,10 +12,13 @@ import AboutUs from "../components/AboutUs";
 import CartView from "../components/CartView";
 import Main from "../components/Main";
 import ForgotPasswordForm from "../components/ForgotPasswordForm";
+import SliderCategory from "../components/SliderCategory";
 
 // error components
 import ProductsError from "../components/ProductsError";
-const SliderCategory = lazy(() => import("../components/SliderCategory"));
+
+// lazy loading component
+// const SliderCategory = lazy(() => import("../components/SliderCategory"));
 
 /*
  * function to call api of refreshToken, setting new token in localStorage and then re-invoke *    "jwtExpiryFunction" & the outcome/response that
@@ -147,7 +148,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
         errorElement: <ProductsError />,
-        children: [
+        /* children: [
           {
             path: "/",
             element: <SliderCategory />,
@@ -173,7 +174,7 @@ const router = createBrowserRouter([
               },
             ],
           },
-        ],
+        ], */
       },
 
       {
