@@ -153,6 +153,7 @@ const router = createBrowserRouter([
             path: "/",
             element: <SliderCategory />,
             loader: async () => {
+              if(localStorage.getItem("access_token")) {
               return JWTExpiryHandlerFunction(
                 "https://baraqah-departmental-store-server.onrender.com/getAllProducts",
                 "SliderCategory.jsx - API getAllProducts"
