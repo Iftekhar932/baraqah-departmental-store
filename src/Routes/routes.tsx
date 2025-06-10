@@ -91,8 +91,9 @@ export async function JWTExpiryHandlerFunction(
   if (!accessToken) {
     await refreshHandlingFunction(url, compName, true);
     accessToken = await getItemAsync("access_token");
+    console.time("set here");
   }
-
+  console.time(`new accessToken ${accessToken}`);
   const response = await axios
     .get(url, {
       withCredentials: true,
