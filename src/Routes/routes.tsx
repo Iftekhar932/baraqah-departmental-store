@@ -88,12 +88,10 @@ export async function JWTExpiryHandlerFunction(
 ) {
   // compName parameter is used to identify the component name to locate in which components this function is used
   let accessToken = await getItemAsync("access_token");
-  console.time("new accessToken");
   if (!accessToken) {
     await refreshHandlingFunction(url, compName, true);
     accessToken = await getItemAsync("access_token");
   }
-  console.timeEnd("new accessToken");
   const response = await axios
     .get(url, {
       withCredentials: true,
@@ -150,7 +148,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
         errorElement: <ProductsError />,
-        children: [
+        /*         children: [
           {
             path: "/",
             element: <SliderCategory />,
@@ -176,7 +174,7 @@ const router = createBrowserRouter([
               },
             ],
           },
-        ],
+        ], */
       },
 
       {
