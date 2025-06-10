@@ -87,9 +87,10 @@ export async function JWTExpiryHandlerFunction(
   compName: string = ""
 ) {
   // compName parameter is used to identify the component name to locate in which components this function is used
-  const accessToken = await getItemAsync("access_token");
+  let accessToken = await getItemAsync("access_token");
   if (!accessToken) {
-    return;
+    await refreshHandlingFunction(url, compName, true);
+    accessToken = await getItemAsync("access_token");
   }
 
   const response = await axios
@@ -155,7 +156,7 @@ const router = createBrowserRouter([
             loader: async () => {
               return JWTExpiryHandlerFunction(
                 "https://baraqah-departmental-store-server.onrender.com/getAllProducts",
-                "SliderCategory.jsx - API getAllProducts"
+                "SliderCategory.jsx €- API getAllProducts"
               );
             },
             errorElement: <ProductsError />,
