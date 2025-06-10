@@ -88,12 +88,12 @@ export async function JWTExpiryHandlerFunction(
 ) {
   // compName parameter is used to identify the component name to locate in which components this function is used
   let accessToken = await getItemAsync("access_token");
+  console.time("new accessToken");
   if (!accessToken) {
     await refreshHandlingFunction(url, compName, true);
     accessToken = await getItemAsync("access_token");
-    console.time("set here");
   }
-  console.time(`new accessToken ${accessToken}`);
+  console.timeEnd("new accessToken");
   const response = await axios
     .get(url, {
       withCredentials: true,
