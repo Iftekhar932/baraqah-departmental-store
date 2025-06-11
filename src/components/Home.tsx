@@ -2,17 +2,15 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import DealsDetail from "./DealsDetail";
 import Hero from "./Hero";
+import { JWTExpiryHandlerFunction } from "../Routes/routes";
 
 const Home = () => {
   React.useEffect(() => {
     console.log("Home component mounted");
-    fetch(
-      "https://baraqah-departmental-store-server.onrender.com/getAllProducts"
-    )
-      .then((response) => response.json())
-      .catch((error) => {
-        console.error("Error fetching products:", error);
-      });
+    JWTExpiryHandlerFunction(
+      "https://baraqah-departmental-store-server.onrender.com/getAllProducts",
+      "SliderCategory.jsx €- API getAllProducts"
+    );
   }, []);
   return (
     <>
