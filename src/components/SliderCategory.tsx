@@ -1,11 +1,11 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { JWTExpiryHandlerFunction } from "../Routes/routes";
+import { ProductDataStructure } from "../types/interfaces";
+import useFirebase from "../hooks/useFirebase";
 import "react-multi-carousel/lib/styles.css";
 import Carousel from "react-multi-carousel";
 import { motion } from "framer-motion";
-import { ProductDataStructure } from "../types/interfaces";
-import useFirebase from "../hooks/useFirebase";
-import { useEffect, useState } from "react";
-import { JWTExpiryHandlerFunction } from "../Routes/routes"; // adjust import path if needed
 import LoadingSpinner from "./LoadingSpinner";
 
 const responsive = {
@@ -28,29 +28,30 @@ const responsive = {
 };
 
 const SliderCategory = () => {
+  const { category } = useParams<{ category?: string }>();
   const { loading, setLoading } = useFirebase();
   const [data, setData] = useState<ProductDataStructure[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
-    JWTExpiryHandlerFunction(
-      "https://baraqah-departmental-store-server.onrender.com/getAllProducts",
-      "SliderCategory.tsx - API getAllProducts"
-    )
+    let url = "https://baraqah-departmental-store-server.onrender.com/getAllProducts";
+    if (category) {
+      url = `https://baraqah-departmental-store-server.onrender.com/getAllProductsCategoryWise/${category}`;
+    }
+    JWTExpiryHandlerFunction(url, "SliderCategory.tsx - API getAllProducts")
       .then((res: any) => {
-        // Adjust this if your API returns { data: [...] }
         setData(res?.data?.data || []);
         setLoading(false);
       })
-      .catch((err) => {
+      .catch(() => {
         setError("Failed to load categories.");
         setLoading(false);
       });
-  }, [setLoading]);
+  }, [category, setLoading]);
 
   // collecting category names while preventing clone element in the array
-  const category = Array.from(new Set(data?.map((image) => image.category)));
+  const categoryNames = Array.from(new Set(data?.map((image) => image.category)));
   const imgs = Array.from(new Set(data?.map((image) => image.categoryImg)));
 
   if (loading) return <LoadingSpinner loading={loading} />;
@@ -81,10 +82,10 @@ const SliderCategory = () => {
           <div
             key={index}
             className="tooltip m-10 md:mr-5 lg:mr-0"
-            data-tip={category[index]}
+            data-tip={categoryNames[index]}
           >
-            <Link to={`products/${category[index]}`}>
-              <img src={img} alt={category[index]} loading="lazy" />
+            <Link to={`products/${categoryNames[index]}`}>
+              <img src={img} alt={categoryNames[index]} loading="lazy" />
             </Link>
           </div>
         ))}
