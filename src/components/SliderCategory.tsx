@@ -1,45 +1,30 @@
-import { Link, Outlet, useParams } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { JWTExpiryHandlerFunction } from "../Routes/routes";
 import { ProductDataStructure } from "../types/interfaces";
 import useFirebase from "../hooks/useFirebase";
-import "react-multi-carousel/lib/styles.css";
 import Carousel from "react-multi-carousel";
 import { motion } from "framer-motion";
 import LoadingSpinner from "./LoadingSpinner";
 
 const responsive = {
-  superLargeDesktop: {
-    breakpoint: { max: 4000, min: 3000 },
-    items: 3,
-  },
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 3,
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 2,
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1,
-  },
+  superLargeDesktop: { breakpoint: { max: 4000, min: 3000 }, items: 3 },
+  desktop: { breakpoint: { max: 3000, min: 1024 }, items: 3 },
+  tablet: { breakpoint: { max: 1024, min: 464 }, items: 2 },
+  mobile: { breakpoint: { max: 464, min: 0 }, items: 1 },
 };
 
 const SliderCategory = () => {
-  const { category } = useParams<{ category?: string }>();
   const { loading, setLoading } = useFirebase();
   const [data, setData] = useState<ProductDataStructure[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
-    let url = "https://baraqah-departmental-store-server.onrender.com/getAllProducts";
-    if (category) {
-      url = `https://baraqah-departmental-store-server.onrender.com/getAllProductsCategoryWise/${category}`;
-    }
-    JWTExpiryHandlerFunction(url, "SliderCategory.tsx - API getAllProducts")
+    JWTExpiryHandlerFunction(
+      "https://baraqah-departmental-store-server.onrender.com/getAllProducts",
+      "SliderCategory.tsx - API getAllProducts"
+    )
       .then((res: any) => {
         setData(res?.data?.data || []);
         setLoading(false);
@@ -48,11 +33,17 @@ const SliderCategory = () => {
         setError("Failed to load categories.");
         setLoading(false);
       });
-  }, [category, setLoading]);
+  }, [setLoading]);
 
-  // collecting category names while preventing clone element in the array
-  const categoryNames = Array.from(new Set(data?.map((image) => image.category)));
-  const imgs = Array.from(new Set(data?.map((image) => image.categoryImg)));
+  // Get unique categories and their images
+  const categoriesMap = new Map<string, string>();
+  data.forEach((item) => {
+    if (!categoriesMap.has(item.category)) {
+      categoriesMap.set(item.category, item.categoryImg);
+    }
+  });
+  const categoryNames = Array.from(categoriesMap.keys());
+  const imgs = Array.from(categoriesMap.values());
 
   if (loading) return <LoadingSpinner loading={loading} />;
   if (error) return <div>{error}</div>;
@@ -78,14 +69,14 @@ const SliderCategory = () => {
         itemClass="carousel-item-padding-40-px"
         className="h-64 mx-auto md:w-[500px]"
       >
-        {imgs?.map((img, index) => (
+        {categoryNames.map((cat, index) => (
           <div
-            key={index}
+            key={cat}
             className="tooltip m-10 md:mr-5 lg:mr-0"
-            data-tip={categoryNames[index]}
+            data-tip={cat}
           >
-            <Link to={`products/${categoryNames[index]}`}>
-              <img src={img} alt={categoryNames[index]} loading="lazy" />
+            <Link to={`products/${cat}`}>
+              <img src={imgs[index]} alt={cat} loading="lazy" />
             </Link>
           </div>
         ))}
