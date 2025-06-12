@@ -155,7 +155,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
         errorElement: <ProductsError />,
-        /* children: [
+        children: [
           {
             path: "/",
             element: <SliderCategory />,
@@ -176,7 +176,7 @@ const router = createBrowserRouter([
               },
             ],
           },
-        ], */
+        ],
       },
 
       {
