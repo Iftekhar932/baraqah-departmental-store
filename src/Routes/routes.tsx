@@ -21,12 +21,12 @@ import ProductsError from "../components/ProductsError";
 const SliderCategory = lazy(() => import("../components/SliderCategory"));
 
 /*
- * function to call api of refreshToken, setting new token in localStorage and then re-invoke *    "jwtExpiryFunction" & the outcome/response that
- * is returned from that function is finally
+PURPOSE OF "refreshHandlingFunction":
+ * refresh accessToken, set new token in localStorage, and then re-invoke "jwtExpiryFunction" while returning the result of invoked function
  * returned from this function - only if access_token is expired this functions is used
  */
-//  this function is imported in "CartView.jsx", "SliderCategory.jsx" and "Product.jsx"  component
 
+//  this function is imported in "CartView.tsx", "Product.tsx","AdminPanel.tsx"  component
 export const refreshHandlingFunction = async (
   url: string | null,
   compName: string = "", // this compName parameter is used to identify the component name to locate in which components this function is used
@@ -52,8 +52,7 @@ export const refreshHandlingFunction = async (
 
     /* 
      "alreadyFetchedFlag" is set to "true" when ARGUMENT IS SENT FROM OTHER COMPONENTS
-     where this function is invoked/called. In this case, "JWTExpiryHandlerFunction" 
-     this function is not needed to be invoked in this file as it is invoked in the component file. (preventing it to call api twice)
+     where this function is invoked/called to prevent the function from being called again in this file
      */
     if (alreadyFetchedFlag === true) {
       return;
@@ -77,10 +76,11 @@ export const refreshHandlingFunction = async (
   }
 };
 
-/* when jwt "access_token" expires it'll invoke "refreshHandlingFunction" above or it'll handle API response - when access_token expires,
-------------------------------------------------------------------------------------------------
-NOTE: if "refreshHandlingFunction" is used after a token is expired  the final response will be returned from the place "jwtExpiryHandlingFunction" is invoked and returned, which is in the try-catch block of "refreshHandlingFunction". (This'll only happen once after the renewal of accessToken )
-*/
+/*
+  PURPOSE OF "JWTExpiryHandlerFunction":
+  calls any API that requires "access_token" to be sent in the header,
+  it checks if "access_token" is present in localStorage, if not it calls "refreshHandlingFunction" to refresh the token,
+ */
 //  this function is imported in "CartView.jsx", "SliderCategory.jsx" and "Product.jsx"  component,
 export async function JWTExpiryHandlerFunction(
   url: string,
@@ -88,10 +88,13 @@ export async function JWTExpiryHandlerFunction(
 ) {
   // compName parameter is used to identify the component name to locate in which components this function is used
   let accessToken = await getItemAsync("access_token");
+  console.log(accessToken, "91");
   if (!accessToken) {
     await refreshHandlingFunction(url, compName, true);
     accessToken = await getItemAsync("access_token");
+    console.log(accessToken, "95");
   }
+  console.log(accessToken, "97");
   const response = await axios
     .get(url, {
       withCredentials: true,
