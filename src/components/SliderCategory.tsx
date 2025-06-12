@@ -37,9 +37,6 @@ const SliderCategory = () => {
     setLoading(true);
     let url =
       "https://baraqah-departmental-store-server.onrender.com/getAllProducts";
-    /* if (category) {
-      url = `https://baraqah-departmental-store-server.onrender.com/getAllProductsCategoryWise/${category}`;
-    } */
     JWTExpiryHandlerFunction(url, "SliderCategory.tsx - API getAllProducts")
       .then((res: any) => {
         setData(res?.data || []);
@@ -48,7 +45,8 @@ const SliderCategory = () => {
       .catch(() => {
         setError("Failed to load categories.");
         setLoading(false);
-      });
+      })
+      .finally(() => setLoading(false));
   }, [setLoading]);
 
   // collecting category names while preventing clone element in the array
