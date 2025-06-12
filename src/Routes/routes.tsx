@@ -57,7 +57,7 @@ export const refreshHandlingFunction = async (
     if (alreadyFetchedFlag === true) {
       return;
     } else {
-      return await JWTExpiryHandlerFunction(url);
+      return await JWTExpiryHandlerFunction(url); // retrying the original request after refreshing accessToken
     }
   } catch (err) {
     console.log(
@@ -87,14 +87,18 @@ export async function JWTExpiryHandlerFunction(
   compName: string = ""
 ) {
   // compName parameter is used to identify the component name to locate in which components this function is used
+
   let accessToken = await getItemAsync("access_token");
-  console.log(accessToken, "91");
   if (!accessToken) {
-    await refreshHandlingFunction(url, compName, true);
+    console.log("if statement reached");
+    let refreshSuccess = await refreshHandlingFunction(url, compName, true);
     accessToken = await getItemAsync("access_token");
-    console.log(accessToken, "95");
+    if (!refreshSuccess) {
+      window.location.href = "/userLogin";
+    }
+    return;
   }
-  console.log(accessToken, "97");
+
   const response = await axios
     .get(url, {
       withCredentials: true,
@@ -151,12 +155,12 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
         errorElement: <ProductsError />,
-        /*         children: [
+        children: [
           {
             path: "/",
             element: <SliderCategory />,
             loader: async () => {
-              return JWTExpiryHandlerFunction(
+              return await JWTExpiryHandlerFunction(
                 "https://baraqah-departmental-store-server.onrender.com/getAllProducts",
                 "SliderCategory.jsx €- API getAllProducts"
               );
@@ -177,7 +181,7 @@ const router = createBrowserRouter([
               },
             ],
           },
-        ], */
+        ],
       },
 
       {
