@@ -86,50 +86,56 @@ export async function JWTExpiryHandlerFunction(
   url: string,
   compName: string = ""
 ) {
-  // compName parameter is used to identify the component name to locate in which components this function is used
-
+  // Try to get a valid access token, refreshing if needed
   let accessToken = await getItemAsync("access_token");
+
   if (!accessToken) {
-    console.log("if statement reached");
-    let refreshSuccess = await refreshHandlingFunction(url, compName, true);
-    accessToken = await getItemAsync("access_token");
+    const refreshSuccess = await refreshHandlingFunction(url, compName, true);
     if (!refreshSuccess) {
+      localStorage.clear();
       window.location.href = "/userLogin";
+      return;
     }
-    return;
+    accessToken = await getItemAsync("access_token");
+    if (!accessToken) {
+      localStorage.clear();
+      window.location.href = "/userLogin";
+      return;
+    }
   }
 
-  const response = await axios
-    .get(url, {
+  try {
+    const response = await axios.get(url, {
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-    })
-    .catch(async function (err) {
-      console.log(
-        "🚀 ~ file: routes.js:82 ~ JWTExpiryHandlerFunction ~ err:",
-        err?.response,
-        err?.response?.status,
-        err?.response?.data,
-        err?.data?.refreshTokenExpiry,
-        compName
-      );
-
-      if (err?.data?.refreshTokenExpiry == true) {
-        localStorage.removeItem("userEmail");
-        localStorage.removeItem("userProducts");
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("role");
-      }
-
-      if (err?.response?.status === 403) {
-        return await refreshHandlingFunction(url);
-      }
     });
-  return response;
+    return response;
+  } catch (err: any) {
+    // If token expired or invalid, try to refresh once more
+    if (err?.response?.status === 401 || err?.response?.status === 403) {
+      const refreshSuccess = await refreshHandlingFunction(url, compName, true);
+      if (refreshSuccess) {
+        accessToken = await getItemAsync("access_token");
+        if (accessToken) {
+          // Retry the request once
+          return axios.get(url, {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+        }
+      }
+      localStorage.clear();
+      window.location.href = "/userLogin";
+      return;
+    }
+    // Other errors
+    throw err;
+  }
 }
-
 // used "Promise" to use localStorage in asynchronous way(used in "JWTExpiryHandlerFunction" * "refreshHandlingFunction")
 function getItemAsync(key: string) {
   return new Promise((resolve) => {
@@ -214,30 +220,3 @@ const router = createBrowserRouter([
 ]);
 
 export default router;
-/* children: [
-          {
-            path: "/",
-            element: <SliderCategory />,
-            loader: async () => {
-              return await JWTExpiryHandlerFunction(
-                "https://baraqah-departmental-store-server.onrender.com/getAllProducts",
-                "SliderCategory.jsx €- API getAllProducts"
-              );
-            },
-            errorElement: <ProductsError />,
-
-            children: [
-              {
-                path: "/products/:category",
-                element: <Products />,
-                errorElement: <ProductsError />,
-                loader: async (req) => {
-                  return await JWTExpiryHandlerFunction(
-                    `https://baraqah-departmental-store-server.onrender.com/getAllProductsCategoryWise/${req.params.category}`,
-                    "Products.jsx || API - getAllProductsCategoryWise"
-                  );
-                },
-              },
-            ],
-          },
-        ], */
