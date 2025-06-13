@@ -57,7 +57,7 @@ const SliderCategory = () => {
 
   if (loading) return <LoadingSpinner loading={loading} />;
   if (error) return <div>{error}</div>;
-  if (!data.length) return <div>No categories found.</div>;
+  // if (!data.length) return <div>No categories found.</div>;
 
   return (
     <motion.div
