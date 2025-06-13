@@ -10,7 +10,7 @@ const ProductsError = () => {
   // if user is logged in it won't navigate
   const timeToNavigate = () => {
     if (window.location.pathname != "/") {
-      setTimeout(() => setUserHere(!userHere), 3000);
+      setTimeout(() => setUserHere(!userHere), 30000);
     }
     if (userHere) {
       navigate("/userLogin");
