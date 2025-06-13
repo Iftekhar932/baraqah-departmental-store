@@ -82,11 +82,13 @@ export const refreshHandlingFunction = async (
   it checks if "access_token" is present in localStorage, if not it calls "refreshHandlingFunction" to refresh the token,
  */
 //  this function is imported in "CartView.jsx", "SliderCategory.jsx" and "Product.jsx"  component,
+
 export async function JWTExpiryHandlerFunction(
   url: string,
   compName: string = ""
 ) {
-  // Try to get a valid access token, refreshing if needed
+  // compName parameter is used to identify the component name to locate in which components this function is used
+
   let accessToken = await getItemAsync("access_token");
 
   if (!accessToken) {
@@ -104,37 +106,36 @@ export async function JWTExpiryHandlerFunction(
     }
   }
 
-  try {
-    const response = await axios.get(url, {
+  const response = await axios
+    .get(url, {
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-    });
-    return response;
-  } catch (err: any) {
-    // If token expired or invalid, try to refresh once more
-    if (err?.response?.status === 401 || err?.response?.status === 403) {
-      const refreshSuccess = await refreshHandlingFunction(url, compName, true);
-      if (refreshSuccess) {
-        accessToken = await getItemAsync("access_token");
-        if (accessToken) {
-          // Retry the request once
-          return axios.get(url, {
-            withCredentials: true,
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          });
-        }
+    })
+    .catch(async function (err) {
+      console.log(
+        "🚀 ~ file: routes.js:82 ~ JWTExpiryHandlerFunction ~ err:",
+        err?.response,
+        err?.response?.status,
+        err?.response?.data,
+        err?.data?.refreshTokenExpiry,
+        compName
+      );
+
+      if (err?.data?.refreshTokenExpiry == true) {
+        localStorage.removeItem("userEmail");
+        localStorage.removeItem("userProducts");
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("role");
       }
-      localStorage.clear();
-      window.location.href = "/userLogin";
-      return;
-    }
-    // Other errors
-    throw err;
-  }
+
+      if (err?.response?.status === 403) {
+        return await refreshHandlingFunction(url);
+      }
+    });
+
+  return response;
 }
 // used "Promise" to use localStorage in asynchronous way(used in "JWTExpiryHandlerFunction" * "refreshHandlingFunction")
 function getItemAsync(key: string) {
