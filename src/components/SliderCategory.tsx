@@ -7,7 +7,7 @@ import "react-multi-carousel/lib/styles.css";
 import Carousel from "react-multi-carousel";
 import { motion } from "framer-motion";
 import LoadingSpinner from "./LoadingSpinner";
-import ErrorComponent from "./ErrorComponent";
+import ProductsError from "./ProductsError";
 
 const responsive = {
   superLargeDesktop: {
@@ -58,7 +58,7 @@ const SliderCategory = () => {
 
   if (loading) return <LoadingSpinner loading={loading} />;
   if (error) return <div>{error}</div>;
-  if (!data.length) return <ErrorComponent />;
+  if (!data.length) return <ProductsError />;
 
   return (
     <motion.div
