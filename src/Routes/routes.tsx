@@ -82,7 +82,7 @@ export const refreshHandlingFunction = async (
   it checks if "access_token" is present in localStorage, if not it calls "refreshHandlingFunction" to refresh the token,
  */
 //  this function is imported in "CartView.jsx", "SliderCategory.jsx" and "Product.jsx"  component,
-/* export async function JWTExpiryHandlerFunction(
+export async function JWTExpiryHandlerFunction(
   url: string,
   compName: string = ""
 ) {
@@ -133,53 +133,6 @@ export const refreshHandlingFunction = async (
     });
 
   return response;
-} */
-
-export async function JWTExpiryHandlerFunction(
-  url: string,
-  compName: string = ""
-) {
-  let accessToken = await getItemAsync("access_token");
-
-  // Try to refresh if no access token
-  if (!accessToken) {
-    const refreshSuccess = await refreshHandlingFunction(url, compName, true);
-    if (refreshSuccess) {
-      accessToken = await getItemAsync("access_token");
-    }
-    if (!accessToken) {
-      return;
-    }
-  }
-
-  try {
-    const response = await axios.get(url, {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    return response;
-  } catch (err: any) {
-    // Only try refresh if error is 401/403 (token expired/invalid)
-    if (err?.response?.status === 401 || err?.response?.status === 403) {
-      const refreshSuccess = await refreshHandlingFunction(url, compName, true);
-      if (refreshSuccess) {
-        accessToken = await getItemAsync("access_token");
-        if (accessToken) {
-          // Retry the request once
-          return axios.get(url, {
-            withCredentials: true,
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          });
-        }
-      }
-      return;
-    }
-    // throw err;
-  }
 }
 
 // used "Promise" to use localStorage in asynchronous way(used in "JWTExpiryHandlerFunction" * "refreshHandlingFunction")
