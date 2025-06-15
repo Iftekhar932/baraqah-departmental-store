@@ -178,7 +178,7 @@ export async function JWTExpiryHandlerFunction(
       }
       return;
     }
-    throw err;
+    // throw err;
   }
 }
 
